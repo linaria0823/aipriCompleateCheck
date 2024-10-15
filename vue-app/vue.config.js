@@ -1,5 +1,6 @@
 module.exports = {
-  outputDir: 'docs',
-  assetsDir: './',
-  publicPath: './',
+  outputDir: '../docs', // リポジトリのルートに出力
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/aipriCompleateCheck/'
+    : '/'
 }
