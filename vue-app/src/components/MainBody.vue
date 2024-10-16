@@ -70,7 +70,7 @@
                           :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                           @click="toggleItem(verseData.value)">
                         <div class="description1">{{verseData.name}}</div>
-                        <img class="cardItemImg" v-lazy="verseData.src" alt="">
+                        <img class="cardItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                       </button>
                     </li>
                   </ul>
@@ -83,7 +83,7 @@
                           :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                           @click="toggleItem(verseData.value)">
                         <div class="description1">{{verseData.name}}</div>
-                        <img class="cardItemImg" v-lazy="verseData.src" alt="">
+                        <img class="cardItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                       </button>
                     </li>
                   </ul>
@@ -96,7 +96,7 @@
                           :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                           @click="toggleItem(verseData.value)">
                         <div class="description1">{{verseData.name}}</div>
-                        <img class="cardItemImg" v-lazy="verseData.src" alt="">
+                        <img class="cardItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                       </button>
                     </li>
                   </ul>
@@ -109,7 +109,7 @@
                           :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                           @click="toggleItem(verseData.value)">
                         <div class="description1">{{verseData.name}}</div>
-                        <img class="cardItemImg" v-lazy="verseData.src" alt="">
+                        <img class="cardItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                       </button>
                     </li>
                   </ul>
