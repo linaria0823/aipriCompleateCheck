@@ -26,19 +26,12 @@
               <option v-bind:value="1">所持済み</option>
               <option v-bind:value="2">未所持</option>
             </select>
-            <div class="inlineBlock searchMargin">
-              アイテム名：
-            </div>
-            <input type="text">
+            <input type="text" class="searchMargin" placeholder="アイテム名で検索">
             <div>
               <div>
-                <div>-1弾-</div>
                 <ul id="dispHimitsuItemList">
                   <li>
-                    <button class="noClick tooltip1 itemButton">
-                      <div class="description1">カルテットスターバズリウムハート</div>
-                      <img class="cardItemImg" src="https://github.com/linaria0823/aipriComp/blob/main/img/himitsu/AP4-001.png?raw=true">
-                    </button>
+                    メンテ中
                   </li>
                 </ul>
               </div>
@@ -66,11 +59,7 @@
               <option v-bind:value="1">所持済み</option>
               <option v-bind:value="2">未所持</option>
             </select>
-            <div class="inlineBlock searchMargin">
-              アイテム名：
-            </div>
-            <input type="text">
-
+            <input type="text" class="searchMargin" v-model="itemName" placeholder="アイテム名で検索">
             <div>
               <div>
                 <div v-show="(selectedVerseVersion === 1 || selectedVerseVersion === 0) && verseList1.length > 0">
@@ -135,7 +124,7 @@
 </template>
 
 <script>
-import himitsuJson from '../../json/himitsuItem.JSON'
+//import himitsuJson from '../../json/himitsuItem.JSON'
 import verseJson from '../../json/verseItem.JSON'
 import Cookies from 'js-cookie';  // js-cookie のインポート
 
@@ -143,22 +132,61 @@ export default {
   name: "MainBody",
   data() {
     return {
-      isActive: "A",  // 初期値を'A'に変更
-      selectedHimitsuVersion: 0,
+      isActive: "A",
       selectedVerseVersion: 0,
-      selectedHimitsuGet: 0,
       selectedVerseGet: 0,
-      //iniHimitsuList: himitsuJson,
+      itemName: "", // アイテム名の入力値
       iniVerseList: verseJson,
-      himitsuList: himitsuJson,
       verseList: verseJson,
-      verseList1: [],
-      verseList2: [],
-      verseList3: [],
-      verseList4: [],
-      selectedItems: [],  // 選択されたボタンのインデックスを配列で管理
+      selectedItems: [],
     };
   },
+  computed: {
+  // 共通のフィルタ処理
+  filteredVerseList() {
+    let list = this.iniVerseList;
+
+    // バージョンで絞り込み
+    if (this.selectedVerseVersion !== 0) {
+      list = list.filter(
+        (item) => item.version === String(this.selectedVerseVersion)
+      );
+    }
+
+    // 取得状況で絞り込み
+    if (this.selectedVerseGet === 1) {
+      // 所持済み
+      list = list.filter((item) => this.selectedItems.includes(item.value));
+    } else if (this.selectedVerseGet === 2) {
+      // 未所持
+      list = list.filter((item) => !this.selectedItems.includes(item.value));
+    }
+
+    // アイテム名で絞り込み（部分一致）
+    if (this.itemName) {
+      const nameLower = this.itemName.toLowerCase(); // 小文字で比較
+      list = list.filter((item) =>
+        item.name.toLowerCase().includes(nameLower)
+      );
+    }
+
+    return list;
+  },
+
+  // 各弾ごとのリスト
+  verseList1() {
+    return this.filteredVerseList.filter((item) => item.version === "1");
+  },
+  verseList2() {
+    return this.filteredVerseList.filter((item) => item.version === "2");
+  },
+  verseList3() {
+    return this.filteredVerseList.filter((item) => item.version === "3");
+  },
+  verseList4() {
+    return this.filteredVerseList.filter((item) => item.version === "4");
+  },
+},
   methods: {
     change(num) {
       this.isActive = num;
@@ -196,25 +224,10 @@ export default {
           this.verseList = list.filter(tabItem => !slectItem.includes(tabItem.value));
         }
       }
-      // 各弾のリストを更新
-      this.updateList();
     },
-    // 各弾のリストを更新
-    updateList() {
-      // 1弾のみのリストを作成
-      this.verseList1 = this.verseList.filter(data => data.version === "1");
-      // 2弾のみのリストを作成
-      this.verseList2 = this.verseList.filter(data => data.version === "2");
-      // 3弾のみのリストを作成
-      this.verseList3 = this.verseList.filter(data => data.version === "3");
-      // 4弾のみのリストを作成
-      this.verseList4 = this.verseList.filter(data => data.version === "4");
-    }
   },
   mounted() {
     //Cookies.remove('selectedItems');
-    // 各弾のリストを更新
-    this.updateList();
     // コンポーネントがマウントされたときにCookieからデータを読み込む
     this.loadSelectedItems();
   },
@@ -236,7 +249,7 @@ export default {
       this.getListCheck("verse", newVal);
     }
   }
-  };
+};
 </script>
 
 <style scoped>
