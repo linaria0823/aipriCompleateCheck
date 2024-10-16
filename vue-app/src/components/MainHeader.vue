@@ -36,6 +36,7 @@ a {
   width: 100%;
   z-index: 1000;
   background-color: #fff;
+  top: 0;
 }
 .title {
   float: left;
