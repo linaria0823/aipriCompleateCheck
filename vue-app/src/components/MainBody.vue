@@ -11,7 +11,7 @@
             <div class="inlineBlock">
               バージョン：
             </div>
-            <select v-model="selectedHimitsuVersion" class="inlineBlock">
+            <select v-model="selectedHimitsuVersion" class="inlineBlock dropBox">
               <option v-bind:value="0">全弾</option>
               <option v-bind:value="1">1弾</option>
               <option v-bind:value="2">2弾</option>
@@ -21,12 +21,12 @@
             <div class="inlineBlock searchMargin">
               取得状況：
             </div>
-            <select v-model="selectedHimitsuGet" class="inlineBlock">
+            <select v-model="selectedHimitsuGet" class="inlineBlock dropBox">
               <option v-bind:value="0">すべて</option>
               <option v-bind:value="1">所持済み</option>
               <option v-bind:value="2">未所持</option>
             </select>
-            <input type="text" class="searchMargin" placeholder="アイテム名で検索">
+            <input type="text" class="searchMargin textSize" placeholder="アイテム名で検索">
             <div>
               <div>
                 <ul id="dispHimitsuItemList">
@@ -44,7 +44,7 @@
             <div class="inlineBlock">
               バージョン：
             </div>
-            <select v-model="selectedVerseVersion" class="inlineBlock">
+            <select v-model="selectedVerseVersion" class="inlineBlock dropBox">
               <option v-bind:value="0">全弾</option>
               <option v-bind:value="1">1弾</option>
               <option v-bind:value="2">2弾</option>
@@ -54,12 +54,12 @@
             <div class="inlineBlock searchMargin">
               取得状況：
             </div>
-            <select v-model="selectedVerseGet" class="inlineBlock">
+            <select v-model="selectedVerseGet" class="inlineBlock dropBox">
               <option v-bind:value="0">すべて</option>
               <option v-bind:value="1">所持済み</option>
               <option v-bind:value="2">未所持</option>
             </select>
-            <input type="text" class="searchMargin" v-model="itemName" placeholder="アイテム名で検索">
+            <input type="text" class="searchMargin textSize" v-model="itemName" placeholder="アイテム名で検索">
             <div>
               <div>
                 <div v-show="(selectedVerseVersion === 1 || selectedVerseVersion === 0) && verseList1.length > 0">
@@ -307,6 +307,13 @@ ul{
 li{
   list-style: none;
 }
+.dropBox {
+  padding: 5px;
+  font-size: 15px;
+}
+.textSize {
+  height: 25px;
+}
 .tab_list {
   display: flex;
   align-items: flex-end;
@@ -330,7 +337,7 @@ li{
 }
 .tab_listMobile li {
   list-style: none;
-  width: 170px;
+  width: 150px;
   padding: 8px 5px;
   text-align: center;
   margin-right: 6px;
@@ -372,7 +379,7 @@ li{
 .tableMain {
   border-radius: 10px;
   margin: 0 auto;
-  padding: 10px 30px;
+  padding: 10px 10px;
 }
 .himitsuMain {
   background-color: rgb(169 215 255);

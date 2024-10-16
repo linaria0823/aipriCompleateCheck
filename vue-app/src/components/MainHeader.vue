@@ -3,7 +3,7 @@
     <h1 class="title">
       アイプリコンプチェック
     </h1>
-    <button class="loginButton">ログイン</button>
+    <!--<button class="loginButton">ログイン</button>-->
   </div>
 </template>
   
