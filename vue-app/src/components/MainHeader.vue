@@ -40,7 +40,7 @@ a {
 }
 .title {
   float: left;
-  font-size: 15px;
+  font-size: 20px;
   margin-top: 0;
   margin-left: 5px;
   color: rgb(19, 53, 204);

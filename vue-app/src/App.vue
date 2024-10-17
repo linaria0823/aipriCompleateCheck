@@ -1,5 +1,6 @@
 <template>
   <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <MainHeader msg="Welcome to Your Vue.js App"/>
   <MainBody msg="Welcome to Your Vue.js App"/>
 </template>
