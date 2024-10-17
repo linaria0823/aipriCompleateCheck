@@ -563,6 +563,8 @@ li{
 }
 .tableTitle {
   margin-top: 5px;
+  background-color:antiquewhite;
+  font-weight: bold;
 }
 .starClass {
   width: 200px;
