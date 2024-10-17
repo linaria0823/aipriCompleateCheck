@@ -8,13 +8,15 @@
       <ul class="article">
         <li v-if="isActive === 'A'" class="tableMain himitsuMain">
           <div class="center">
-            <select v-model="selectedHimitsuVersion" class="inlineBlock dropBox">
-              <option v-bind:value="0">全弾</option>
-              <option v-bind:value="1">1弾</option>
-              <option v-bind:value="2">2弾</option>
-              <option v-bind:value="3">3弾</option>
-              <option v-bind:value="4">4弾</option>
-            </select>
+            <label class="selectbox-2">
+              <select v-model="selectedHimitsuVersion" class="inlineBlock dropBox">
+                <option v-bind:value="0">全弾</option>
+                <option v-bind:value="1">1弾</option>
+                <option v-bind:value="2">2弾</option>
+                <option v-bind:value="3">3弾</option>
+                <option v-bind:value="4">4弾</option>
+              </select>
+            </label>
             <select v-model="selectedHimitsuGet" class="inlineBlock dropBox">
               <option v-bind:value="0">すべて</option>
               <option v-bind:value="1">所持済み</option>
@@ -53,7 +55,7 @@
               <option v-bind:value="3">★★★</option>
               <option v-bind:value="2">★★</option>
             </select>
-            <select v-model="selectedVerseBrand" class="inlineBlock dropBox">
+            <select v-model="selectedVerseBrand" class="inlineBlock dropBox" v-bind:class="{'mobileSearchBox': this.mobile === true}">
               <option v-bind:value="0">{{ verseBrandDropBoxLabel }}</option>
               <option value="ph">ポッピンハート</option>
               <option value="mm">ミラクルムーン</option>
@@ -67,7 +69,7 @@
               <option value="pc">プリティーコレクション</option>
               <option value="ps">プリズムストーン</option>
             </select>
-            <input type="text" class="searchMargin textSize" v-model="itemName" placeholder="アイテム名で検索">
+            <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="itemName" placeholder="アイテム名で検索">
             <div>
               <div>
                 <div v-show="(selectedVerseVersion === 1 || selectedVerseVersion === 0)
@@ -511,5 +513,9 @@ li{
   background-color: #d9d9d9;
   border-radius: 50%;
   line-height: 40px;
+ }
+ .mobileSearchBox {
+  margin-top: 5px;
+  width: 160px;
  }
 </style>
