@@ -128,7 +128,7 @@
                           (selectedVerseRank === 3 && verseList2.filter(item => item.rank === 3).length > 0) ||
                           (selectedVerseRank === 2 && verseList2.filter(item => item.rank === 2).length > 0)
                       )
-                  )&& verseList1.length > 0">
+                  )&& verseList2.length > 0">
                   <div class="tableTitle versionMargin">-2弾-</div>
                   <div>
                     <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
@@ -176,7 +176,7 @@
                           (selectedVerseRank === 3 && verseList3.filter(item => item.rank === 3).length > 0) ||
                           (selectedVerseRank === 2 && verseList3.filter(item => item.rank === 2).length > 0)
                       )
-                  )&& verseList1.length > 0">
+                  )&& verseList3.length > 0">
                   <div class="tableTitle versionMargin">-3弾-</div>
                   <div>
                     <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
