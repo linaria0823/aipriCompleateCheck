@@ -1,7 +1,7 @@
 <template>
   <div class="head">
     <h1 class="title">
-      アイプリコンプチェック
+      <img v-lazy="require(`@/img/icon/title.png`)" class="titleIcon" alt="">アイプリコンプチェック
     </h1>
     <!--<button class="loginButton">ログイン</button>-->
   </div>
@@ -47,6 +47,9 @@ a {
 }
 .loginButton {
   float: right;
+}
+.titleIcon {
+  width: 20px;
 }
 </style>
   

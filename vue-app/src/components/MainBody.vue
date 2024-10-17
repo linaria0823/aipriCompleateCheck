@@ -43,6 +43,7 @@
               <option v-bind:value="2">2弾</option>
               <option v-bind:value="3">3弾</option>
               <option v-bind:value="4">4弾</option>
+              <option value="SP">SP</option>
             </select>
             <select v-model="selectedVerseGet" class="inlineBlock dropBox">
               <option v-bind:value="0">{{ verseGetDropBoxLabel }}</option>
@@ -120,17 +121,53 @@
                     </div>
                   </div>
                 </div>
-                <div v-show="(selectedVerseVersion === 2 || selectedVerseVersion === 0) && verseList2.length > 0">
+                <div v-show="(selectedVerseVersion === 2 || selectedVerseVersion === 0)
+                  && (
+                      selectedVerseRank === 0 || (
+                          (selectedVerseRank === 4 && verseList2.filter(item => item.rank === 4).length > 0) ||
+                          (selectedVerseRank === 3 && verseList2.filter(item => item.rank === 3).length > 0) ||
+                          (selectedVerseRank === 2 && verseList2.filter(item => item.rank === 2).length > 0)
+                      )
+                  )">
                   <div class="tableTitle versionMargin">-2弾-</div>
-                  <ul id="dispHimitsuItemList">
-                    <li v-for="(verseData) in verseList2" :key="verseData.value" class="itemLi">
-                        <button class="tooltip1 itemButton" 
-                          :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                          @click="toggleItem(verseData.value)">
-                        <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                      </button>
-                    </li>
-                  </ul>
+                  <div>
+                    <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
+                      <img v-if="verseList2.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
+                      <ul id="dispHimitsuItemList">
+                        <li v-for="(verseData) in verseList2.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
+                          <button class="tooltip1 itemButton" 
+                            :class="{'isClicked': selectedItems.includes(verseData.value)}" 
+                            @click="toggleItem(verseData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                    <div v-show="(selectedVerseRank === 3 || selectedVerseRank === 0)">
+                      <img v-if="verseList2.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
+                      <ul id="dispHimitsuItemList">
+                        <li v-for="(verseData) in verseList2.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
+                          <button class="tooltip1 itemButton" 
+                            :class="{'isClicked': selectedItems.includes(verseData.value)}" 
+                            @click="toggleItem(verseData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                    <div v-show="(selectedVerseRank === 2 || selectedVerseRank === 0)">
+                      <img v-if="verseList2.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
+                      <ul id="dispHimitsuItemList">
+                        <li v-for="(verseData) in verseList2.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
+                          <button class="tooltip1 itemButton" 
+                            :class="{'isClicked': selectedItems.includes(verseData.value)}" 
+                            @click="toggleItem(verseData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
                 <div v-show="(selectedVerseVersion === 3 || selectedVerseVersion === 0) && verseList3.length > 0">
                   <div class="tableTitle versionMargin">-3弾-</div>
@@ -423,7 +460,7 @@ li{
   max-width: 1500px;
 }
 .mainBody {
-  padding-top: 30px;
+  padding-top: 35px;
 }
 .tableMain {
   border-radius: 10px;
