@@ -450,28 +450,38 @@
      },
       async login() {
         const provider = new GoogleAuthProvider();
-        //const auth = getAuth();
+        // const auth = getAuth();
         try {
-          // 永続性を設定（ブラウザのローカルストレージに保存）
-          await setPersistence(auth, browserLocalPersistence);
-          const result = await signInWithPopup(auth, provider);
-          const user = result.user;
+            // 永続性を設定（ブラウザのローカルストレージに保存）
+            await setPersistence(auth, browserLocalPersistence);
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
 
-          // ユーザープロフィール情報の取得
-          this.userPhotoURL = user.photoURL; // GoogleアイコンのURLを取得
- 
-          // ユーザーデータを取得
-          await this.fetchUserData(user.uid);
- 
-          // ローカルストレージから選択されたアイテムを取得
-          const storedItems = localStorage.getItem('selectedItems');
-          if (storedItems) {
-            this.selectedItems = JSON.parse(storedItems);
-            console.log("取得した選択されたアイテム:", this.selectedItems);
-          }
+            // ユーザープロフィール情報の取得
+            this.userPhotoURL = user.photoURL; // GoogleアイコンのURLを取得
+
+            // ユーザーデータを取得
+            await this.fetchUserData(user.uid);
+
+            // Firestoreにログイン状態を更新
+            await this.updateUserLoginStatus(user.uid, true); // ログイン状態を更新
+
+            // ローカルストレージから選択されたアイテムを取得
+            const storedItems = localStorage.getItem('selectedItems');
+            if (storedItems) {
+                this.selectedItems = JSON.parse(storedItems);
+                console.log("取得した選択されたアイテム:", this.selectedItems);
+            }
         } catch (error) {
-          console.error("ログインエラー:", error);
+            console.error("ログインエラー:", error);
         }
+      },
+      async updateUserLoginStatus(uid, status) {
+        const db = getFirestore();
+        const docRef = doc(db, "users", uid);
+        
+        // ユーザーのログイン状態を更新
+        await setDoc(docRef, { isLoggedIn: status }, { merge: true });
       },
       checkUserState() {
         //const auth = getAuth();
@@ -492,31 +502,47 @@
         });
       },
  
-     async fetchUserData(uid) {
-       const db = getFirestore();
-       const docRef = doc(db, "users", uid);
-       const docSnap = await getDoc(docRef);
- 
-       if (docSnap.exists()) {
-         // ユーザーデータが存在する場合
-         console.log("ユーザーデータ:", docSnap.data());
-         
-         // 既存の選択されたアイテムのみをローカルストレージに保存
-         if (docSnap.data().selectedItems) {
-           this.selectedItems = docSnap.data().selectedItems;
-           localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
-         } else {
-           console.log("選択されたアイテムが見つかりません。");
-         }
-       } else {
-         // ユーザーデータが存在しない場合、新規作成
-         console.log("初めてのログインです。ユーザーデータを作成します。");
-         const defaultData = { selectedItems: [] }; // デフォルトの選択されたアイテム
-         await this.saveUserData(uid, defaultData);
-         this.selectedItems = defaultData.selectedItems; // 初期化
-         localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
-       }
-     },
+      async fetchUserData(uid) {
+        const db = getFirestore();
+        const docRef = doc(db, "users", uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            // ユーザーデータが存在する場合
+            console.log("ユーザーデータ:", docSnap.data());
+
+            // 現在のログイン状態を確認
+            const isLoggedIn = docSnap.data().isLoggedIn || false; // デフォルトはfalse
+
+            if (isLoggedIn) {
+                // 他端末でログイン中の場合の処理
+                console.log("他端末でログイン中のため、現在の端末をログアウトします。");
+                await this.logout(uid); // 現在の端末をログアウトさせる処理
+            } else {
+                // ログイン状態がfalseの場合、現在の端末をログイン状態に更新
+                await this.updateUserLoginStatus(uid, true); // ログイン状態をtrueに設定
+            }
+
+            // 既存の選択されたアイテムのみをローカルストレージに保存
+            if (docSnap.data().selectedItems) {
+                this.selectedItems = docSnap.data().selectedItems;
+                localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
+            } else {
+                console.log("選択されたアイテムが見つかりません。");
+            }
+        } else {
+            // ユーザーデータが存在しない場合、新規作成
+            console.log("初めてのログインです。ユーザーデータを作成します。");
+            const defaultData = { 
+                selectedItems: [], // デフォルトの選択されたアイテム
+                isLoggedIn: true, // 新規作成時はログイン状態をtrueに設定
+                lastLogin: null // 最初はnull
+            };
+            await this.saveUserData(uid, defaultData);
+            this.selectedItems = defaultData.selectedItems; // 初期化
+            localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
+        }
+      },
       togglePopup() {
         this.showPopup = !this.showPopup; // ポップアップの表示/非表示をトグル
       },
