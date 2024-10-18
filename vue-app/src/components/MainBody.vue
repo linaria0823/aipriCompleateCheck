@@ -1,5 +1,9 @@
 <template>
  <div id="contents" class="mainBody">
+    <div>
+      <button @click="loginWithGoogle">Googleでログイン</button>
+      <button @click="logout">ログアウト</button>
+    </div>
     <div class="tab_box">
       <ul class="tab_list" v-bind:class="{'tab_listMobile': this.mobile === true,'tab_list': this.mobile === false}">
         <li v-on:click="change('A')" v-bind:class="{'activeHimitsu': isActive === 'A'}">ひみつのアイプリ</li>
@@ -244,8 +248,11 @@
 <script>
 //import himitsuJson from '../../json/himitsuItem.JSON'
 import verseJson from '../../json/verseItem.JSON'
-import Cookies from 'js-cookie';  // js-cookie のインポート
+//import Cookies from 'js-cookie';  // js-cookie のインポート
 import 'font-awesome/css/font-awesome.css';
+import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, getAuth } from "firebase/auth";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import { auth } from '../firebaseConfig'; // Firebaseの初期化ファイルからインポート
 
 export default {
   name: "MainBody",
@@ -348,10 +355,10 @@ export default {
         this.selectedItems.splice(itemIndex, 1);
       }
       // Cookieに保存
-      Cookies.set('selectedItems', JSON.stringify(this.selectedItems), { expires: 365 });
+      localStorage.setItem('selectedItems', JSON.stringify(this.selectedItems));
     },
     loadSelectedItems() {
-      const savedItems = Cookies.get('selectedItems');
+      const savedItems = localStorage.getItem('selectedItems');
       if (savedItems) {
         // Cookieから復元
         this.selectedItems = JSON.parse(savedItems);
@@ -404,7 +411,81 @@ export default {
             } else {
                 this.buttonActive = false
             }
-        } 
+        },
+        async loginWithGoogle() {
+          const provider = new GoogleAuthProvider();
+
+try {
+  const result = await signInWithPopup(auth, provider);
+  const user = result.user;
+
+  // ユーザーデータを取得
+  await this.fetchUserData(user.uid);
+
+  // ローカルストレージから選択されたアイテムを取得
+  const storedItems = localStorage.getItem('selectedItems');
+  if (storedItems) {
+    this.selectedItems = JSON.parse(storedItems);
+    console.log("取得した選択されたアイテム:", this.selectedItems);
+  }
+} catch (error) {
+  console.error("ログインエラー:", error);
+}
+    },
+
+    async fetchUserData(uid) {
+      const db = getFirestore();
+      const docRef = doc(db, "users", uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        // ユーザーデータが存在する場合
+        console.log("ユーザーデータ:", docSnap.data());
+        localStorage.setItem("userData", JSON.stringify(docSnap.data()));
+      } else {
+        // ユーザーデータが存在しない場合、新規作成
+        console.log("初めてのログインです。ユーザーデータを作成します。");
+        // 新規ユーザーの場合はデフォルトデータを作成することができます
+        const defaultData = { /* デフォルトのユーザーデータ */ };
+        await this.saveUserData(uid, defaultData);
+        localStorage.setItem("userData", JSON.stringify(defaultData));
+      }
+    },
+
+    async logout() {
+      const auth = getAuth();
+
+      // ローカルストレージからユーザーデータを取得
+      const userData = JSON.parse(localStorage.getItem("userData"));
+
+  // currentUserが存在する場合のみ処理を実行
+  if (auth.currentUser) {
+    if (userData) {
+      await this.saveUserData(auth.currentUser.uid, userData);
+    }
+    
+    // 選択されたアイテムをFirestoreに保存
+    await this.saveSelectedItems(auth.currentUser.uid, this.selectedItems);
+    
+    // サインアウト
+    await signOut(auth);
+    localStorage.removeItem("userData");
+  } else {
+    console.log("ログインしていないため、ログアウト処理をスキップします。");
+  }
+    },
+
+    async saveUserData(uid, data) {
+      const db = getFirestore();
+      const docRef = doc(db, "users", uid);
+      await setDoc(docRef, data, { merge: true });
+    },
+
+    async saveSelectedItems(uid, selectedItems) {
+  const db = getFirestore();
+  const docRef = doc(db, "users", uid);
+  await setDoc(docRef, { selectedItems: selectedItems }, { merge: true });
+}
   },
   mounted() {
     //Cookies.remove('selectedItems');
@@ -417,6 +498,16 @@ export default {
     }
     window.addEventListener('scroll',this.scrollWindow)
   },
+  created() {
+    // ここでユーザーのログイン状態を監視することもできます
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("ユーザーがログインしています:", user.uid);
+      } else {
+        console.log("ログインしていません。");
+      }
+    });
+  }
 };
 </script>
 
