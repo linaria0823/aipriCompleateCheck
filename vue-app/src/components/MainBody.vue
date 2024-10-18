@@ -298,6 +298,7 @@
        itemName: "", // アイテム名の入力値
        iniVerseList: verseJson,
        verseList: verseJson,
+       user: {},
        selectedItems: [],
        mobile: false,
        buttonActive: false,//ボタンを非表示にしておく
@@ -450,17 +451,100 @@
      },
       async login() {
         const provider = new GoogleAuthProvider();
+        //const auth = getAuth();
         try {
-            await setPersistence(auth, browserLocalPersistence);
-            const result = await signInWithPopup(auth, provider);
-            const user = result.user;
+          // 永続性を設定（ブラウザのローカルストレージに保存）
+          await setPersistence(auth, browserLocalPersistence);
+          const result = await signInWithPopup(auth, provider);
+          const user = result.user;
 
-            // ユーザーデータを取得
-            await this.fetchUserData(user.uid);
+          // ユーザープロフィール情報の取得
+          this.userPhotoURL = user.photoURL;
+
+          // ユーザーデータを取得
+          await this.fetchUserData(user.uid);
+
+          // ローカルストレージから選択されたアイテムを取得
+          const storedItems = localStorage.getItem('selectedItems');
+          if (storedItems) {
+            this.selectedItems = JSON.parse(storedItems);
+            console.log("取得した選択されたアイテム:", this.selectedItems);
+          }
         } catch (error) {
-            console.error("ログインエラー:", error);
+          console.error("ログインエラー:", error);
         }
+      }, 
+      async handleLogout() {
+        const uid = this.user.uid; // ユーザーIDを取得
+        await this.logout(uid); // ログアウト処理を実行
+        // ログアウト後の処理（状態のクリアなど）
+        this.isLoggedIn = false;
+        this.userPhotoURL = null;
+        this.user = {};
       },
+
+    async logout(uid) {
+      //const auth = getAuth();
+      
+      // Firestoreでログイン状態を更新
+      await this.updateUserLoginStatus(uid, false); // ログイン状態をfalseに設定
+      
+      // ローカルストレージの選択されたアイテムを取得
+      const storedItems = localStorage.getItem('selectedItems');
+      
+      // ローカルストレージのデータを Firestore に保存
+      if (storedItems) {
+        const selectedItems = JSON.parse(storedItems);
+        await this.saveUserData(uid, { selectedItems });
+      }
+
+      // 現在のユーザーをログアウト
+      await signOut(auth);
+      console.log("ユーザーがログアウトしました。");
+    },
+
+    async fetchUserData(uid) {
+      const db = getFirestore();
+      const docRef = doc(db, "users", uid);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        console.log("ユーザーデータ:", docSnap.data());
+        
+        const isLoggedIn = docSnap.data().isLoggedIn || false;
+
+        if (isLoggedIn) {
+          console.log("他端末がログイン中のため、ログアウト処理を行います。");
+          const loggedInUserId = docSnap.id; // ログイン中のユーザーのUIDを取得
+          await this.logout(loggedInUserId); // ログイン中の端末をログアウト
+        }
+
+        // 現在の端末をログイン状態に更新
+        await this.updateUserLoginStatus(uid, true);
+      } else {
+        console.log("初めてのログインです。ユーザーデータを作成します。");
+        const defaultData = { 
+          selectedItems: [], 
+          isLoggedIn: true // 新規作成時はログイン状態をtrueに設定
+        };
+        await this.saveUserData(uid, defaultData);
+      }
+    },
+    async saveUserData(uid, data) {
+      const db = getFirestore();
+      const docRef = doc(db, "users", uid);
+
+      // ユーザーデータを Firestore に保存
+      await setDoc(docRef, data, { merge: true }); // merge: true を指定すると、既存のデータとマージされる
+    },
+
+    async updateUserLoginStatus(uid, status) {
+      const db = getFirestore();
+      const docRef = doc(db, "users", uid);
+
+      // ログイン状態を更新
+      await setDoc(docRef, { isLoggedIn: status }, { merge: true });
+    },
       checkUserState() {
         //const auth = getAuth();
         // ここでユーザーのログイン状態を監視することもできます
@@ -479,66 +563,6 @@
           }
         });
       },
- 
-      async handleLogout() {
-        const uid = this.user.uid; // ユーザーIDを取得
-        await this.logout(uid); // ログアウト処理を実行
-        // ログアウト後の処理（状態のクリアなど）
-        this.isLoggedIn = false;
-        this.userPhotoURL = null;
-        this.user = {};
-    },
-
-    async logout(uid) {
-        //const auth = getAuth();
-        
-        // Firestoreでログイン状態を更新
-        await this.updateUserLoginStatus(uid, false); // ログイン状態をfalseに設定
-        
-        // ローカルストレージの選択されたアイテムを取得
-        const storedItems = localStorage.getItem('selectedItems');
-        
-        // ローカルストレージのデータを Firestore に保存
-        if (storedItems) {
-            const selectedItems = JSON.parse(storedItems);
-            await this.saveUserData(uid, { selectedItems });
-        }
-
-        // 現在のユーザーをログアウト
-        await signOut(auth);
-        console.log("ユーザーがログアウトしました。");
-    },
-
-    async fetchUserData(uid) {
-        const db = getFirestore();
-        const docRef = doc(db, "users", uid);
-        const docSnap = await getDoc(docRef);
-
-        if (docSnap.exists()) {
-            console.log("ユーザーデータ:", docSnap.data());
-            
-            const isLoggedIn = docSnap.data().isLoggedIn || false;
-
-            if (isLoggedIn) {
-                console.log("他端末がログイン中のため、現在の端末をログアウトさせます。");
-                await this.logout(uid); // 他端末がログインしている場合、現在の端末をログアウト
-            } else {
-                await this.updateUserLoginStatus(uid, true); // 現在の端末をログイン状態に更新
-            }
-        } else {
-            console.log("初めてのログインです。ユーザーデータを作成します。");
-            const defaultData = { 
-                selectedItems: [], 
-                isLoggedIn: true // 新規作成時はログイン状態をtrueに設定
-            };
-            await this.saveUserData(uid, defaultData);
-        }
-    },
-      async updateUserLoginStatus(uid, status) {
-          const db = getFirestore();
-          const docRef = doc(db, "users", uid);
-          await setDoc(docRef, { isLoggedIn: status }, { merge: true });
-      },
       togglePopup() {
         this.showPopup = !this.showPopup; // ポップアップの表示/非表示をトグル
       },
@@ -553,21 +577,7 @@
       closePopup() {
         this.showPopup = false;
       },
- 
-      // ユーザーID情報を登録する
-      async saveUserData(uid, data) {
-        const db = getFirestore();
-        const docRef = doc(db, "users", uid);
 
-        // ユーザーデータを Firestore に保存
-        await setDoc(docRef, data, { merge: true }); // merge: true を指定すると、既存のデータとマージされる
-    },
-      // 取得情報を登録する
-      async saveSelectedItems(uid, selectedItems) {
-        const db = getFirestore();
-        const docRef = doc(db, "users", uid);
-        await setDoc(docRef, { selectedItems: selectedItems }, { merge: true });
-      }
     },
     mounted() {
       //Cookies.remove('selectedItems');
@@ -587,6 +597,7 @@
       document.removeEventListener('click', this.handleClickOutside); // コンポーネントが破棄される前にイベントリスナーを削除
     },
     created() {
+      this.checkUserState();
     }
   };
 </script>
