@@ -48,8 +48,8 @@ a {
   float: right;
 }
 .titleIcon {
-  width: 300px;
-  margin-top: 10px;
+  width: 250px;
+  margin-top: 12px;
 }
 </style>
   
