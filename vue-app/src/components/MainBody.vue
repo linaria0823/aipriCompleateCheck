@@ -422,12 +422,6 @@ try {
   // ユーザーデータを取得
   await this.fetchUserData(user.uid);
 
-  // ローカルストレージから選択されたアイテムを取得
-  const storedItems = localStorage.getItem('selectedItems');
-  if (storedItems) {
-    this.selectedItems = JSON.parse(storedItems);
-    console.log("取得した選択されたアイテム:", this.selectedItems);
-  }
 } catch (error) {
   console.error("ログインエラー:", error);
 }
@@ -439,14 +433,11 @@ try {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        // ユーザーデータが存在する場合
-        console.log("ユーザーデータ:", docSnap.data());
-        localStorage.setItem("userData", JSON.stringify(docSnap.data()));
         // 選択されたアイテムのデータをローカルストレージに保存
         if (docSnap.data().selectedItems) {
           localStorage.setItem("selectedItems", JSON.stringify(docSnap.data().selectedItems));
         } else {
-          console.log("選択されたアイテムが見つかりません。");
+          //console.log("選択されたアイテムが見つかりません。");
         }
       } else {
         // ユーザーデータが存在しない場合、新規作成
@@ -454,7 +445,7 @@ try {
         // 新規ユーザーの場合はデフォルトデータを作成することができます
         const defaultData = { /* デフォルトのユーザーデータ */ };
         await this.saveUserData(uid, defaultData);
-        localStorage.setItem("userData", JSON.stringify(defaultData));
+        localStorage.setItem("selectedItems", JSON.stringify(defaultData));
       }
     },
 
@@ -462,7 +453,7 @@ try {
       const auth = getAuth();
 
       // ローカルストレージからユーザーデータを取得
-      const userData = JSON.parse(localStorage.getItem("userData"));
+      const userData = JSON.parse(localStorage.getItem("selectedItems"));
 
   // currentUserが存在する場合のみ処理を実行
   if (auth.currentUser) {
@@ -475,7 +466,7 @@ try {
     
     // サインアウト
     await signOut(auth);
-    localStorage.removeItem("userData");
+    localStorage.removeItem("selectedItems");
   } else {
     console.log("ログインしていないため、ログアウト処理をスキップします。");
   }
@@ -508,6 +499,8 @@ try {
     // ここでユーザーのログイン状態を監視することもできます
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        // ローカルストレージから選択されたアイテムを取得
+        this.selectedItems = JSON.parse(localStorage.getItem('selectedItems'));
         console.log("ユーザーがログインしています:", user.uid);
       } else {
         console.log("ログインしていません。");
