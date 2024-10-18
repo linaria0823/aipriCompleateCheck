@@ -451,36 +451,36 @@
      },
       async login() {
         const provider = new GoogleAuthProvider();
-        //const auth = getAuth();
-        try {
-          // 永続性を設定（ブラウザのローカルストレージに保存）
-          await setPersistence(auth, browserLocalPersistence);
-          const result = await signInWithPopup(auth, provider);
-          const user = result.user;
+      //const auth = getAuth();
+      try {
+        // 永続性を設定（ブラウザのローカルストレージに保存）
+        await setPersistence(auth, browserLocalPersistence);
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
 
-          // ユーザープロフィール情報の取得
-          this.userPhotoURL = user.photoURL;
+        // ユーザープロフィール情報の取得
+        this.userPhotoURL = user.photoURL;
 
-          // ユーザーデータを取得
-          await this.fetchUserData(user.uid);
+        // ユーザーデータを取得または更新
+        await this.fetchUserData(user.uid);
 
-          // ローカルストレージから選択されたアイテムを取得
-          const storedItems = localStorage.getItem('selectedItems');
-          if (storedItems) {
-            this.selectedItems = JSON.parse(storedItems);
-            console.log("取得した選択されたアイテム:", this.selectedItems);
-          }
-        } catch (error) {
-          console.error("ログインエラー:", error);
+        // ローカルストレージから選択されたアイテムを取得
+        const storedItems = localStorage.getItem('selectedItems');
+        if (storedItems) {
+          this.selectedItems = JSON.parse(storedItems);
+          console.log("取得した選択されたアイテム:", this.selectedItems);
         }
+      } catch (error) {
+        console.error("ログインエラー:", error);
+      }
       }, 
       async handleLogout() {
         const uid = this.user.uid; // ユーザーIDを取得
-        await this.logout(uid); // ログアウト処理を実行
-        // ログアウト後の処理（状態のクリアなど）
-        this.isLoggedIn = false;
-        this.userPhotoURL = null;
-        this.user = {};
+      await this.logout(uid); // ログアウト処理を実行
+      // ログアウト後の処理（状態のクリアなど）
+      this.isLoggedIn = false;
+      this.userPhotoURL = null;
+      this.user = {};
       },
 
     async logout(uid) {
@@ -525,7 +525,8 @@
         console.log("初めてのログインです。ユーザーデータを作成します。");
         const defaultData = { 
           selectedItems: [], 
-          isLoggedIn: true // 新規作成時はログイン状態をtrueに設定
+          isLoggedIn: true, // 新規作成時はログイン状態をtrueに設定
+          uid: uid // UIDも保存
         };
         await this.saveUserData(uid, defaultData);
       }
@@ -545,24 +546,24 @@
       // ログイン状態を更新
       await setDoc(docRef, { isLoggedIn: status }, { merge: true });
     },
-      checkUserState() {
-        //const auth = getAuth();
-        // ここでユーザーのログイン状態を監視することもできます
-        onAuthStateChanged(auth, (user) => {
-          this.isLoading = false; // 認証状態の確認が完了したらローディングを終了
-          if (user) {
-            this.isLoggedIn = true;
-            this.userPhotoURL = user.photoURL; // GoogleアイコンのURL
-            this.user = user; // ユーザー情報を保存
-            console.log("ユーザーがログインしています:", user.uid);
-          } else {
-            this.isLoggedIn = false;
-            this.userPhotoURL = null; // アイコンをクリア
-            this.user = {}; // ユーザー情報をクリア
-            console.log("ログインしていません。");
-          }
-        });
-      },
+    checkUserState() {
+      //const auth = getAuth();
+      // ここでユーザーのログイン状態を監視することもできます
+      onAuthStateChanged(auth, (user) => {
+        this.isLoading = false; // 認証状態の確認が完了したらローディングを終了
+        if (user) {
+          this.isLoggedIn = true;
+          this.userPhotoURL = user.photoURL; // GoogleアイコンのURL
+          this.user = user; // ユーザー情報を保存
+          console.log("ユーザーがログインしています:", user.uid);
+        } else {
+          this.isLoggedIn = false;
+          this.userPhotoURL = null; // アイコンをクリア
+          this.user = {}; // ユーザー情報をクリア
+          console.log("ログインしていません。");
+        }
+      });
+    },
       togglePopup() {
         this.showPopup = !this.showPopup; // ポップアップの表示/非表示をトグル
       },
