@@ -442,6 +442,12 @@ try {
         // ユーザーデータが存在する場合
         console.log("ユーザーデータ:", docSnap.data());
         localStorage.setItem("userData", JSON.stringify(docSnap.data()));
+        // 選択されたアイテムのデータをローカルストレージに保存
+        if (docSnap.data().selectedItems) {
+          localStorage.setItem("selectedItems", JSON.stringify(docSnap.data().selectedItems));
+        } else {
+          console.log("選択されたアイテムが見つかりません。");
+        }
       } else {
         // ユーザーデータが存在しない場合、新規作成
         console.log("初めてのログインです。ユーザーデータを作成します。");
