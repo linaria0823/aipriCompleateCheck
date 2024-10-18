@@ -1,7 +1,7 @@
 <template>
  <div id="contents" class="mainBody">
     <div>
-      <button @click="loginWithGoogle">Googleでログイン</button>
+      <button @click="login">Googleでログイン</button>
       <button @click="logout">ログアウト</button>
     </div>
     <div class="tab_box">
@@ -398,39 +398,39 @@ export default {
       }
     },
     pageTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            })
-        },
-        scrollWindow() {
-            const top = 100 //topから100pxスクロールしたらボタン登場
-            this.scroll = window.scrollY //垂直方向
-            if (top <= this.scroll) {
-                this.buttonActive = true
-            } else {
-                this.buttonActive = false
-            }
-        },
-        async loginWithGoogle() {
-          const provider = new GoogleAuthProvider();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        })
+    },
+    scrollWindow() {
+        const top = 100 //topから100pxスクロールしたらボタン登場
+        this.scroll = window.scrollY //垂直方向
+        if (top <= this.scroll) {
+            this.buttonActive = true
+        } else {
+            this.buttonActive = false
+        }
+    },
+    async login() {
+      const provider = new GoogleAuthProvider();
 
-try {
-  const result = await signInWithPopup(auth, provider);
-  const user = result.user;
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
 
-  // ユーザーデータを取得
-  await this.fetchUserData(user.uid);
+        // ユーザーデータを取得
+        await this.fetchUserData(user.uid);
 
-  // ローカルストレージから選択されたアイテムを取得
-  const storedItems = localStorage.getItem('selectedItems');
-  if (storedItems) {
-    this.selectedItems = JSON.parse(storedItems);
-    console.log("取得した選択されたアイテム:", this.selectedItems);
-  }
-} catch (error) {
-  console.error("ログインエラー:", error);
-}
+        // ローカルストレージから選択されたアイテムを取得
+        const storedItems = localStorage.getItem('selectedItems');
+        if (storedItems) {
+          this.selectedItems = JSON.parse(storedItems);
+          console.log("取得した選択されたアイテム:", this.selectedItems);
+        }
+      } catch (error) {
+        console.error("ログインエラー:", error);
+      }
     },
 
     async fetchUserData(uid) {
@@ -441,57 +441,50 @@ try {
       if (docSnap.exists()) {
         // ユーザーデータが存在する場合
         console.log("ユーザーデータ:", docSnap.data());
-        localStorage.setItem("userData", JSON.stringify(docSnap.data()));
-        // 選択されたアイテムのデータをローカルストレージに保存
+        
+        // 既存の選択されたアイテムのみをローカルストレージに保存
         if (docSnap.data().selectedItems) {
-          localStorage.setItem("selectedItems", JSON.stringify(docSnap.data().selectedItems));
+          this.selectedItems = docSnap.data().selectedItems;
+          localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
         } else {
           console.log("選択されたアイテムが見つかりません。");
         }
       } else {
         // ユーザーデータが存在しない場合、新規作成
         console.log("初めてのログインです。ユーザーデータを作成します。");
-        // 新規ユーザーの場合はデフォルトデータを作成することができます
-        const defaultData = { /* デフォルトのユーザーデータ */ };
+        const defaultData = { selectedItems: [] }; // デフォルトの選択されたアイテム
         await this.saveUserData(uid, defaultData);
-        localStorage.setItem("userData", JSON.stringify(defaultData));
+        this.selectedItems = defaultData.selectedItems; // 初期化
+        localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
       }
     },
 
     async logout() {
       const auth = getAuth();
-
-      // ローカルストレージからユーザーデータを取得
-      const userData = JSON.parse(localStorage.getItem("userData"));
-
-  // currentUserが存在する場合のみ処理を実行
-  if (auth.currentUser) {
-    if (userData) {
-      await this.saveUserData(auth.currentUser.uid, userData);
-    }
-    
-    // 選択されたアイテムをFirestoreに保存
-    await this.saveSelectedItems(auth.currentUser.uid, this.selectedItems);
-    
-    // サインアウト
-    await signOut(auth);
-    localStorage.removeItem("userData");
-  } else {
-    console.log("ログインしていないため、ログアウト処理をスキップします。");
-  }
+      // currentUserが存在する場合のみ処理を実行
+      if (auth.currentUser) {
+        // 選択されたアイテムをFirestoreに保存
+        await this.saveSelectedItems(auth.currentUser.uid, this.selectedItems);        
+        // サインアウト
+        await signOut(auth);
+        localStorage.removeItem("selectedItems"); // 選択されたアイテムのローカルストレージも削除
+      } else {
+        console.log("ログインしていないため、ログアウト処理をスキップします。");
+      }
     },
 
+    // ユーザーID情報を登録する
     async saveUserData(uid, data) {
       const db = getFirestore();
       const docRef = doc(db, "users", uid);
       await setDoc(docRef, data, { merge: true });
     },
-
+    // 取得情報を登録する
     async saveSelectedItems(uid, selectedItems) {
-  const db = getFirestore();
-  const docRef = doc(db, "users", uid);
-  await setDoc(docRef, { selectedItems: selectedItems }, { merge: true });
-}
+      const db = getFirestore();
+      const docRef = doc(db, "users", uid);
+      await setDoc(docRef, { selectedItems: selectedItems }, { merge: true });
+    }
   },
   mounted() {
     //Cookies.remove('selectedItems');
