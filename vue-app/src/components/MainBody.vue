@@ -475,54 +475,57 @@
   async login() {
     this.showLogoutPopup = false;
     const provider = new GoogleAuthProvider();
-  try {
-    await setPersistence(auth, browserLocalPersistence);
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
+    try {
+        await setPersistence(auth, browserLocalPersistence);
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
 
-    // ログインした端末の一意なIDを作成し保存（初回のみ生成）
-    let deviceId = localStorage.getItem('deviceId');
-    if (!deviceId) {
-      deviceId = Math.random().toString(36).substring(2); // 簡易な一意のIDを生成
-      localStorage.setItem('deviceId', deviceId);
-    }
+        // ログインした端末の一意なIDを作成し保存（初回のみ生成）
+        let deviceId = localStorage.getItem('deviceId');
+        if (!deviceId) {
+            deviceId = Math.random().toString(36).substring(2); // 簡易な一意のIDを生成
+            localStorage.setItem('deviceId', deviceId);
+        }
 
-    const db = getFirestore();
-    const docRef = doc(db, "users", user.uid);
-    const userDoc = await getDoc(docRef);
-    const currentDeviceId = localStorage.getItem('deviceId');
-    // 確認ポップアップ表示
-    if (userDoc.exists() && userDoc.data().currentDeviceId !== currentDeviceId) {
-      // 他端末でのログインを検出
-      const confirmLogout = confirm("他の端末でログインされています。ログアウトしますか？");
-      if (confirmLogout) {        
-        // ユーザーデータを取得
-        await this.fetchUserData(user.uid); // ここでユーザーデータを取得
-        // ログイン状態の監視を開始
-        this.monitorUserLoginState(user.uid);
-        // Firestoreに端末IDを保存（他の端末と区別するため）
-        await setDoc(doc(db, "users", user.uid), {
-        currentDeviceId: deviceId,
-        lastLoginAt: new Date()
-        }, { merge: true });
-      } else {
-        // 他端末からログアウトせずに続行
-        console.log("他の端末からのログインを保持します。");
-        await auth.signOut(); // ログアウト処理
-        return; // ログインを中止
-      }
-    } else {
-      // ユーザーデータを取得
-      await this.fetchUserData(user.uid); // 初回ログイン時のユーザーデータ取得
-      // Firestoreに端末IDを保存（他の端末と区別するため）
-      await setDoc(doc(db, "users", user.uid), {
-      currentDeviceId: deviceId,
-      lastLoginAt: new Date()
-      }, { merge: true });
+        const db = getFirestore();
+        const docRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(docRef);
+        const currentDeviceId = localStorage.getItem('deviceId');
+
+        // 確認ポップアップ表示
+        if (userDoc.exists() && userDoc.data().currentDeviceId !== currentDeviceId) {
+            // 他端末でのログインを検出
+            const confirmLogout = confirm("他の端末でログインされています。ログアウトしますか？");
+            if (confirmLogout) {
+                // まず、選択されたアイテムを保存
+                await this.saveSelectedItems(user.uid, this.selectedItems);
+                await this.logout(); // 他端末からログアウト
+                // ユーザーデータを取得
+                await this.fetchUserData(user.uid);
+                // ログイン状態の監視を開始
+                this.monitorUserLoginState(user.uid);
+                // Firestoreに端末IDを保存
+                await setDoc(doc(db, "users", user.uid), {
+                    currentDeviceId: deviceId,
+                    lastLoginAt: new Date()
+                }, { merge: true });
+            } else {
+                console.log("他の端末からのログインを保持します。");
+                await auth.signOut(); // ログアウト処理
+                return; // ログインを中止
+            }
+        } else {
+            // ユーザーデータを取得
+            await this.fetchUserData(user.uid);
+            // Firestoreに端末IDを保存
+            await setDoc(doc(db, "users", user.uid), {
+                currentDeviceId: deviceId,
+                lastLoginAt: new Date()
+            }, { merge: true });
+        }
+    } catch (error) {
+        console.error("ログインエラー:", error);
     }
-  } catch (error) {
-    console.error("ログインエラー:", error);
-  }
   },
 
   checkUserState() {
