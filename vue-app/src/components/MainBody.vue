@@ -82,7 +82,7 @@
                <option v-bind:value="4">★★★★</option>
                <option v-bind:value="3">★★★</option>
                <option v-bind:value="2">★★</option>
-               <option value="sp">★★</option>
+               <option value="sp">SP</option>
              </select>
              <select v-model="selectedHimitsuChar" class="inlineBlock dropBox" v-bind:class="{'mobileSearchBox': this.mobile === true}">
                <option v-bind:value="0">{{ himitsuCharDropBoxLabel }}</option>
@@ -113,11 +113,11 @@
                        <img v-if="himitsuList1.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(himitsuData) in himitsuList1.filter(item => item.rank === 4)" :key="himitsuData.value" class="itemLi">
-                           <button class="tooltip1 itemButton" 
+                           <div class="tooltip1 cardButton" 
                              :class="{'isClicked': selectedItems.includes(himitsuData.value)}" 
                              @click="toggleItem(himitsuData.value)">
-                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${himitsu.src}`)" alt="">
-                           </button>
+                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/himitsu/${himitsuData.src}`)" alt="">
+                         </div>
                          </li>
                        </ul>
                      </div>
@@ -125,11 +125,11 @@
                        <img v-if="himitsuList1.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in himitsuList1.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
-                           <button class="tooltip1 itemButton" 
+                           <div class="tooltip1 cardButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                           </button>
+                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/himitsu/${verseData.src}`)" alt="">
+                           </div>
                          </li>
                        </ul>
                      </div>
@@ -137,11 +137,11 @@
                        <img v-if="himitsuList1.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in himitsuList1.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
-                           <button class="tooltip1 itemButton" 
+                           <div class="tooltip1 cardButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                           </button>
+                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/himitsu/${verseData.src}`)" alt="">
+                           </div>
                          </li>
                        </ul>
                      </div>
@@ -172,7 +172,7 @@
                <option v-bind:value="4">★★★★</option>
                <option v-bind:value="3">★★★</option>
                <option v-bind:value="2">★★</option>
-               <option value="sp">★★</option>
+               <option value="sp">SP</option>
              </select>
              <select v-model="selectedVerseBrand" class="inlineBlock dropBox" v-bind:class="{'mobileSearchBox': this.mobile === true}">
                <option v-bind:value="0">{{ verseBrandDropBoxLabel }}</option>
@@ -208,7 +208,7 @@
                            <button class="tooltip1 itemButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                            </button>
                          </li>
                        </ul>
@@ -220,7 +220,7 @@
                            <button class="tooltip1 itemButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                            </button>
                          </li>
                        </ul>
@@ -232,7 +232,7 @@
                            <button class="tooltip1 itemButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                            </button>
                          </li>
                        </ul>
@@ -256,7 +256,7 @@
                            <button class="tooltip1 itemButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                            </button>
                          </li>
                        </ul>
@@ -268,7 +268,7 @@
                            <button class="tooltip1 itemButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                            </button>
                          </li>
                        </ul>
@@ -280,7 +280,7 @@
                            <button class="tooltip1 itemButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                            </button>
                          </li>
                        </ul>
@@ -304,7 +304,7 @@
                            <button class="tooltip1 itemButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                            </button>
                          </li>
                        </ul>
@@ -316,7 +316,7 @@
                            <button class="tooltip1 itemButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                            </button>
                          </li>
                        </ul>
@@ -328,7 +328,7 @@
                            <button class="tooltip1 itemButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                            </button>
                          </li>
                        </ul>
@@ -352,7 +352,7 @@
                            <button class="tooltip1 itemButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                            </button>
                          </li>
                        </ul>
@@ -364,7 +364,7 @@
                            <button class="tooltip1 itemButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                            </button>
                          </li>
                        </ul>
@@ -376,7 +376,7 @@
                            <button class="tooltip1 itemButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                            </button>
                          </li>
                        </ul>
@@ -388,7 +388,8 @@
                        selectedVerseRank === 0 || (
                            (selectedVerseRank === 4 && verseListSP.filter(item => item.rank === 4).length > 0) ||
                            (selectedVerseRank === 3 && verseListSP.filter(item => item.rank === 3).length > 0) ||
-                           (selectedVerseRank === 2 && verseListSP.filter(item => item.rank === 2).length > 0)
+                           (selectedVerseRank === 2 && verseListSP.filter(item => item.rank === 2).length > 0) ||
+                           (selectedVerseRank === 'sp' && verseListSP.filter(item => item.rank === 'sp').length > 0)
                        )
                   )&& verseListSP.length > 0">
                   <div class="tableTitle versionMargin">-スペシャルコーデアイテム-</div>
@@ -400,7 +401,7 @@
                           <button class="tooltip1 itemButton" 
                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                             @click="toggleItem(verseData.value)">
-                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                           </button>
                         </li>
                       </ul>
@@ -412,7 +413,7 @@
                           <button class="tooltip1 itemButton" 
                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                             @click="toggleItem(verseData.value)">
-                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                           </button>
                         </li>
                       </ul>
@@ -424,7 +425,19 @@
                           <button class="tooltip1 itemButton" 
                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                             @click="toggleItem(verseData.value)">
-                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                    <div v-show="(selectedVerseRank === 'sp' || selectedVerseRank === 0)">
+                      <div class="starMargin">SP</div>
+                      <ul id="dispHimitsuItemList">
+                        <li v-for="(verseData) in verseListSP.filter(item => item.rank === 'sp')" :key="verseData.value" class="itemLi">
+                          <button class="tooltip1 itemButton" 
+                            :class="{'isClicked': selectedItems.includes(verseData.value)}" 
+                            @click="toggleItem(verseData.value)">
+                            <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
                           </button>
                         </li>
                       </ul>
@@ -502,11 +515,11 @@ export default {
         list = list.filter((item) => !this.selectedItems.includes(item.value));
       }
   
-      // ブランドで絞り込み
-      if (this.selectedHimitsuBrand !== 0) {
+      // キャラ名で絞り込み
+      if (this.selectedHimitsuChar !== 0) {
         //console.log(this.selectedVerseBrand);
         // selectedVerseBrandが"ph"などの場合、該当するbrandをフィルタリング
-        list = list.filter((item) => item.brand === this.selectedHimitsuBrand);
+        list = list.filter((item) => item.char === this.selectedHimitsuChar);
       }
   
       // アイテム名で絞り込み（部分一致）
@@ -623,26 +636,26 @@ export default {
      change(num) {
        this.isActive = num;
      },
-     toggleItem(name) {
-       const itemIndex = this.selectedItems.indexOf(name);
-       if (itemIndex === -1) {
-         // 選択されていない場合は追加
-         this.selectedItems.push(name);
-       } else {
-         // 選択されている場合は削除
-         this.selectedItems.splice(itemIndex, 1);
-       }
-       // ローカルストレージに保存
-       localStorage.setItem('selectedItems', JSON.stringify(this.selectedItems));
-     },
-     loadSelectedItems() {
-       const savedItems = localStorage.getItem('selectedItems');
-       if (savedItems) {
-         // ローカルストレージから復元
-         this.selectedItems = JSON.parse(savedItems);
-       }
-     },
-     /*async getListCheck(kind, value) {
+     toggleItem(value) {
+        const itemIndex = this.selectedItems.indexOf(value);
+        if (itemIndex === -1) {
+          // 選択されていない場合は追加
+          this.selectedItems.push(value);
+        } else {
+          // 選択されている場合は削除
+          this.selectedItems.splice(itemIndex, 1);
+        }
+        // ローカルストレージに保存
+        localStorage.setItem('selectedItems', JSON.stringify(this.selectedItems));
+      },
+      loadSelectedItems() {
+        const savedItems = localStorage.getItem('selectedItems');
+        if (savedItems) {
+          // ローカルストレージから復元
+          this.selectedItems = JSON.parse(savedItems);
+        }
+      },
+      /*async getListCheck(kind, value) {
       console.log("リストチェック")
        //const holidays = [];
        const list = this.iniVerseList.concat();
@@ -656,42 +669,42 @@ export default {
          } else {
            this.verseList = list.filter(tabItem => !slectItem.includes(tabItem.value));
          }
-       }
-     },
-     filterVerseListByRank(version, rank) {
+        }
+      },
+      filterVerseListByRank(version, rank) {
       console.log("らんくなんちゃら")
        return this.iniVerseList.filter(item => {
          return item.version === String(version) && item.rank === rank;
        });
-     },*/
-     isMobile() {
-       var userAgent = window.navigator.userAgent.toLowerCase()
-       if (
-         userAgent.indexOf("iphone") != -1 ||
-         userAgent.indexOf("ipad") != -1 ||
-         userAgent.indexOf("android") != -1 ||
-         userAgent.indexOf("mobile") != -1
-       ) {
-         return true
-       } else {
-         return false
-       }
-     },
-     pageTop() {
-         window.scrollTo({
-             top: 0,
-             behavior: 'smooth'
-         })
-     },
-     scrollWindow() {
-         const top = 100 //topから100pxスクロールしたらボタン登場
-         this.scroll = window.scrollY //垂直方向
-         if (top <= this.scroll) {
-             this.buttonActive = true
-         } else {
-             this.buttonActive = false
-         }
-     },
+      },*/
+      isMobile() {
+        var userAgent = window.navigator.userAgent.toLowerCase()
+        if (
+           userAgent.indexOf("iphone") != -1 ||
+          userAgent.indexOf("ipad") != -1 ||
+          userAgent.indexOf("android") != -1 ||
+          userAgent.indexOf("mobile") != -1
+        ) {
+          return true
+        } else {
+          return false
+        }
+       },
+      pageTop() {
+          window.scrollTo({
+              top: 0,
+              behavior: 'smooth'
+          })
+      },
+      scrollWindow() {
+          const top = 100 //topから100pxスクロールしたらボタン登場
+          this.scroll = window.scrollY //垂直方向
+          if (top <= this.scroll) {
+              this.buttonActive = true
+          } else {
+              this.buttonActive = false
+          }
+      },
       async login() {
         const provider = new GoogleAuthProvider();
         //const auth = getAuth();
@@ -765,6 +778,7 @@ export default {
         this.showPopup = !this.showPopup; // ポップアップの表示/非表示をトグル
       },
       toggleHelpPopup() {
+        console.log(this.selectedVerseRank);
         this.showHelpPopup = !this.showHelpPopup; // ポップアップの表示/非表示をトグル
       },
       handleClickOutside(event) {
@@ -951,6 +965,14 @@ export default {
    cursor: pointer;
    display: inline-block;
  }
+ .cardButton {
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+ }
+ .cardButton:active {
+      background-color: #f0f0f0;
+      transform: scale(0.95);
+  }
  .itemButton {
    width: auto;
    height: auto;
@@ -978,13 +1000,29 @@ export default {
    width: 100px;
  }
  .cardItemImg {
-   width: 75px;
-   padding-top: 4px;
- }
+    width: 90px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
  .cardItemImgMobile {
-   width: 40px;
-   padding-top: 4px;
+    width: 60px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
  }
+  .cordeItemImg {
+    width: 75px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  .cordeItemImgMobile {
+    width: 40px;
+    margin-bottom: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
  .itemLi{
    display: inline;
  }
@@ -1233,6 +1271,11 @@ export default {
     font-weight: 500;
     font-style: normal;
     font-size: 15px;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  button:active {
+      background-color: #f0f0f0;
+      transform: scale(0.95);
   }
   .helpIcon {
     position: fixed;
