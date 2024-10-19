@@ -8,8 +8,8 @@
         <div v-else-if="isLoggedIn">
           <img :src="userPhotoURL" alt="Googleアイコン" class="circular-icon loginButton" @click="togglePopup" ref="icon"/>
           <!-- オーバーレイ -->
-          <div v-if="showPopup" class="overlay" @click="showPopup = false"></div>
-          <div v-if="showPopup" class="popup" ref="popup">
+          <div v-if="showLogoutPopup" class="overlay" @click="showLogoutPopup = false"></div>
+          <div v-if="showLogoutPopup" class="popup" ref="popup">
             <p>ログアウトしますか？</p>
             <div class="buttonBox">
               <button class="okButton" @click="logout">はい</button>
@@ -305,7 +305,7 @@
         userPhotoURL: "",
         isLoggedIn: false, // ログイン状態を保持
         isLoading: true, // ローディング状態を保持
-        showPopup: false, // ポップアップの表示状態を保持
+        showLogoutPopup: false, // ポップアップの表示状態を保持
         unsubscribe: null // unsubscribeをデータプロパティとして定義
       };
     },
@@ -473,6 +473,7 @@
   },
 
   async login() {
+    this.showLogoutPopup = false;
     const provider = new GoogleAuthProvider();
   try {
     await setPersistence(auth, browserLocalPersistence);
@@ -490,7 +491,6 @@
     const docRef = doc(db, "users", user.uid);
     const userDoc = await getDoc(docRef);
     const currentDeviceId = localStorage.getItem('deviceId');
-    
     // 確認ポップアップ表示
     if (userDoc.exists() && userDoc.data().currentDeviceId !== currentDeviceId) {
       // 他端末でのログインを検出
@@ -625,21 +625,21 @@
 
   togglePopup() {
     console.log("ヨバレテル！")
-    this.showPopup = !this.showPopup; // ポップアップの表示/非表示をトグル
+    this.showLogoutPopup = !this.showLogoutPopup; // ポップアップの表示/非表示をトグル
   },
 
     handleClickOutside(event) {
       console.log("ヨバレテル！")
       const popup = this.$refs.popup;
       const icon = this.$refs.icon;
-      if (this.showPopup && popup && !popup.contains(event.target) && icon && !icon.contains(event.target)) {
-        this.showPopup = false;
+      if (this.showLogoutPopup && popup && !popup.contains(event.target) && icon && !icon.contains(event.target)) {
+        this.showLogoutPopup = false;
       }
     },
 
     closePopup() {
       console.log("ヨバレテル！")
-      this.showPopup = false;
+      this.showLogoutPopup = false;
     },
 
     isMobile() {
