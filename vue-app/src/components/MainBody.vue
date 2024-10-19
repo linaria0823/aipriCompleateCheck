@@ -515,6 +515,9 @@ async login() {
         // ログイン状態の監視を開始
         this.monitorUserLoginState(user.uid);
 
+        // 追加: Firestoreから選択されたアイテムを取得
+        await this.fetchSelectedItems(user.uid);
+
       } else {
         // 他端末からログアウトせずに続行
         console.log("他の端末からのログインを保持します。");
@@ -533,6 +536,9 @@ async login() {
 
       // ログイン状態の監視を開始
       this.monitorUserLoginState(user.uid);
+      
+      // 追加: Firestoreから選択されたアイテムを取得
+      await this.fetchSelectedItems(user.uid);
     }
   } catch (error) {
     console.error("ログインエラー:", error);
