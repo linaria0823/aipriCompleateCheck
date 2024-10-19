@@ -502,18 +502,18 @@ async login() {
     if (userDoc.exists() && userDoc.data().currentDeviceId !== currentDeviceId) {
       // 他端末でのログインを検出
       const confirmLogout = confirm("他の端末でログインされています。ログアウトしますか？");
-      if (confirmLogout) {        
+      if (confirmLogout) {
         // ユーザーデータを取得
         await this.fetchUserData(user.uid); // ここでユーザーデータを取得
-        
-        // ログイン状態の監視を開始
-        this.monitorUserLoginState(user.uid);
 
         // Firestoreに端末IDを保存（他の端末と区別するため）
         await setDoc(doc(db, "users", user.uid), {
           currentDeviceId: deviceId,
           lastLoginAt: new Date()
         }, { merge: true });
+
+        // ログイン状態の監視を開始
+        this.monitorUserLoginState(user.uid);
 
       } else {
         // 他端末からログアウトせずに続行
@@ -557,7 +557,7 @@ checkUserState() {
 },
 
 async fetchUserData(uid) {
-  console.log("fetchよばれてる");
+  console.log("fetch呼ばれています");
   const db = getFirestore();
   const docRef = doc(db, "users", uid);
   const docSnap = await getDoc(docRef);
@@ -571,7 +571,7 @@ async fetchUserData(uid) {
       this.selectedItems = docSnap.data().selectedItems;
       localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
     } else {
-      console.log("選択されたアイテムが見つかりません。"); // ここを確認
+      console.log("選択されたアイテムが見つかりません。");
     }
   } else {
     // ユーザーデータが存在しない場合、新規作成
@@ -605,7 +605,7 @@ async logout() {
 },
 
 async fetchSelectedItems(uid) {
-  console.log("fetch呼ばれてる");
+  console.log("fetch呼ばれています");
   const db = getFirestore();
   const docRef = doc(db, "users", uid);
 
@@ -627,7 +627,7 @@ async waitForLogoutAndFetchItems(uid) {
   const db = getFirestore();
   const docRef = doc(db, "users", uid);
   
-  // ここでFirestoreへのデータ更新を待つ処理を行います
+  // Firestoreのドキュメントの更新を待つ
   const waitForUpdate = new Promise((resolve) => {
     const unsubscribe = onSnapshot(docRef, (docSnap) => {
       if (docSnap.exists()) {
@@ -652,7 +652,7 @@ async waitForLogoutAndFetchItems(uid) {
     }, 10000); // 10秒待機（必要に応じて調整）
   });
 
-  await waitForUpdate; // ここでFirestoreの更新を待つ
+  await waitForUpdate; // Firestoreの更新を待つ
 },
 
 // ユーザーID情報を登録する
