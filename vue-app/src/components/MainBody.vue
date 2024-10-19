@@ -469,7 +469,9 @@
           // 選択されたアイテムを保存してからログアウト
           await this.saveSelectedItems(auth.currentUser.uid, this.selectedItems);
           await this.logout();
-          await this.fetchSelectedItems(uid); // Firestore から選択されたアイテムを取得
+
+          // Firestore から選択されたアイテムを取得
+          await this.fetchSelectedItems(uid);
         } else {
           console.warn("現在のユーザーが存在しません。ログアウト処理をスキップします。");
         }
@@ -504,13 +506,16 @@
       if (confirmLogout) {        
         // ユーザーデータを取得
         await this.fetchUserData(user.uid); // ここでユーザーデータを取得
+        
         // ログイン状態の監視を開始
         this.monitorUserLoginState(user.uid);
+
         // Firestoreに端末IDを保存（他の端末と区別するため）
         await setDoc(doc(db, "users", user.uid), {
-        currentDeviceId: deviceId,
-        lastLoginAt: new Date()
+          currentDeviceId: deviceId,
+          lastLoginAt: new Date()
         }, { merge: true });
+
       } else {
         // 他端末からログアウトせずに続行
         console.log("他の端末からのログインを保持します。");
@@ -520,11 +525,15 @@
     } else {
       // ユーザーデータを取得
       await this.fetchUserData(user.uid); // 初回ログイン時のユーザーデータ取得
+
       // Firestoreに端末IDを保存（他の端末と区別するため）
       await setDoc(doc(db, "users", user.uid), {
-      currentDeviceId: deviceId,
-      lastLoginAt: new Date()
+        currentDeviceId: deviceId,
+        lastLoginAt: new Date()
       }, { merge: true });
+
+      // ログイン状態の監視を開始
+      this.monitorUserLoginState(user.uid); // ここを追加
     }
   } catch (error) {
     console.error("ログインエラー:", error);
@@ -599,20 +608,21 @@
   // Firestoreから選択されたアイテムを取得するメソッド
   async fetchSelectedItems(uid) {
     console.log("fetch呼ばれてる")
-    const db = getFirestore();
-    const docRef = doc(db, "users", uid);
+  const db = getFirestore();
+  const docRef = doc(db, "users", uid);
 
-    try {
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        this.selectedItems = docSnap.data().selectedItems || []; // Firestoreから取得したアイテムを設定
-        console.log("Firestoreから取得した選択されたアイテム:", this.selectedItems);
-      } else {
-        console.log("ドキュメントが存在しません");
-      }
-    } catch (error) {
-      console.error("Firestoreから選択されたアイテムを取得中にエラーが発生しました:", error);
+  try {
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      this.selectedItems = docSnap.data().selectedItems || []; // Firestoreから取得したアイテムを設定
+      console.log("Firestoreから取得した選択されたアイテム:", this.selectedItems);
+      localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems)); // ローカルストレージに保存
+    } else {
+      console.log("ドキュメントが存在しません");
     }
+  } catch (error) {
+    console.error("Firestoreから選択されたアイテムを取得中にエラーが発生しました:", error);
+  }
   },
 
   // ユーザーID情報を登録する
