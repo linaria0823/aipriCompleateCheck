@@ -99,7 +99,7 @@
                <option v-bind:value="2">2弾</option>
                <option v-bind:value="3">3弾</option>
                <option v-bind:value="4">4弾</option>
-               <option value="SP">SP</option>
+               <option value="sp">SP</option>
              </select>
              <select v-model="selectedVerseGet" class="inlineBlock dropBox">
                <option v-bind:value="0">{{ verseGetDropBoxLabel }}</option>
@@ -111,6 +111,7 @@
                <option v-bind:value="4">★★★★</option>
                <option v-bind:value="3">★★★</option>
                <option v-bind:value="2">★★</option>
+               <option value="sp">★★</option>
              </select>
              <select v-model="selectedVerseBrand" class="inlineBlock dropBox" v-bind:class="{'mobileSearchBox': this.mobile === true}">
                <option v-bind:value="0">{{ verseBrandDropBoxLabel }}</option>
@@ -273,7 +274,14 @@
                      </div>
                    </div>
                  </div>
-                 <div v-show="(selectedVerseVersion === 4 || selectedVerseVersion === 0) && verseList4.length > 0">
+                 <div v-show="(selectedVerseVersion === 4 || selectedVerseVersion === 0)
+                   && (
+                       selectedVerseRank === 0 || (
+                           (selectedVerseRank === 4 && verseList4.filter(item => item.rank === 4).length > 0) ||
+                           (selectedVerseRank === 3 && verseList4.filter(item => item.rank === 3).length > 0) ||
+                           (selectedVerseRank === 2 && verseList4.filter(item => item.rank === 2).length > 0)
+                       )
+                   )&& verseList4.length > 0">
                    <div class="tableTitle versionMargin">-4弾-</div>
                    <div>
                      <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
@@ -313,18 +321,66 @@
                        </ul>
                      </div>
                    </div>
-                 </div>
-               </div>
-             </div>
-           </div>
-         </li>
-       </ul>
-     </div>
-   </div>
-   <button class="top_btn" v-show="buttonActive" @click="pageTop">
-     <i class="fa-solid fa-angle-up"></i>
-   </button>
- </template>
+                  </div>
+                  <div v-show="(selectedVerseVersion === 'sp' || selectedVerseVersion === 0)
+                    && (
+                       selectedVerseRank === 0 || (
+                           (selectedVerseRank === 4 && verseListSP.filter(item => item.rank === 4).length > 0) ||
+                           (selectedVerseRank === 3 && verseListSP.filter(item => item.rank === 3).length > 0) ||
+                           (selectedVerseRank === 2 && verseListSP.filter(item => item.rank === 2).length > 0)
+                       )
+                  )&& verseListSP.length > 0">
+                  <div class="tableTitle versionMargin">-スペシャルコーデアイテム-</div>
+                  <div>
+                    <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
+                      <img v-if="verseListSP.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
+                      <ul id="dispHimitsuItemList">
+                        <li v-for="(verseData) in verseListSP.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
+                          <button class="tooltip1 itemButton" 
+                            :class="{'isClicked': selectedItems.includes(verseData.value)}" 
+                            @click="toggleItem(verseData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                    <div v-show="(selectedVerseRank === 3 || selectedVerseRank === 0)">
+                      <img v-if="verseListSP.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
+                      <ul id="dispHimitsuItemList">
+                        <li v-for="(verseData) in verseListSP.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
+                          <button class="tooltip1 itemButton" 
+                            :class="{'isClicked': selectedItems.includes(verseData.value)}" 
+                            @click="toggleItem(verseData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                    <div v-show="(selectedVerseRank === 2 || selectedVerseRank === 0)">
+                      <img v-if="verseListSP.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
+                      <ul id="dispHimitsuItemList">
+                        <li v-for="(verseData) in verseListSP.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
+                          <button class="tooltip1 itemButton" 
+                            :class="{'isClicked': selectedItems.includes(verseData.value)}" 
+                            @click="toggleItem(verseData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          </button>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <button class="top_btn" v-show="buttonActive" @click="pageTop">
+    <i class="fa-solid fa-angle-up"></i>
+  </button>
+</template>
  
  <script>
  //import himitsuJson from '../../json/himitsuItem.JSON'
@@ -409,6 +465,9 @@
      },
      verseList4() {
        return this.filteredVerseList.filter((item) => item.version === "4");
+     },
+     verseListSP() {
+       return this.filteredVerseList.filter((item) => item.version === "sp");
      },
  
      // バージョンのドロップボックス文字列を変化
@@ -833,6 +892,7 @@
     height: 40px;       /* アイコンの高さ */
     border-radius: 50%; /* 円形にするための設定 */
     object-fit: cover;  /* 画像のアスペクト比を維持しつつ、指定サイズに収める */
+    cursor: pointer;
   }
   .popup {
     position: fixed; /* スクロールしても位置を固定 */
