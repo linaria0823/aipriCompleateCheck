@@ -17,8 +17,11 @@ export default {
     togglePopup() {
       this.showPopup = !this.showPopup; // ポップアップの表示/非表示をトグル
     },
-    closePopup () {
+    closePopup() {
       this.showPopup = false; // ポップアップを閉じる
+    },
+    refresh() {
+      location.reload();
     }
   }
 }

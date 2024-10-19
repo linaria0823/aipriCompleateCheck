@@ -352,7 +352,7 @@
  
      // ブランドで絞り込み
      if (this.selectedVerseBrand !== 0) {
-       console.log(this.selectedVerseBrand);
+       //console.log(this.selectedVerseBrand);
        // selectedVerseBrandが"ph"などの場合、該当するbrandをフィルタリング
        list = list.filter((item) => item.brand === this.selectedVerseBrand);
      }
@@ -489,7 +489,7 @@
           const storedItems = localStorage.getItem('selectedItems');
           if (storedItems) {
             this.selectedItems = JSON.parse(storedItems);
-            console.log("取得した選択されたアイテム:", this.selectedItems);
+            //console.log("取得した選択されたアイテム:", this.selectedItems);
           }
         } catch (error) {
           console.error("ログインエラー:", error);
@@ -504,12 +504,12 @@
             this.isLoggedIn = true;
             this.userPhotoURL = user.photoURL; // GoogleアイコンのURL
             this.user = user; // ユーザー情報を保存
-            console.log("ユーザーがログインしています:", user.uid);
+            //console.log("ユーザーがログインしています:", user.uid);
           } else {
             this.isLoggedIn = false;
             this.userPhotoURL = null; // アイコンをクリア
             this.user = {}; // ユーザー情報をクリア
-            console.log("ログインしていません。");
+            //console.log("ログインしていません。");
           }
         });
       },
@@ -521,7 +521,7 @@
  
        if (docSnap.exists()) {
          // ユーザーデータが存在する場合
-         console.log("ユーザーデータ:", docSnap.data());
+         //console.log("ユーザーデータ:", docSnap.data());
          
          // 既存の選択されたアイテムのみをローカルストレージに保存
          /*if (docSnap.data().selectedItems) {
@@ -532,7 +532,7 @@
          }*/
        } else {
          // ユーザーデータが存在しない場合、新規作成
-         console.log("初めてのログインです。ユーザーデータを作成します。");
+         //console.log("初めてのログインです。ユーザーデータを作成します。");
          const defaultData = { selectedItems: [] }; // デフォルトの選択されたアイテム
          await this.saveUserData(uid, defaultData);
          this.selectedItems = defaultData.selectedItems; // 初期化
@@ -564,7 +564,7 @@
           //this.selectedItems = []; // もしくは初期化するアイテムの配列を設定
           this.closePopup(); // ポップアップを閉じる
         } else {
-          console.log("ログインしていないため、ログアウト処理をスキップします。");
+          //console.log("ログインしていないため、ログアウト処理をスキップします。");
         }
       },
  
@@ -993,8 +993,8 @@
   }
   .closeButton {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 0px;
+    right: 0px;
     background-color: transparent;
     border: none;
     font-size: 28px;
@@ -1015,9 +1015,10 @@
     right: 110px;
     top: 8px;
     width: 30px;
+    cursor: pointer;
   }
   .helpTextBox {
-    margin-top: 20px;
+    margin-top: 10px;
     margin-bottom: 10px;
     font-size: 11px;
   }
