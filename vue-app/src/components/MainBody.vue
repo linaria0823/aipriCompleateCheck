@@ -468,16 +468,39 @@
         if (auth.currentUser) {
           // 選択されたアイテムを保存してからログアウト
           await this.saveSelectedItems(auth.currentUser.uid, this.selectedItems);
+          
+          // 端末1をログアウト
           await this.logout();
 
-          // Firestoreから選択されたアイテムを取得
-          await this.fetchSelectedItems(uid);
+          // Firestore から選択されたアイテムを取得
+          await this.waitForLogoutAndFetchItems(uid);
         } else {
           console.warn("現在のユーザーが存在しません。ログアウト処理をスキップします。");
         }
       }
     }
   });
+  },
+
+  async waitForLogoutAndFetchItems(uid) {
+    const db = getFirestore();
+    const docRef = doc(db, "users", uid);
+
+    // Firestoreのドキュメントをリアルタイムで監視
+    onSnapshot(docRef, async (docSnap) => {
+      if (docSnap.exists()) {
+        const userData = docSnap.data();
+
+        // 選択されたアイテムをFirestoreから取得
+        if (userData.selectedItems) {
+          this.selectedItems = userData.selectedItems;
+          localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
+          console.log("Firestoreから取得した選択されたアイテム:", this.selectedItems);
+        } else {
+          console.log("選択されたアイテムが見つかりません。");
+        }
+      }
+    });
   },
 
   async login() {
@@ -498,12 +521,12 @@
     const docRef = doc(db, "users", user.uid);
     const userDoc = await getDoc(docRef);
     const currentDeviceId = localStorage.getItem('deviceId');
-
+    
     // 確認ポップアップ表示
     if (userDoc.exists() && userDoc.data().currentDeviceId !== currentDeviceId) {
       // 他端末でのログインを検出
       const confirmLogout = confirm("他の端末でログインされています。ログアウトしますか？");
-      if (confirmLogout) {
+      if (confirmLogout) {        
         // ユーザーデータを取得
         await this.fetchUserData(user.uid); // ここでユーザーデータを取得
         
