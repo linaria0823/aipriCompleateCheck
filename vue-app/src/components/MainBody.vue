@@ -283,163 +283,164 @@
  //import Cookies from 'js-cookie';  // js-cookie のインポート
  import 'font-awesome/css/font-awesome.css';
  import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from "firebase/auth";
- import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+ import { getFirestore, doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
  import { auth } from '../firebaseConfig'; // Firebaseの初期化ファイルからインポート
  
  export default {
-   name: "MainBody",
-   data() {
-     return {
-       isActive: "A",
-       selectedVerseVersion: 0,
-       selectedVerseGet: 0,
-       selectedVerseRank: 0,
-       selectedVerseBrand: 0,
-       itemName: "", // アイテム名の入力値
-       iniVerseList: verseJson,
-       verseList: verseJson,
-       selectedItems: [],
-       mobile: false,
-       buttonActive: false,//ボタンを非表示にしておく
-       scroll: 0,
-       userPhotoURL: "",
-       isLoggedIn: false, // ログイン状態を保持
-       isLoading: true, // ローディング状態を保持
-       showPopup: false, // ポップアップの表示状態を保持
-     };
-   },
-   computed: {
-     filteredVerseList() {
-     let list = this.iniVerseList;
- 
-     // バージョンで絞り込み
-     if (this.selectedVerseVersion !== 0) {
-       list = list.filter(
-         (item) => item.version === String(this.selectedVerseVersion)
-       );
-     }
- 
-     // 取得状況で絞り込み
-     if (this.selectedVerseGet === 1) {
-       // 所持済み
-       list = list.filter((item) => this.selectedItems.includes(item.value));
-     } else if (this.selectedVerseGet === 2) {
-       // 未所持
-       list = list.filter((item) => !this.selectedItems.includes(item.value));
-     }
- 
-     // ブランドで絞り込み
-     if (this.selectedVerseBrand !== 0) {
-       console.log(this.selectedVerseBrand);
-       // selectedVerseBrandが"ph"などの場合、該当するbrandをフィルタリング
-       list = list.filter((item) => item.brand === this.selectedVerseBrand);
-     }
- 
-     // アイテム名で絞り込み（部分一致）
-     if (this.itemName) {
-       const nameLower = this.itemName.toLowerCase(); // 小文字で比較
-       list = list.filter((item) =>
-         item.name.toLowerCase().includes(nameLower)
-       );
-     }
- 
-     return list;
-   },
+    name: "MainBody",
+    data() {
+      return {
+        isActive: "A",
+        selectedVerseVersion: 0,
+        selectedVerseGet: 0,
+        selectedVerseRank: 0,
+        selectedVerseBrand: 0,
+        itemName: "", // アイテム名の入力値
+        iniVerseList: verseJson,
+        verseList: verseJson,
+        selectedItems: [],
+        mobile: false,
+        buttonActive: false,//ボタンを非表示にしておく
+        scroll: 0,
+        userPhotoURL: "",
+        isLoggedIn: false, // ログイン状態を保持
+        isLoading: true, // ローディング状態を保持
+        showPopup: false, // ポップアップの表示状態を保持
+        unsubscribe: null // unsubscribeをデータプロパティとして定義
+      };
+    },
+    computed: {
+      filteredVerseList() {
+      let list = this.iniVerseList;
+  
+      // バージョンで絞り込み
+      if (this.selectedVerseVersion !== 0) {
+        list = list.filter(
+          (item) => item.version === String(this.selectedVerseVersion)
+        );
+      }
+  
+      // 取得状況で絞り込み
+      if (this.selectedVerseGet === 1) {
+        // 所持済み
+        list = list.filter((item) => this.selectedItems.includes(item.value));
+      } else if (this.selectedVerseGet === 2) {
+        // 未所持
+        list = list.filter((item) => !this.selectedItems.includes(item.value));
+      }
+  
+      // ブランドで絞り込み
+      if (this.selectedVerseBrand !== 0) {
+        console.log(this.selectedVerseBrand);
+        // selectedVerseBrandが"ph"などの場合、該当するbrandをフィルタリング
+        list = list.filter((item) => item.brand === this.selectedVerseBrand);
+      }
+  
+      // アイテム名で絞り込み（部分一致）
+      if (this.itemName) {
+        const nameLower = this.itemName.toLowerCase(); // 小文字で比較
+        list = list.filter((item) =>
+          item.name.toLowerCase().includes(nameLower)
+        );
+      }
+  
+      return list;
+    },
    
-     // 各弾ごとのリスト
-     verseList1() {
-       return this.filteredVerseList.filter((item) => item.version === "1");
-     },
-     verseList2() {
-       return this.filteredVerseList.filter((item) => item.version === "2");
-     },
-     verseList3() {
-       return this.filteredVerseList.filter((item) => item.version === "3");
-     },
-     verseList4() {
-       return this.filteredVerseList.filter((item) => item.version === "4");
-     },
- 
-     // バージョンのドロップボックス文字列を変化
-     verseVersionDropBoxLabel() {
-         return this.selectedVerseVersion === 0 ? 'バージョン' : 'すべて';
-     },
-     // 取得状況のドロップボックス文字列を変化
-       verseGetDropBoxLabel() {
-         return this.selectedVerseGet === 0 ? '取得状況' : 'すべて';
-     },
-     // ランクのドロップボックス文字列を変化
-       verseRankDropBoxLabel() {
-         return this.selectedVerseRank === 0 ? 'ランク' : 'すべて';
-     },
-     // ブランドのドロップボックス文字列を変化
-     verseBrandDropBoxLabel() {
-         return this.selectedVerseBrand === 0 ? 'ブランド' : 'すべて';
-     },
-   },
-   methods: {
-     change(num) {
-       this.isActive = num;
-     },
-     toggleItem(name) {
-       const itemIndex = this.selectedItems.indexOf(name);
-       if (itemIndex === -1) {
-         // 選択されていない場合は追加
-         this.selectedItems.push(name);
-       } else {
-         // 選択されている場合は削除
-         this.selectedItems.splice(itemIndex, 1);
-       }
-       // ローカルストレージに保存
-       localStorage.setItem('selectedItems', JSON.stringify(this.selectedItems));
-     },
-     loadSelectedItems() {
-       const savedItems = localStorage.getItem('selectedItems');
-       if (savedItems) {
-         // ローカルストレージから復元
-         this.selectedItems = JSON.parse(savedItems);
-       }
-     },
-     async getListCheck(kind, value) {
-       //const holidays = [];
-       const list = this.iniVerseList.concat();
-       const slectItem = this.selectedItems.concat();
-       //const inilist = this.iniVerseList.concat();
-       if (kind === "verse") {
-         if(value === 0) {
-           this.verseList = list.concat();
-         } else if (value === 1) {
-           this.verseList = this.selectedItems.map(tabItem => list.find(item => item.value === tabItem));
-         } else {
-           this.verseList = list.filter(tabItem => !slectItem.includes(tabItem.value));
-         }
-       }
-     },
-     filterVerseListByRank(version, rank) {
-       return this.iniVerseList.filter(item => {
-         return item.version === String(version) && item.rank === rank;
-       });
-     },
-     isMobile() {
-       var userAgent = window.navigator.userAgent.toLowerCase()
-       if (
-         userAgent.indexOf("iphone") != -1 ||
-         userAgent.indexOf("ipad") != -1 ||
-         userAgent.indexOf("android") != -1 ||
-         userAgent.indexOf("mobile") != -1
-       ) {
-         return true
-       } else {
-         return false
-       }
-     },
-     pageTop() {
+      // 各弾ごとのリスト
+      verseList1() {
+        return this.filteredVerseList.filter((item) => item.version === "1");
+      },
+      verseList2() {
+        return this.filteredVerseList.filter((item) => item.version === "2");
+      },
+      verseList3() {
+        return this.filteredVerseList.filter((item) => item.version === "3");
+      },
+      verseList4() {
+        return this.filteredVerseList.filter((item) => item.version === "4");
+      },
+  
+      // バージョンのドロップボックス文字列を変化
+      verseVersionDropBoxLabel() {
+          return this.selectedVerseVersion === 0 ? 'バージョン' : 'すべて';
+      },
+      // 取得状況のドロップボックス文字列を変化
+        verseGetDropBoxLabel() {
+          return this.selectedVerseGet === 0 ? '取得状況' : 'すべて';
+      },
+      // ランクのドロップボックス文字列を変化
+        verseRankDropBoxLabel() {
+          return this.selectedVerseRank === 0 ? 'ランク' : 'すべて';
+      },
+      // ブランドのドロップボックス文字列を変化
+      verseBrandDropBoxLabel() {
+          return this.selectedVerseBrand === 0 ? 'ブランド' : 'すべて';
+      },
+    },
+    methods: {
+      change(num) {
+        this.isActive = num;
+      },
+      toggleItem(name) {
+        const itemIndex = this.selectedItems.indexOf(name);
+        if (itemIndex === -1) {
+          // 選択されていない場合は追加
+          this.selectedItems.push(name);
+        } else {
+          // 選択されている場合は削除
+          this.selectedItems.splice(itemIndex, 1);
+        }
+        // ローカルストレージに保存
+        localStorage.setItem('selectedItems', JSON.stringify(this.selectedItems));
+      },
+      loadSelectedItems() {
+        const savedItems = localStorage.getItem('selectedItems');
+        if (savedItems) {
+          // ローカルストレージから復元
+          this.selectedItems = JSON.parse(savedItems);
+        }
+      },
+      async getListCheck(kind, value) {
+        //const holidays = [];
+        const list = this.iniVerseList.concat();
+        const slectItem = this.selectedItems.concat();
+        //const inilist = this.iniVerseList.concat();
+        if (kind === "verse") {
+          if(value === 0) {
+            this.verseList = list.concat();
+          } else if (value === 1) {
+            this.verseList = this.selectedItems.map(tabItem => list.find(item => item.value === tabItem));
+          } else {
+            this.verseList = list.filter(tabItem => !slectItem.includes(tabItem.value));
+          }
+        }
+      },
+      filterVerseListByRank(version, rank) {
+        return this.iniVerseList.filter(item => {
+          return item.version === String(version) && item.rank === rank;
+        });
+      },
+      sMobile() {
+        var userAgent = window.navigator.userAgent.toLowerCase()
+        if (
+          userAgent.indexOf("iphone") != -1 ||
+          userAgent.indexOf("ipad") != -1 ||
+          userAgent.indexOf("android") != -1 ||
+          userAgent.indexOf("mobile") != -1
+        ) {
+          return true
+        } else {
+          return false
+        }
+      },
+      pageTop() {
          window.scrollTo({
              top: 0,
              behavior: 'smooth'
          })
-     },
-     scrollWindow() {
+      },
+      scrollWindow() {
          const top = 100 //topから100pxスクロールしたらボタン登場
          this.scroll = window.scrollY //垂直方向
          if (top <= this.scroll) {
@@ -447,31 +448,67 @@
          } else {
              this.buttonActive = false
          }
-     },
-      async login() {
-        const provider = new GoogleAuthProvider();
-        //const auth = getAuth();
-        try {
-          // 永続性を設定（ブラウザのローカルストレージに保存）
-          await setPersistence(auth, browserLocalPersistence);
-          const result = await signInWithPopup(auth, provider);
-          const user = result.user;
+      },
+     // ユーザーのログイン状態を監視するリスナーを設定
+    async monitorUserLoginState(uid) {
+      const db = getFirestore();
+      const docRef = doc(db, "users", uid);
 
-          // ユーザープロフィール情報の取得
-          this.userPhotoURL = user.photoURL; // GoogleアイコンのURLを取得
- 
-          // ユーザーデータを取得
-          await this.fetchUserData(user.uid);
- 
-          // ローカルストレージから選択されたアイテムを取得
-          const storedItems = localStorage.getItem('selectedItems');
-          if (storedItems) {
-            this.selectedItems = JSON.parse(storedItems);
-            console.log("取得した選択されたアイテム:", this.selectedItems);
+      // Firestoreのドキュメントをリアルタイムで監視
+      this.unsubscribe = onSnapshot(docRef, (docSnap) => {
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
+          const currentDeviceId = localStorage.getItem('deviceId'); 
+
+          if (userData.currentDeviceId && userData.currentDeviceId !== currentDeviceId) {
+            console.log("他の端末でログインされました。ログアウトします。");
+            this.logout(); 
           }
-        } catch (error) {
-          console.error("ログインエラー:", error);
         }
+      });
+    },
+    async login() {
+      const provider = new GoogleAuthProvider();
+      try {
+        await setPersistence(auth, browserLocalPersistence);
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+
+        // ログインした端末の一意なIDを作成し保存（初回のみ生成）
+        let deviceId = localStorage.getItem('deviceId');
+        if (!deviceId) {
+          deviceId = Math.random().toString(36).substring(2); // 簡易な一意のIDを生成
+          localStorage.setItem('deviceId', deviceId);
+        }
+
+        // Firestoreに端末IDを保存（他の端末と区別するため）
+        const db = getFirestore();
+        await setDoc(doc(db, "users", user.uid), {
+          currentDeviceId: deviceId,
+          lastLoginAt: new Date()
+        }, { merge: true });
+
+        // FirestoreからselectedItemsを取得
+        const userDocRef = doc(db, "users", user.uid);
+        const userDocSnap = await getDoc(userDocRef);
+        if (userDocSnap.exists()) {
+          const userData = userDocSnap.data();
+          const firestoreItems = userData.selectedItems;
+          
+          if (firestoreItems) {
+            localStorage.setItem('selectedItems', JSON.stringify(firestoreItems));
+            this.selectedItems = firestoreItems; // Vueのデータに反映
+            console.log("Firestoreから取得した選択されたアイテム:", this.selectedItems);
+          }
+        } else {
+          console.log("Firestoreドキュメントが存在しません");
+        }
+
+        // ログイン状態の監視を開始
+        this.monitorUserLoginState(user.uid);
+      } catch (error) {
+        console.error("ログインエラー:", error);
+      }
       },
       checkUserState() {
         //const auth = getAuth();
@@ -516,7 +553,44 @@
          this.selectedItems = defaultData.selectedItems; // 初期化
          localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
        }
-     },
+      },
+      async logout() {
+        try {
+          // Firestoreのリスナーを解除
+          if (this.unsubscribe) {
+            this.unsubscribe();
+          }
+          // currentUserが存在する場合のみ処理を実行
+          if (auth.currentUser) {
+            // 選択されたアイテムをFirestoreに保存
+            await this.saveSelectedItems(auth.currentUser.uid, this.selectedItems);        
+            // サインアウト
+            await signOut(auth);
+            localStorage.removeItem("selectedItems"); // 選択されたアイテムのローカルストレージも削除
+            // 画面の状態をリセット
+            this.selectedItems = []; // もしくは初期化するアイテムの配列を設定
+            this.showPopup = false; // ポップアップを閉じる
+          } else {
+            console.log("ログインしていないため、ログアウト処理をスキップします。");
+          }
+        } catch (error) {
+          console.error("ログアウトエラー:", error);
+        }
+        //const auth = getAuth();
+      },
+ 
+      // ユーザーID情報を登録する
+      async saveUserData(uid, data) {
+        const db = getFirestore();
+        const docRef = doc(db, "users", uid);
+        await setDoc(docRef, data, { merge: true });
+      },
+      // 取得情報を登録する
+      async saveSelectedItems(uid, selectedItems) {
+        const db = getFirestore();
+        const docRef = doc(db, "users", uid);
+        await setDoc(docRef, { selectedItems: selectedItems }, { merge: true });
+      },
       togglePopup() {
         this.showPopup = !this.showPopup; // ポップアップの表示/非表示をトグル
       },
@@ -531,35 +605,19 @@
       closePopup() {
         this.showPopup = false;
       },
-      async logout() {
-        //const auth = getAuth();
-        // currentUserが存在する場合のみ処理を実行
-        if (auth.currentUser) {
-          // 選択されたアイテムをFirestoreに保存
-          await this.saveSelectedItems(auth.currentUser.uid, this.selectedItems);        
-          // サインアウト
-          await signOut(auth);
-          localStorage.removeItem("selectedItems"); // 選択されたアイテムのローカルストレージも削除
-          // 画面の状態をリセット
-          this.selectedItems = []; // もしくは初期化するアイテムの配列を設定
-          this.showPopup = false; // ポップアップを閉じる
+      isMobile() {
+        var userAgent = window.navigator.userAgent.toLowerCase()
+        if (
+          userAgent.indexOf("iphone") != -1 ||
+          userAgent.indexOf("ipad") != -1 ||
+          userAgent.indexOf("android") != -1 ||
+          userAgent.indexOf("mobile") != -1
+        ) {
+          return true
         } else {
-          console.log("ログインしていないため、ログアウト処理をスキップします。");
+          return false
         }
       },
- 
-      // ユーザーID情報を登録する
-      async saveUserData(uid, data) {
-        const db = getFirestore();
-        const docRef = doc(db, "users", uid);
-        await setDoc(docRef, data, { merge: true });
-      },
-      // 取得情報を登録する
-      async saveSelectedItems(uid, selectedItems) {
-        const db = getFirestore();
-        const docRef = doc(db, "users", uid);
-        await setDoc(docRef, { selectedItems: selectedItems }, { merge: true });
-      }
     },
     mounted() {
       //Cookies.remove('selectedItems');

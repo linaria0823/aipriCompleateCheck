@@ -8,7 +8,7 @@ const app = createApp(App);
 // Use the VueLazyload plugin
 app.use(VueLazyload, {
   // Placeholder image while loading
-  loading: '/path/to/loading-placeholder.jpg',
+  //loading: '/path/to/loading-placeholder.jpg',
   // Placeholder image on error
   error: '/path/to/error-placeholder.jpg',
   // Enable lazy loading
