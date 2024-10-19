@@ -626,22 +626,33 @@ async fetchSelectedItems(uid) {
 async waitForLogoutAndFetchItems(uid) {
   const db = getFirestore();
   const docRef = doc(db, "users", uid);
-
-  // Firestoreのドキュメントをリアルタイムで監視
-  onSnapshot(docRef, async (docSnap) => {
-    if (docSnap.exists()) {
-      const userData = docSnap.data();
-
-      // 選択されたアイテムをFirestoreから取得
-      if (userData.selectedItems) {
-        this.selectedItems = userData.selectedItems;
-        localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
-        console.log("Firestoreから取得した選択されたアイテム:", this.selectedItems);
+  
+  // ここでFirestoreへのデータ更新を待つ処理を行います
+  const waitForUpdate = new Promise((resolve) => {
+    const unsubscribe = onSnapshot(docRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const userData = docSnap.data();
+        
+        // 選択されたアイテムをFirestoreから取得
+        if (userData.selectedItems) {
+          this.selectedItems = userData.selectedItems;
+          localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
+          console.log("Firestoreから取得した選択されたアイテム:", this.selectedItems);
+          resolve(); // データ取得完了を通知
+        }
       } else {
-        console.log("選択されたアイテムが見つかりません。");
+        console.log("ドキュメントが存在しません");
       }
-    }
+    });
+
+    // 一定時間待った後に解除する処理も追加
+    setTimeout(() => {
+      unsubscribe(); // リスナーを解除
+      resolve(); // タイムアウトで解決
+    }, 10000); // 10秒待機（必要に応じて調整）
   });
+
+  await waitForUpdate; // ここでFirestoreの更新を待つ
 },
 
 // ユーザーID情報を登録する
