@@ -64,28 +64,89 @@
        <ul class="article">
          <li v-if="isActive === 'A'" class="tableMain himitsuMain">
            <div class="center">
-             <label class="selectbox-2">
-               <select v-model="selectedHimitsuVersion" class="inlineBlock dropBox">
-                 <option v-bind:value="0">全弾</option>
-                 <option v-bind:value="1">1弾</option>
-                 <option v-bind:value="2">2弾</option>
-                 <option v-bind:value="3">3弾</option>
-                 <option v-bind:value="4">4弾</option>
-               </select>
-             </label>
+            <select v-model="selectedHimitsuVersion" class="inlineBlock dropBox versionDrop">
+               <option v-bind:value="0">{{ himitsuVersionDropBoxLabel }}</option>
+               <option v-bind:value="1">1弾</option>
+               <option v-bind:value="2">2弾</option>
+               <option v-bind:value="3">3弾</option>
+               <option v-bind:value="4">4弾</option>
+               <option value="sp">SP</option>
+             </select>
              <select v-model="selectedHimitsuGet" class="inlineBlock dropBox">
-               <option v-bind:value="0">すべて</option>
+               <option v-bind:value="0">{{ himitsuGetDropBoxLabel }}</option>
                <option v-bind:value="1">所持済み</option>
                <option v-bind:value="2">未所持</option>
              </select>
-             <input type="text" class="textSize" placeholder="アイテム名で検索">
+             <select v-model="selectedHimitsuRank" class="inlineBlock dropBox">
+               <option v-bind:value="0">{{ himitsuRankDropBoxLabel }}</option>
+               <option v-bind:value="4">★★★★</option>
+               <option v-bind:value="3">★★★</option>
+               <option v-bind:value="2">★★</option>
+               <option value="sp">★★</option>
+             </select>
+             <select v-model="selectedHimitsuChar" class="inlineBlock dropBox" v-bind:class="{'mobileSearchBox': this.mobile === true}">
+               <option v-bind:value="0">{{ himitsuCharDropBoxLabel }}</option>
+               <option value="himari">ひまり</option>
+               <option value="mitsuki">みつき</option>
+               <option value="tumugi">つむぎ</option>
+               <option value="sakura">サクラ</option>
+               <option value="tamaki">タマキ</option>
+               <option value="airi">アイリ</option>
+               <option value="rinrin">リンリン</option>
+               <option value="thi">チィ</option>
+               <option value="other">その他</option>
+             </select>
+             <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="himitsuItemName" placeholder="アイテム名で検索">
              <div>
                <div>
-                 <ul id="dispHimitsuItemList">
-                   <li>
-                     メンテ中
-                   </li>
-                 </ul>
+                <div v-show="(selectedHimitsuVersion === 1 || selectedHimitsuVersion === 0)
+                   && (
+                    selectedHimitsuRank === 0 || (
+                           (selectedHimitsuRank === 4 && himitsuList1.filter(item => item.rank === 4).length > 0) ||
+                           (selectedHimitsuRank === 3 && himitsuList1.filter(item => item.rank === 3).length > 0) ||
+                           (selectedHimitsuRank === 2 && himitsuList1.filter(item => item.rank === 2).length > 0)
+                       )
+                   )&& himitsuList1.length > 0">
+                   <div class="tableTitle">-1弾-</div>
+                   <div>
+                     <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
+                       <img v-if="himitsuList1.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
+                       <ul id="dispHimitsuItemList">
+                         <li v-for="(himitsuData) in himitsuList1.filter(item => item.rank === 4)" :key="himitsuData.value" class="itemLi">
+                           <button class="tooltip1 itemButton" 
+                             :class="{'isClicked': selectedItems.includes(himitsuData.value)}" 
+                             @click="toggleItem(himitsuData.value)">
+                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${himitsu.src}`)" alt="">
+                           </button>
+                         </li>
+                       </ul>
+                     </div>
+                     <div v-show="(selectedHimitsuRank === 3 || selectedHimitsuRank === 0)">
+                       <img v-if="himitsuList1.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
+                       <ul id="dispHimitsuItemList">
+                         <li v-for="(verseData) in himitsuList1.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
+                           <button class="tooltip1 itemButton" 
+                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
+                             @click="toggleItem(verseData.value)">
+                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                           </button>
+                         </li>
+                       </ul>
+                     </div>
+                     <div v-show="(selectedHimitsuRank === 2 || selectedHimitsuRank === 0)">
+                       <img v-if="himitsuList1.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
+                       <ul id="dispHimitsuItemList">
+                         <li v-for="(verseData) in himitsuList1.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
+                           <button class="tooltip1 itemButton" 
+                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
+                             @click="toggleItem(verseData.value)">
+                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                           </button>
+                         </li>
+                       </ul>
+                     </div>
+                   </div>
+                 </div>
                </div>
              </div>
            </div>
@@ -127,7 +188,7 @@
                <option value="pc">プリティーコレクション</option>
                <option value="ps">プリズムストーン</option>
              </select>
-             <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="itemName" placeholder="アイテム名で検索">
+             <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="verseItemName" placeholder="アイテム名で検索">
              <div>
                <div>
                  <div v-show="(selectedVerseVersion === 1 || selectedVerseVersion === 0)
@@ -382,111 +443,182 @@
   </button>
 </template>
  
- <script>
- //import himitsuJson from '../../json/himitsuItem.JSON'
- import verseJson from '../../json/verseItem.JSON'
- //import Cookies from 'js-cookie';  // js-cookie のインポート
- import 'font-awesome/css/font-awesome.css';
- import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from "firebase/auth";
- import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
- import { auth } from '../firebaseConfig'; // Firebaseの初期化ファイルからインポート
+<script>
+import himitsuJson from '../../json/himitsuItem.JSON'
+import verseJson from '../../json/verseItem.JSON'
+//import Cookies from 'js-cookie';  // js-cookie のインポート
+import 'font-awesome/css/font-awesome.css';
+import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from "firebase/auth";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import { auth } from '../firebaseConfig'; // Firebaseの初期化ファイルからインポート
  
- export default {
-   name: "MainBody",
-   data() {
-     return {
-       isActive: "A",
-       selectedVerseVersion: 0,
-       selectedVerseGet: 0,
-       selectedVerseRank: 0,
-       selectedVerseBrand: 0,
-       itemName: "", // アイテム名の入力値
-       iniVerseList: verseJson,
-       verseList: verseJson,
-       selectedItems: [],
-       mobile: false,
-       buttonActive: false,//ボタンを非表示にしておく
-       scroll: 0,
-       userPhotoURL: "",
-       isLoggedIn: false, // ログイン状態を保持
-       isLoading: true, // ローディング状態を保持
-       showPopup: false, // ポップアップの表示状態を保持
-       showHelpPopup: false, // ポップアップの表示状態を保持
-       user: ""
-     };
-   },
-   computed: {
-     filteredVerseList() {
-     let list = this.iniVerseList;
- 
-     // バージョンで絞り込み
-     if (this.selectedVerseVersion !== 0) {
-       list = list.filter(
-         (item) => item.version === String(this.selectedVerseVersion)
-       );
-     }
- 
-     // 取得状況で絞り込み
-     if (this.selectedVerseGet === 1) {
-       // 所持済み
-       list = list.filter((item) => this.selectedItems.includes(item.value));
-     } else if (this.selectedVerseGet === 2) {
-       // 未所持
-       list = list.filter((item) => !this.selectedItems.includes(item.value));
-     }
- 
-     // ブランドで絞り込み
-     if (this.selectedVerseBrand !== 0) {
-       //console.log(this.selectedVerseBrand);
-       // selectedVerseBrandが"ph"などの場合、該当するbrandをフィルタリング
-       list = list.filter((item) => item.brand === this.selectedVerseBrand);
-     }
- 
-     // アイテム名で絞り込み（部分一致）
-     if (this.itemName) {
-       const nameLower = this.itemName.toLowerCase(); // 小文字で比較
-       list = list.filter((item) =>
-         item.name.toLowerCase().includes(nameLower)
-       );
-     }
- 
-     return list;
-   },
-   
-     // 各弾ごとのリスト
-     verseList1() {
-       return this.filteredVerseList.filter((item) => item.version === "1");
-     },
-     verseList2() {
-       return this.filteredVerseList.filter((item) => item.version === "2");
-     },
-     verseList3() {
-       return this.filteredVerseList.filter((item) => item.version === "3");
-     },
-     verseList4() {
-       return this.filteredVerseList.filter((item) => item.version === "4");
-     },
-     verseListSP() {
-       return this.filteredVerseList.filter((item) => item.version === "sp");
-     },
- 
-     // バージョンのドロップボックス文字列を変化
-     verseVersionDropBoxLabel() {
-         return this.selectedVerseVersion === 0 ? 'バージョン' : 'すべて';
-     },
-     // 取得状況のドロップボックス文字列を変化
-       verseGetDropBoxLabel() {
-         return this.selectedVerseGet === 0 ? '取得状況' : 'すべて';
-     },
-     // ランクのドロップボックス文字列を変化
-       verseRankDropBoxLabel() {
-         return this.selectedVerseRank === 0 ? 'ランク' : 'すべて';
-     },
-     // ブランドのドロップボックス文字列を変化
-     verseBrandDropBoxLabel() {
-         return this.selectedVerseBrand === 0 ? 'ブランド' : 'すべて';
-     },
-   },
+export default {
+  name: "MainBody",
+  data() {
+    return {
+      isActive: "A",
+      selectedHimitsuVersion: 0,
+      selectedHimitsuGet: 0,
+      selectedHimitsuRank: 0,
+      selectedHimitsuChar: 0,
+      selectedVerseVersion: 0,
+      selectedVerseGet: 0,
+      selectedVerseRank: 0,
+      selectedVerseBrand: 0,
+      himitsuItemName: "", // アイテム名の入力値
+      verseItemName: "", // アイテム名の入力値
+      iniHimitsuList: himitsuJson,
+      //himitsuList: himitsuJson,
+      iniVerseList: verseJson,
+      //verseList: verseJson,
+      selectedItems: [],
+      mobile: false,
+      buttonActive: false,//ボタンを非表示にしておく
+      scroll: 0,
+      userPhotoURL: "",
+      isLoggedIn: false, // ログイン状態を保持
+      isLoading: true, // ローディング状態を保持
+      showPopup: false, // ポップアップの表示状態を保持
+      showHelpPopup: false, // ポップアップの表示状態を保持
+      user: ""
+    };
+  },
+  computed: {
+    filteredHimitsuList() {
+      let list = this.iniHimitsuList;
+      // バージョンで絞り込み
+      if (this.selectedHimitsuVersion !== 0) {
+        list = list.filter(
+          (item) => item.version === String(this.selectedHimitsuVersion)
+        );
+      }
+  
+      // 取得状況で絞り込み
+      if (this.selectedHimitsuGet === 1) {
+        // 所持済み
+        list = list.filter((item) => this.selectedItems.includes(item.value));
+      } else if (this.selectedHimitsuGet === 2) {
+        // 未所持
+        list = list.filter((item) => !this.selectedItems.includes(item.value));
+      }
+  
+      // ブランドで絞り込み
+      if (this.selectedHimitsuBrand !== 0) {
+        //console.log(this.selectedVerseBrand);
+        // selectedVerseBrandが"ph"などの場合、該当するbrandをフィルタリング
+        list = list.filter((item) => item.brand === this.selectedHimitsuBrand);
+      }
+  
+      // アイテム名で絞り込み（部分一致）
+      if (this.himitsuItemName) {
+        const nameLower = this.himitsuItemName.toLowerCase(); // 小文字で比較
+        list = list.filter((item) =>
+          item.name.toLowerCase().includes(nameLower)
+        );
+      }
+      console.log(list);
+      return list;
+    },
+    filteredVerseList() {
+      let list = this.iniVerseList;
+  
+      // バージョンで絞り込み
+      if (this.selectedVerseVersion !== 0) {
+        list = list.filter(
+          (item) => item.version === String(this.selectedVerseVersion)
+        );
+      }
+  
+      // 取得状況で絞り込み
+      if (this.selectedVerseGet === 1) {
+        // 所持済み
+        list = list.filter((item) => this.selectedItems.includes(item.value));
+      } else if (this.selectedVerseGet === 2) {
+        // 未所持
+        list = list.filter((item) => !this.selectedItems.includes(item.value));
+      }
+  
+      // ブランドで絞り込み
+      if (this.selectedVerseBrand !== 0) {
+        //console.log(this.selectedVerseBrand);
+        // selectedVerseBrandが"ph"などの場合、該当するbrandをフィルタリング
+        list = list.filter((item) => item.brand === this.selectedVerseBrand);
+      }
+  
+      // アイテム名で絞り込み（部分一致）
+      if (this.verseItemName) {
+        const nameLower = this.verseItemName.toLowerCase(); // 小文字で比較
+        list = list.filter((item) =>
+          item.name.toLowerCase().includes(nameLower)
+        );
+      }
+      return list;
+    },
+  
+    // 各弾ごとのリスト
+    himitsuList1() {
+      return this.filteredHimitsuList.filter((item) => item.version === "1");
+    },
+    himitsuList2() {
+      return this.filteredHimitsuList.filter((item) => item.version === "2");
+    },
+    himitsuList3() {
+      return this.filteredHimitsuList.filter((item) => item.version === "3");
+    },
+    himitsuList4() {
+      return this.filteredHimitsuList.filter((item) => item.version === "4");
+    },
+    himitsuListSP() {
+      return this.filteredHimitsuList.filter((item) => item.version === "sp");
+    },
+    verseList1() {
+      return this.filteredVerseList.filter((item) => item.version === "1");
+    },
+    verseList2() {
+      return this.filteredVerseList.filter((item) => item.version === "2");
+    },
+    verseList3() {
+      return this.filteredVerseList.filter((item) => item.version === "3");
+    },
+    verseList4() {
+      return this.filteredVerseList.filter((item) => item.version === "4");
+    },
+    verseListSP() {
+      return this.filteredVerseList.filter((item) => item.version === "sp");
+    },
+    // バージョンのドロップボックス文字列を変化
+    himitsuVersionDropBoxLabel() {
+        return this.selectedVerseVersion === 0 ? 'バージョン' : 'すべて';
+    },
+    // 取得状況のドロップボックス文字列を変化
+    himitsuGetDropBoxLabel() {
+        return this.selectedVerseGet === 0 ? '取得状況' : 'すべて';
+    },
+    // ランクのドロップボックス文字列を変化
+    himitsuRankDropBoxLabel() {
+        return this.selectedVerseRank === 0 ? 'ランク' : 'すべて';
+    },
+    // キャラのドロップボックス文字列を変化
+    himitsuCharDropBoxLabel() {
+        return this.selectedVerseBrand === 0 ? 'キャラ' : 'すべて';
+    },
+    // バージョンのドロップボックス文字列を変化
+    verseVersionDropBoxLabel() {
+        return this.selectedVerseVersion === 0 ? 'バージョン' : 'すべて';
+    },
+    // 取得状況のドロップボックス文字列を変化
+      verseGetDropBoxLabel() {
+        return this.selectedVerseGet === 0 ? '取得状況' : 'すべて';
+    },
+    // ランクのドロップボックス文字列を変化
+      verseRankDropBoxLabel() {
+        return this.selectedVerseRank === 0 ? 'ランク' : 'すべて';
+    },
+    // ブランドのドロップボックス文字列を変化
+    verseBrandDropBoxLabel() {
+        return this.selectedVerseBrand === 0 ? 'ブランド' : 'すべて';
+    },
+  },
    methods: {
      change(num) {
        this.isActive = num;
@@ -510,7 +642,8 @@
          this.selectedItems = JSON.parse(savedItems);
        }
      },
-     async getListCheck(kind, value) {
+     /*async getListCheck(kind, value) {
+      console.log("リストチェック")
        //const holidays = [];
        const list = this.iniVerseList.concat();
        const slectItem = this.selectedItems.concat();
@@ -526,10 +659,11 @@
        }
      },
      filterVerseListByRank(version, rank) {
+      console.log("らんくなんちゃら")
        return this.iniVerseList.filter(item => {
          return item.version === String(version) && item.rank === rank;
        });
-     },
+     },*/
      isMobile() {
        var userAgent = window.navigator.userAgent.toLowerCase()
        if (
@@ -694,7 +828,6 @@
     },
     mounted() {
       //Cookies.remove('selectedItems');
-      // コンポーネントがマウントされたときにCookieからデータを読み込む
       this.loadSelectedItems();
       if (this.isMobile()) {
         this.mobile = true;
