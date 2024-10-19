@@ -8,8 +8,18 @@
 <script>
 export default {
   name: 'MainHeader',
-  props: {
-    msg: String
+  data() {
+     return {
+       showPopup: false, // ポップアップの表示状態を保持
+     };
+   },
+  methods: {
+    togglePopup() {
+      this.showPopup = !this.showPopup; // ポップアップの表示/非表示をトグル
+    },
+    closePopup () {
+      this.showPopup = false; // ポップアップを閉じる
+    }
   }
 }
 </script>
@@ -48,7 +58,7 @@ a {
   float: right;
 }
 .titleIcon {
-  width: 250px;
+  width: 220px;
   margin-top: 12px;
 }
 </style>

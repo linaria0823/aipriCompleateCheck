@@ -1,6 +1,25 @@
 <template>
   <div id="contents" class="mainBody">
      <div>
+        <img v-lazy="require(`@/img/icon/help.png`)" class="helpIcon" alt="" @click="toggleHelpPopup">
+        <div v-if="showHelpPopup" class="overlay" @click="showHelpPopup = false"></div>
+        <div v-if="showHelpPopup" class="popup" ref="popup">
+          <div class="closeIconBox">
+            <button class="closeButton" @click="closeHelpPopup">×</button>
+          </div>
+          <div class="helpTextBox">
+            <div>データはお使いの端末のブラウザへ保存されます。</div>
+            <div>Googleアカウントと連携することで、クラウドへデータを保存することもできます。</div>
+            <br>
+            <div class="redText">
+              ※右上アイコン押下後に表示される、
+            </div>
+            <div class="redText">
+              「クラウドへデータ保存」、
+              「クラウドからデータ取得」を押下するまでクラウドへの保存、取得は行われません。
+            </div>
+          </div>
+        </div>
         <div v-if="isLoading" class="loginButton">
           <!-- ローディング中の表示（スピナーなど） -->
           <p>読み込み中...</p>
@@ -10,11 +29,12 @@
           <!-- オーバーレイ -->
           <div v-if="showPopup" class="overlay" @click="showPopup = false"></div>
           <div v-if="showPopup" class="popup" ref="popup">
-            <p>ログアウトしますか？</p>
-            <div class="buttonBox">
-              <button class="okButton" @click="logout">はい</button>
-              <button class="ngButton" @click="closePopup">いいえ</button>
+            <div class="closeIconBox">
+              <button class="closeButton" @click="closePopup">×</button>
             </div>
+            <button class="getButton" @click="getCloudData">クラウドからデータ取得</button>
+            <button class="saveButton" @click="saveCloudData">クラウドへデータ保存</button>
+            <button class="logoutButton" @click="logout">ログアウト</button>
           </div>
         </div>
         <div v-else>
@@ -306,6 +326,8 @@
        isLoggedIn: false, // ログイン状態を保持
        isLoading: true, // ローディング状態を保持
        showPopup: false, // ポップアップの表示状態を保持
+       showHelpPopup: false, // ポップアップの表示状態を保持
+       user: ""
      };
    },
    computed: {
@@ -452,16 +474,16 @@
         const provider = new GoogleAuthProvider();
         //const auth = getAuth();
         try {
-          // 永続性を設定（ブラウザのローカルストレージに保存）
+          // 永続性を設定
           await setPersistence(auth, browserLocalPersistence);
           const result = await signInWithPopup(auth, provider);
-          const user = result.user;
+          this.user = result.user;
 
           // ユーザープロフィール情報の取得
-          this.userPhotoURL = user.photoURL; // GoogleアイコンのURLを取得
+          this.userPhotoURL = this.user.photoURL; // GoogleアイコンのURLを取得
  
           // ユーザーデータを取得
-          await this.fetchUserData(user.uid);
+          await this.fetchUserData(this.user.uid);
  
           // ローカルストレージから選択されたアイテムを取得
           const storedItems = localStorage.getItem('selectedItems');
@@ -502,12 +524,12 @@
          console.log("ユーザーデータ:", docSnap.data());
          
          // 既存の選択されたアイテムのみをローカルストレージに保存
-         if (docSnap.data().selectedItems) {
+         /*if (docSnap.data().selectedItems) {
            this.selectedItems = docSnap.data().selectedItems;
            localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
          } else {
            console.log("選択されたアイテムが見つかりません。");
-         }
+         }*/
        } else {
          // ユーザーデータが存在しない場合、新規作成
          console.log("初めてのログインです。ユーザーデータを作成します。");
@@ -516,33 +538,31 @@
          this.selectedItems = defaultData.selectedItems; // 初期化
          localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
        }
-     },
+      },
       togglePopup() {
         this.showPopup = !this.showPopup; // ポップアップの表示/非表示をトグル
+      },
+      toggleHelpPopup() {
+        this.showHelpPopup = !this.showHelpPopup; // ポップアップの表示/非表示をトグル
       },
       handleClickOutside(event) {
         // ポップアップとアイコンの外側をクリックしたときにポップアップを閉じる
         const popup = this.$refs.popup;
         const icon = this.$refs.icon;
         if (this.showPopup && popup && !popup.contains(event.target) && icon && !icon.contains(event.target)) {
-          this.showPopup = false;
+          this.closePopup();
         }
-      },
-      closePopup() {
-        this.showPopup = false;
       },
       async logout() {
         //const auth = getAuth();
         // currentUserが存在する場合のみ処理を実行
-        if (auth.currentUser) {
-          // 選択されたアイテムをFirestoreに保存
-          await this.saveSelectedItems(auth.currentUser.uid, this.selectedItems);        
+        if (auth.currentUser) {       
           // サインアウト
           await signOut(auth);
-          localStorage.removeItem("selectedItems"); // 選択されたアイテムのローカルストレージも削除
+          //localStorage.removeItem("selectedItems"); // 選択されたアイテムのローカルストレージも削除
           // 画面の状態をリセット
-          this.selectedItems = []; // もしくは初期化するアイテムの配列を設定
-          this.showPopup = false; // ポップアップを閉じる
+          //this.selectedItems = []; // もしくは初期化するアイテムの配列を設定
+          this.closePopup(); // ポップアップを閉じる
         } else {
           console.log("ログインしていないため、ログアウト処理をスキップします。");
         }
@@ -559,6 +579,29 @@
         const db = getFirestore();
         const docRef = doc(db, "users", uid);
         await setDoc(docRef, { selectedItems: selectedItems }, { merge: true });
+      },
+      async getCloudData () {
+        // 選択されたアイテムをFirestoreから取得
+        // ユーザーデータを取得
+        const db = getFirestore();
+        const docRef = doc(db, "users", this.user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.data().selectedItems) {
+           this.selectedItems = docSnap.data().selectedItems;
+           localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
+        }
+        this.closePopup(); // ポップアップを閉じる
+      },
+      async saveCloudData () {
+        // 選択されたアイテムをFirestoreに保存
+        await this.saveSelectedItems(auth.currentUser.uid, this.selectedItems);
+        this.closePopup(); // ポップアップを閉じる
+      },
+      closePopup () {
+        this.showPopup = false; // ポップアップを閉じる
+      },
+      closeHelpPopup () {
+        this.showHelpPopup = false; // ポップアップを閉じる
       }
     },
     mounted() {
@@ -776,7 +819,6 @@
     flex-direction: column; /* 縦に並べる */
     align-items: center; /* 中央に揃える */
     width: 300px;
-    height: 100px;
   }
   .overlay {
     position: fixed; /* スクロールしても位置を固定 */
@@ -785,7 +827,7 @@
     width: 100%; /* 全幅 */
     height: 100%; /* 全高 */
     background-color: rgba(0, 0, 0, 0.5); /* 半透明の黒 */
-    z-index: 1000; /* ポップアップの下に配置 */
+    z-index: 1001; /* ポップアップの下に配置 */
   }
   .loginButton {
     position: fixed;
@@ -900,7 +942,22 @@
     background-color: white;
     opacity: 8%;
   }
-  .okButton {
+  .getButton {
+    color: #fff;
+    background-color: #00b13f;
+    border-radius: 100vh;
+    border-color: #00b13f;
+    border-style: solid;
+    /* クリックした際に枠線をnone消す */
+    outline: none;
+    /* 影を消す */
+    box-shadow: none;
+    padding: 5px 20px;
+    width: 210px;
+    display: inline-block;
+    margin: 10px;
+  }
+  .saveButton {
     color: #fff;
     background-color: #3191ff;
     border-radius: 100vh;
@@ -911,26 +968,61 @@
     /* 影を消す */
     box-shadow: none;
     padding: 5px 20px;
-    width: 90px;
+    width: 210px;
     display: inline-block;
-    margin-right: 10px;
+    margin: 10px;
   }
-  .ngButton {
-    color: #000000;
+  .logoutButton {
+    color: #ff0000;
     background-color: #ffffff;
     border-radius: 100vh;
-    border-color: #3191ff;
+    border-color: #ff0000;
     border-style: solid;
     /* クリックした際に枠線をnone消す */
     outline: none;
     /* 影を消す */
     box-shadow: none;
     padding: 5px 20px;
-    width: 90px;
+    width: 210px;
     display: inline-block;
+    margin-top: 30px;
+    margin-bottom: 10px;
   }
   .buttonBox {
     text-align: center;
+  }
+  .closeButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: transparent;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+  }
+  .closeIconBox {
+    height: 20px;
+  }
+  button{
+    font-family: "Zen Maru Gothic", serif;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 15px;
+  }
+  .helpIcon {
+    position: fixed;
+    z-index: 1000;
+    right: 110px;
+    top: 8px;
+    width: 30px;
+  }
+  .helpTextBox {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 11px;
+  }
+  .redText {
+    color: red; /* テキストを赤色にする */
   }
  </style>
  
