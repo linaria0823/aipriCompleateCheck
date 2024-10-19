@@ -9,7 +9,7 @@
           </div>
           <div class="helpTextBox">
             <div>データはお使いの端末のブラウザへ保存されます。</div>
-            <div>基本的にはクラウドへ保存する必要はありませんが、ブラウザのキャッシュ削除や端末変更、別端末へのデータ移行時等時はGoogleアカウントと連携し、クラウドへデータ保存してください。</div>
+            <div>基本的にはクラウドへ保存する必要はありませんが、ブラウザのキャッシュ削除や端末変更など別端末へのデータ移行時等はGoogleアカウントと連携し、クラウドへデータ保存してください。</div>
             <br>
             <div class="redText">
               ※右上アイコン押下後に表示される、
@@ -275,15 +275,44 @@
                  </div>
                  <div v-show="(selectedVerseVersion === 4 || selectedVerseVersion === 0) && verseList4.length > 0">
                    <div class="tableTitle versionMargin">-4弾-</div>
-                   <ul id="dispHimitsuItemList">
-                     <li v-for="(verseData) in verseList4" :key="verseData.value" class="itemLi">
-                         <button class="tooltip1 itemButton" 
-                           :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                           @click="toggleItem(verseData.value)">
-                         <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                       </button>
-                     </li>
-                   </ul>
+                   <div>
+                     <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
+                       <img v-if="verseList4.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
+                       <ul id="dispHimitsuItemList">
+                         <li v-for="(verseData) in verseList4.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
+                           <button class="tooltip1 itemButton" 
+                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
+                             @click="toggleItem(verseData.value)">
+                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                           </button>
+                         </li>
+                       </ul>
+                     </div>
+                     <div v-show="(selectedVerseRank === 3 || selectedVerseRank === 0)">
+                       <img v-if="verseList4.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
+                       <ul id="dispHimitsuItemList">
+                         <li v-for="(verseData) in verseList4.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
+                           <button class="tooltip1 itemButton" 
+                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
+                             @click="toggleItem(verseData.value)">
+                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                           </button>
+                         </li>
+                       </ul>
+                     </div>
+                     <div v-show="(selectedVerseRank === 2 || selectedVerseRank === 0)">
+                       <img v-if="verseList4.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
+                       <ul id="dispHimitsuItemList">
+                         <li v-for="(verseData) in verseList4.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
+                           <button class="tooltip1 itemButton" 
+                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
+                             @click="toggleItem(verseData.value)">
+                             <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                           </button>
+                         </li>
+                       </ul>
+                     </div>
+                   </div>
                  </div>
                </div>
              </div>
