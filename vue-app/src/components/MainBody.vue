@@ -452,24 +452,30 @@
   // ユーザーのログイン状態を監視するリスナーを設定
   async monitorUserLoginState(uid) {
     const db = getFirestore();
-    const docRef = doc(db, "users", uid);
+  const docRef = doc(db, "users", uid);
 
-    // Firestoreのドキュメントをリアルタイムで監視
-    onSnapshot(docRef, async (docSnap) => {
-      if (docSnap.exists()) {
-        const userData = docSnap.data();
-        const currentDeviceId = localStorage.getItem('deviceId');
+  // Firestoreのドキュメントをリアルタイムで監視
+  onSnapshot(docRef, async (docSnap) => {
+    if (docSnap.exists()) {
+      const userData = docSnap.data();
+      const currentDeviceId = localStorage.getItem('deviceId');
 
-        // 他の端末でログインされた場合
-        if (userData.currentDeviceId && userData.currentDeviceId !== currentDeviceId) {
-          console.log("他の端末でログインされました。ログアウトします。");
+      // 他の端末でログインされた場合
+      if (userData.currentDeviceId && userData.currentDeviceId !== currentDeviceId) {
+        console.log("他の端末でログインされました。ログアウトします。");
+
+        // auth.currentUserが存在する場合のみ処理を続行
+        if (auth.currentUser) {
           // 選択されたアイテムを保存してからログアウト
           await this.saveSelectedItems(auth.currentUser.uid, this.selectedItems);
           await this.logout();
           await this.fetchSelectedItems(uid); // Firestore から選択されたアイテムを取得
+        } else {
+          console.warn("現在のユーザーが存在しません。ログアウト処理をスキップします。");
         }
       }
-    });
+    }
+  });
   },
 
   async login() {
