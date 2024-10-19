@@ -205,11 +205,11 @@
                        <img v-if="verseList1.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList1.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
-                           <button class="tooltip1 itemButton" 
+                            <div class="tooltip1 cordeButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
                              <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                           </button>
+                            </div>
                          </li>
                        </ul>
                      </div>
@@ -217,11 +217,11 @@
                        <img v-if="verseList1.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList1.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
-                           <button class="tooltip1 itemButton" 
+                           <div class="tooltip1 cordeButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
                              <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                           </button>
+                           </div>
                          </li>
                        </ul>
                      </div>
@@ -229,11 +229,11 @@
                        <img v-if="verseList1.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList1.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
-                           <button class="tooltip1 itemButton" 
+                           <div class="tooltip1 cordeButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
                              <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                           </button>
+                            </div>
                          </li>
                        </ul>
                      </div>
@@ -253,11 +253,11 @@
                        <img v-if="verseList2.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList2.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
-                           <button class="tooltip1 itemButton" 
+                            <div class="tooltip1 cordeButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
                              <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                           </button>
+                            </div>
                          </li>
                        </ul>
                      </div>
@@ -265,11 +265,11 @@
                        <img v-if="verseList2.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList2.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
-                           <button class="tooltip1 itemButton" 
+                           <div class="tooltip1 cordeButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
                              <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                           </button>
+                            </div>
                          </li>
                        </ul>
                      </div>
@@ -277,11 +277,11 @@
                        <img v-if="verseList2.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList2.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
-                           <button class="tooltip1 itemButton" 
+                           <div class="tooltip1 cordeButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
                              <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                           </button>
+                            </div>
                          </li>
                        </ul>
                      </div>
@@ -301,11 +301,11 @@
                        <img v-if="verseList3.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList3.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
-                           <button class="tooltip1 itemButton" 
+                           <div class="tooltip1 cordeButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
                              <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                           </button>
+                         </div>
                          </li>
                        </ul>
                      </div>
@@ -313,11 +313,11 @@
                        <img v-if="verseList3.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList3.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
-                           <button class="tooltip1 itemButton" 
+                            <div class="tooltip1 cordeButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
                              <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                           </button>
+                            </div>
                          </li>
                        </ul>
                      </div>
@@ -325,11 +325,11 @@
                        <img v-if="verseList3.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList3.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
-                           <button class="tooltip1 itemButton" 
+                            <div class="tooltip1 cordeButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
                              <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                           </button>
+                            </div>
                          </li>
                        </ul>
                      </div>
@@ -349,11 +349,11 @@
                        <img v-if="verseList4.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList4.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
-                           <button class="tooltip1 itemButton" 
+                           <div class="tooltip1 cordeButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
                              <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                           </button>
+                            </div>
                          </li>
                        </ul>
                      </div>
@@ -361,11 +361,11 @@
                        <img v-if="verseList4.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList4.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
-                           <button class="tooltip1 itemButton" 
+                           <div class="tooltip1 cordeButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
                              <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                           </button>
+                          </div>
                          </li>
                        </ul>
                      </div>
@@ -373,11 +373,11 @@
                        <img v-if="verseList4.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList4.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
-                           <button class="tooltip1 itemButton" 
+                           <div class="tooltip1 cordeButton" 
                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                              @click="toggleItem(verseData.value)">
                              <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                           </button>
+                          </div>
                          </li>
                        </ul>
                      </div>
@@ -398,11 +398,11 @@
                       <img v-if="verseListSP.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                       <ul id="dispHimitsuItemList">
                         <li v-for="(verseData) in verseListSP.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
-                          <button class="tooltip1 itemButton" 
+                          <div class="tooltip1 cordeButton" 
                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                             @click="toggleItem(verseData.value)">
                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                          </button>
+                          </div>
                         </li>
                       </ul>
                     </div>
@@ -410,11 +410,11 @@
                       <img v-if="verseListSP.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                       <ul id="dispHimitsuItemList">
                         <li v-for="(verseData) in verseListSP.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
-                          <button class="tooltip1 itemButton" 
+                          <div class="tooltip1 cordeButton" 
                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                             @click="toggleItem(verseData.value)">
                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                          </button>
+                        </div>
                         </li>
                       </ul>
                     </div>
@@ -422,11 +422,11 @@
                       <img v-if="verseListSP.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                       <ul id="dispHimitsuItemList">
                         <li v-for="(verseData) in verseListSP.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
-                          <button class="tooltip1 itemButton" 
+                          <div class="tooltip1 cordeButton" 
                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                             @click="toggleItem(verseData.value)">
                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                          </button>
+                        </div>
                         </li>
                       </ul>
                     </div>
@@ -434,11 +434,11 @@
                       <div class="starMargin">SP</div>
                       <ul id="dispHimitsuItemList">
                         <li v-for="(verseData) in verseListSP.filter(item => item.rank === 'sp')" :key="verseData.value" class="itemLi">
-                          <button class="tooltip1 itemButton" 
+                          <div class="tooltip1 cordeButton" 
                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                             @click="toggleItem(verseData.value)">
                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                          </button>
+                          </div>
                         </li>
                       </ul>
                     </div>
@@ -965,26 +965,6 @@ export default {
    cursor: pointer;
    display: inline-block;
  }
- .cardButton {
-  cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
- }
- .cardButton:active {
-      background-color: #f0f0f0;
-      transform: scale(0.95);
-  }
- .itemButton {
-   width: auto;
-   height: auto;
-   border: 0;
-   border-radius: 10px;
-   margin-left: 5px;
-   margin-right: 5px;
-   margin-bottom: 5px;
-   background-color: #fff;
-   transition: opacity 0.3s;  /* スムーズな変化のためのトランジション */
-   opacity: 1;  /* 通常状態では不透明 */
- }
  .isClicked {
    opacity: 0.5;  /* クリック時に半透明に */
  }
@@ -999,29 +979,88 @@ export default {
    background: #000;
    width: 100px;
  }
- .cardItemImg {
-    width: 90px;
+  .cardButton {
     margin-bottom: 5px;
     margin-right: 5px;
     margin-left: 5px;
   }
- .cardItemImgMobile {
+  .cardButton:active {
+    margin-bottom: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+  .cardItemImg {
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 90px;
+  }
+  .cardItemImg:active {
+    cursor: pointer;
+    background-color: #f0f0f0;
+    transform: scale(0.95);
+    width: 90px;
+  }
+  .cardItemImgMobile {
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
     width: 60px;
+  }
+  .cardItemImgMobile:active {
+    cursor: pointer;
+    background-color: #f0f0f0;
+    transform: scale(0.95);
+    width: 60px;
+  }
+  .cordeButton {
     margin-bottom: 5px;
     margin-right: 5px;
     margin-left: 5px;
- }
+  }
+  .cordeButton:active {
+    margin-bottom: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
   .cordeItemImg {
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
     width: 75px;
-    margin-bottom: 5px;
-    margin-right: 5px;
-    margin-left: 5px;
+    border-radius: 10px;
+    background-color: #fff;
+    transition: opacity 0.3s;  /* スムーズな変化のためのトランジション */
+    opacity: 1;  /* 通常状態では不透明 */
+  }
+  .cordeItemImg:active {
+    cursor: pointer;
+    background-color: #f0f0f0;
+    transform: scale(0.95);
+    transition: background-color 0.3s, transform 0.2s;
+    width: 75px;
+    border-radius: 10px;
+    background-color: #fff;
+    transition: opacity 0.3s;  /* スムーズな変化のためのトランジション */
+    opacity: 1;  /* 通常状態では不透明 */
   }
   .cordeItemImgMobile {
-    width: 40px;
-    margin-bottom: 5px;
-    margin-right: 5px;
-    margin-left: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    background-color: #fff;
+    transition: opacity 0.3s;  /* スムーズな変化のためのトランジション */
+    opacity: 1;  /* 通常状態では不透明 */
+  }
+  .cordeItemImgMobile:active {
+    cursor: pointer;
+    background-color: #f0f0f0;
+    transform: scale(0.95);
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    background-color: #fff;
+    transition: opacity 0.3s;  /* スムーズな変化のためのトランジション */
+    opacity: 1;  /* 通常状態では不透明 */
   }
  .itemLi{
    display: inline;
