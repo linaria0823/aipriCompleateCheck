@@ -455,14 +455,19 @@
       const docRef = doc(db, "users", uid);
 
       // Firestoreのドキュメントをリアルタイムで監視
-      this.unsubscribe = onSnapshot(docRef, (docSnap) => {
+      onSnapshot(docRef, async (docSnap) => {
         if (docSnap.exists()) {
           const userData = docSnap.data();
-          const currentDeviceId = localStorage.getItem('deviceId'); 
+          const currentDeviceId = localStorage.getItem('deviceId');
 
           if (userData.currentDeviceId && userData.currentDeviceId !== currentDeviceId) {
             console.log("他の端末でログインされました。ログアウトします。");
-            this.logout(); 
+            
+            // 選択されたアイテムを保存してからログアウト
+            await this.logout();
+            
+            // Firestore から選択されたアイテムを取得
+            await this.fetchSelectedItems(uid);
           }
         }
       });
@@ -556,30 +561,23 @@
       },
       async logout() {
         try {
-          // Firestoreのリスナーを解除
-          if (this.unsubscribe) {
-            this.unsubscribe();
-          }
-          // currentUserが存在する場合のみ処理を実行
-          if (auth.currentUser) {
-            // 選択されたアイテムをFirestoreに保存
-            await this.saveSelectedItems(auth.currentUser.uid, this.selectedItems);        
-            // サインアウト
+            // auth.currentUserが存在するか確認
+            if (auth.currentUser) {
+              // 選択されたアイテムを Firestore に保存
+              await this.saveSelectedItems(auth.currentUser.uid, this.selectedItems);
+              
+              // Firestore から選択されたアイテムを取得
+              await this.fetchSelectedItems(auth.currentUser.uid);
+            } else {
+              console.warn("現在のユーザーが存在しません。ログアウト処理をスキップします。");
+            }
+
+            // ログアウト処理
             await signOut(auth);
-            // 新たにログインしている端末から選択されたアイテムを取得
-            this.fetchSelectedItems(auth.currentUser.uid); // このメソッドを定義する必要があります
-            localStorage.removeItem("selectedItems"); // 選択されたアイテムのローカルストレージも削除
-            // 画面の状態をリセット
-            this.selectedItems = []; // もしくは初期化するアイテムの配列を設定
-            this.showPopup = false; // ポップアップを閉じる
-          } else {
-            console.log("ログインしていないため、ログアウト処理をスキップします。");
+          } catch (error) {
+            console.error("ログアウトエラー:", error);
           }
-        } catch (error) {
-          console.error("ログアウトエラー:", error);
-        }
-        //const auth = getAuth();
-      },
+        },
       // Firestoreから選択されたアイテムを取得するメソッド
       async fetchSelectedItems(uid) {
         const db = getFirestore();
