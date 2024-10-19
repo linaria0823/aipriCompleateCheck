@@ -9,7 +9,7 @@
           </div>
           <div class="helpTextBox">
             <div>データはお使いの端末のブラウザへ保存されます。</div>
-            <div>Googleアカウントと連携することで、クラウドへデータを保存することもできます。</div>
+            <div>基本的にはクラウドへ保存する必要はありませんが、ブラウザのキャッシュ削除や端末変更、別端末へのデータ移行時等時はGoogleアカウントと連携し、クラウドへデータ保存してください。</div>
             <br>
             <div class="redText">
               ※右上アイコン押下後に表示される、
@@ -956,6 +956,7 @@
     width: 210px;
     display: inline-block;
     margin: 10px;
+    cursor: pointer;
   }
   .saveButton {
     color: #fff;
@@ -971,6 +972,7 @@
     width: 210px;
     display: inline-block;
     margin: 10px;
+    cursor: pointer;
   }
   .logoutButton {
     color: #ff0000;
@@ -987,6 +989,7 @@
     display: inline-block;
     margin-top: 30px;
     margin-bottom: 10px;
+    cursor: pointer;
   }
   .buttonBox {
     text-align: center;
