@@ -172,7 +172,7 @@
                <option v-bind:value="4">★★★★</option>
                <option v-bind:value="3">★★★</option>
                <option v-bind:value="2">★★</option>
-               <option value="sp">SP</option>
+               <option value="sp">スペシャル</option>
              </select>
              <select v-model="selectedVerseBrand" class="inlineBlock dropBox" v-bind:class="{'mobileSearchBox': this.mobile === true}">
                <option v-bind:value="0">{{ verseBrandDropBoxLabel }}</option>
@@ -431,7 +431,7 @@
                       </ul>
                     </div>
                     <div v-show="(selectedVerseRank === 'sp' || selectedVerseRank === 0)">
-                      <div class="starMargin">SP</div>
+                      <img v-if="verseListSP.filter(item => item.rank === 'sp').length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/special.webp`)" alt="">
                       <ul id="dispHimitsuItemList">
                         <li v-for="(verseData) in verseListSP.filter(item => item.rank === 'sp')" :key="verseData.value" class="itemLi">
                           <div class="tooltip1 cordeButton" 
