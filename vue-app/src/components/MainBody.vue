@@ -470,7 +470,7 @@
           await this.saveSelectedItems(auth.currentUser.uid, this.selectedItems);
           await this.logout();
 
-          // Firestore から選択されたアイテムを取得
+          // Firestoreから選択されたアイテムを取得
           await this.fetchSelectedItems(uid);
         } else {
           console.warn("現在のユーザーが存在しません。ログアウト処理をスキップします。");
@@ -498,12 +498,12 @@
     const docRef = doc(db, "users", user.uid);
     const userDoc = await getDoc(docRef);
     const currentDeviceId = localStorage.getItem('deviceId');
-    
+
     // 確認ポップアップ表示
     if (userDoc.exists() && userDoc.data().currentDeviceId !== currentDeviceId) {
       // 他端末でのログインを検出
       const confirmLogout = confirm("他の端末でログインされています。ログアウトしますか？");
-      if (confirmLogout) {        
+      if (confirmLogout) {
         // ユーザーデータを取得
         await this.fetchUserData(user.uid); // ここでユーザーデータを取得
         
@@ -558,56 +558,56 @@
   },
 
   async fetchUserData(uid) {
-    console.log("fetchよばれてる")
-    const db = getFirestore();
-    const docRef = doc(db, "users", uid);
-    const docSnap = await getDoc(docRef);
+    console.log("fetchよばれてる");
+  const db = getFirestore();
+  const docRef = doc(db, "users", uid);
+  const docSnap = await getDoc(docRef);
 
-    if (docSnap.exists()) {
-      // ユーザーデータが存在する場合
-      console.log("ユーザーデータ:", docSnap.data());
+  if (docSnap.exists()) {
+    // ユーザーデータが存在する場合
+    console.log("ユーザーデータ:", docSnap.data());
 
-      // 既存の選択されたアイテムのみをローカルストレージに保存
-      if (docSnap.data().selectedItems) {
-        this.selectedItems = docSnap.data().selectedItems;
-        localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
-      } else {
-        console.log("選択されたアイテムが見つかりません。"); // ここを確認
-      }
-    } else {
-      // ユーザーデータが存在しない場合、新規作成
-      console.log("初めてのログインです。ユーザーデータを作成します。");
-      const defaultData = { selectedItems: [] }; // デフォルトの選択されたアイテム
-
-      // ユーザーデータを保存
-      await this.saveUserData(uid, defaultData);
-      this.selectedItems = defaultData.selectedItems; // 初期化
+    // 既存の選択されたアイテムのみをローカルストレージに保存
+    if (docSnap.data().selectedItems) {
+      this.selectedItems = docSnap.data().selectedItems;
       localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
-
-      console.log("ユーザーデータが作成されました:", defaultData); // 追加したログ
+    } else {
+      console.log("選択されたアイテムが見つかりません。"); // ここを確認
     }
+  } else {
+    // ユーザーデータが存在しない場合、新規作成
+    console.log("初めてのログインです。ユーザーデータを作成します。");
+    const defaultData = { selectedItems: [] }; // デフォルトの選択されたアイテム
+
+    // ユーザーデータを保存
+    await this.saveUserData(uid, defaultData);
+    this.selectedItems = defaultData.selectedItems; // 初期化
+    localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
+
+    console.log("ユーザーデータが作成されました:", defaultData); // 追加したログ
+  }
   },
 
   async logout() {
     try {
-      // auth.currentUserが存在するか確認
-      if (auth.currentUser) {
-        // 選択されたアイテムを Firestore に保存
-        await this.saveSelectedItems(auth.currentUser.uid, this.selectedItems);
-      } else {
-        console.warn("現在のユーザーが存在しません。ログアウト処理をスキップします。");
-      }
-
-      // ログアウト処理
-      await signOut(auth);
-    } catch (error) {
-      console.error("ログアウトエラー:", error);
+    // auth.currentUserが存在するか確認
+    if (auth.currentUser) {
+      // 選択されたアイテムを Firestore に保存
+      await this.saveSelectedItems(auth.currentUser.uid, this.selectedItems);
+    } else {
+      console.warn("現在のユーザーが存在しません。ログアウト処理をスキップします。");
     }
+
+    // ログアウト処理
+    await signOut(auth);
+  } catch (error) {
+    console.error("ログアウトエラー:", error);
+  }
   },
 
   // Firestoreから選択されたアイテムを取得するメソッド
   async fetchSelectedItems(uid) {
-    console.log("fetch呼ばれてる")
+    console.log("fetch呼ばれてる");
   const db = getFirestore();
   const docRef = doc(db, "users", uid);
 
@@ -625,19 +625,19 @@
   }
   },
 
-  // ユーザーID情報を登録する
-  async saveUserData(uid, data) {
-    const db = getFirestore();
-    const docRef = doc(db, "users", uid);
-    await setDoc(docRef, data, { merge: true });
-  },
+// ユーザーID情報を登録する
+async saveUserData(uid, data) {
+  const db = getFirestore();
+  const docRef = doc(db, "users", uid);
+  await setDoc(docRef, data, { merge: true });
+},
 
-  // 取得情報を登録する
-  async saveSelectedItems(uid, selectedItems) {
-    const db = getFirestore();
-    const docRef = doc(db, "users", uid);
-    await setDoc(docRef, { selectedItems: selectedItems }, { merge: true });
-  },
+// 取得情報を登録する
+async saveSelectedItems(uid, selectedItems) {
+  const db = getFirestore();
+  const docRef = doc(db, "users", uid);
+  await setDoc(docRef, { selectedItems: selectedItems }, { merge: true });
+},
 
   togglePopup() {
     console.log("ヨバレテル！")
