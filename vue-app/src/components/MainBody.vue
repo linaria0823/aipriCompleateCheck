@@ -12,11 +12,14 @@
             <div>基本的にはクラウドへ保存する必要はありませんが、ブラウザのキャッシュ削除や端末変更など別端末へのデータ移行時等はGoogleアカウントと連携し、クラウドへデータ保存してください。</div>
             <br>
             <div class="redText">
-              ※右上アイコン押下後に表示される、
+              ※右上アイコン押下→「クラウドへデータ保存」、「クラウドからデータ取得」を押下するまでクラウドへの保存、取得は行われません。
+            </div>
+            <br>
+            <div class="redBigText">
+              ※iphoneをお使いの方※
             </div>
             <div class="redText">
-              「クラウドへデータ保存」、
-              「クラウドからデータ取得」を押下するまでクラウドへの保存、取得は行われません。
+              7日間アクセスがないとローカルデータが削除されるため、7日以上アクセス予定がない時はクラウドへの保存を推奨します。
             </div>
           </div>
         </div>
@@ -1080,6 +1083,7 @@ export default {
          await this.saveUserData(uid, defaultData);
          this.selectedItems = defaultData.selectedItems; // 初期化
          localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
+         this.showHelpPopup = true;
        }
       },
       togglePopup() {
@@ -1639,6 +1643,10 @@ export default {
   }
   .redText {
     color: red; /* テキストを赤色にする */
+  }
+  .redBigText {
+    color: red; /* テキストを赤色にする */
+    font-size: 15px;
   }
  </style>
  
