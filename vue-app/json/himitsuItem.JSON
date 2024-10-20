@@ -36,7 +36,7 @@
     {"value": "AP1-035", "version" : "1", "rank": 3, "char": "mitsuki", "name" : "ハートメロディ", "src" : "AP1-035.webp"},
     {"value": "AP1-036", "version" : "1", "rank": 3, "char": "himari", "name" : "スターパーティー", "src" : "AP1-036.webp"},
     {"value": "AP1-037", "version" : "1", "rank": 3, "char": "mitsuki", "name" : "スターパーティーいちごチョコ", "src" : "AP1-037.webp"},
-    {"value": "AP1-038", "version" : "1", "rank": 3, "char": "himari", "name" : "パラダイスがくえんせいふく１ねん", "src" : "AP1-038.webp"},
+    {"value": "AP1-038", "version" : "1", "rank": 2, "char": "himari", "name" : "パラダイスがくえんせいふく１ねん", "src" : "AP1-038.webp"},
     {"value": "AP1-039", "version" : "1", "rank": 2, "char": "mitsuki", "name" : "パラダイスがくえんせいふく１ねん", "src" : "AP1-039.webp"},
     {"value": "AP1-040", "version" : "1", "rank": 2, "char": "sakura", "name" : "パラダイスがくえんせいふく２ねん", "src" : "AP1-040.webp"},
     {"value": "AP1-041", "version" : "1", "rank": 2, "char": "himari", "name" : "ラブリーアイドルピンク", "src" : "AP1-041.webp"},

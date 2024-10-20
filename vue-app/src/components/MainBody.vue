@@ -35,8 +35,8 @@
             <div class="closeIconBox">
               <button class="closeButton" @click="closePopup">×</button>
             </div>
-            <button class="getButton" @click="getCloudData">クラウドからデータ取得</button>
             <button class="saveButton" @click="saveCloudData">クラウドへデータ保存</button>
+            <button class="getButton" @click="getCloudData">クラウドからデータ取得</button>
             <button class="logoutButton" @click="logout">ログアウト</button>
           </div>
         </div>
