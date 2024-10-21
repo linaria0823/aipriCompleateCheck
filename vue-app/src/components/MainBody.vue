@@ -31,7 +31,7 @@
           <img :src="userPhotoURL" alt="Googleアイコン" class="circular-icon loginButton" @click="togglePopup" ref="icon"/>
           <!-- オーバーレイ -->
           <div v-if="showPopup" class="overlay" @click="showPopup = false"></div>
-          <div v-if="showPopup" class="popup" ref="popup">
+          <div v-if="showPopup" v-bind:class="{'popupMobile': this.mobile === true,'popup': this.mobile === false}" ref="popup">
             <div class="closeIconBox">
               <button class="closeButton" @click="closePopup">×</button>
             </div>
