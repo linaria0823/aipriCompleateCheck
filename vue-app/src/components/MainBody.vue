@@ -3,7 +3,7 @@
      <div>
         <img v-lazy="require(`@/img/icon/help.png`)" class="helpIcon" alt="" @click="toggleHelpPopup">
         <div v-if="showHelpPopup" class="overlay" @click="showHelpPopup = false"></div>
-        <div v-if="showHelpPopup" class="popup" ref="popup">
+        <div v-if="showHelpPopup" v-bind:class="{'popupMobile': this.mobile === true,'popup': this.mobile === false}" ref="popup">
           <div class="closeIconBox">
             <button class="closeButton" @click="closeHelpPopup">×</button>
           </div>
@@ -1429,7 +1429,23 @@ export default {
     display: flex; /* フレックスボックスを使用 */
     flex-direction: column; /* 縦に並べる */
     align-items: center; /* 中央に揃える */
-    width: 300px;
+    width: 500px;
+  }
+  .popupMobile {
+    position: fixed; /* スクロールしても位置を固定 */
+    top: 50%; /* 画面の中央に配置 */
+    left: 50%; /* 画面の中央に配置 */
+    transform: translate(-50%, -50%); /* ポップアップを中央に調整 */
+    background-color: white; /* ポップアップの背景色 */
+    border: 1px solid #ccc; /* ボーダー */
+    padding: 10px; /* 内側の余白 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* シャドウ効果 */
+    z-index: 1001; /* 他の要素の上に表示 */
+    display: flex; /* フレックスボックスを使用 */
+    flex-direction: column; /* 縦に並べる */
+    align-items: center; /* 中央に揃える */
+    width: 90%;
+    font-size: 11px;
   }
   .overlay {
     position: fixed; /* スクロールしても位置を固定 */
@@ -1639,7 +1655,6 @@ export default {
   .helpTextBox {
     margin-top: 10px;
     margin-bottom: 10px;
-    font-size: 11px;
   }
   .redText {
     color: red; /* テキストを赤色にする */
