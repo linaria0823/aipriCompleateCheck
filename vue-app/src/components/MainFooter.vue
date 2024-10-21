@@ -1,8 +1,19 @@
 <template>
   <footer class="head">
-    問い合わせ先:vivio823823@gmail.ccom
     <div class="link" @click="policyPopup">
       プライバシーポリシー
+    </div>
+    <div>
+      -問い合わせ先-
+    </div>
+    <div>
+      X:
+      <a href="https://x.com/linaria_aipri">
+        リナリア
+      </a>
+    </div>
+    <div>
+      メール:vivio823823@gmail.com
     </div>
     <div v-if="showPolicyPopup" class="overlay" @click="showPolicyPopup = false"></div>
     <div v-if="showPolicyPopup" v-bind:class="{'popupMobile': this.mobile === true,'popup': this.mobile === false}" ref="popup">
@@ -102,11 +113,13 @@ footer {
   color: #bdd8f9;
   font-weight: bold;
   cursor: pointer;
+  margin-bottom: 5px;
 }
 .link:after {
   background-repeat: no-repeat;
   box-sizing: inherit;
   cursor: pointer;
+  margin-bottom: 5px;
 }
 .popup {
   text-align: left;
