@@ -835,7 +835,7 @@ export default {
           item.name.toLowerCase().includes(nameLower)
         );
       }
-      console.log(list);
+      //console.log(list);
       return list;
     },
     filteredVerseList() {
