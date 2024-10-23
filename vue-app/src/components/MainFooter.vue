@@ -64,6 +64,8 @@
 </template>
   
 <script>
+import { event } from 'vue-gtag'
+
 export default {
   name: 'MainFooter',
   data() {
@@ -78,6 +80,8 @@ export default {
     },
     closePolicyPopup() {
       this.showPolicyPopup = false; // ポップアップを閉じる
+      // gat
+      event('ポリシークリック');
     },
     isMobile() {
       var userAgent = window.navigator.userAgent.toLowerCase()

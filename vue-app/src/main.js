@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import VueLazyload from 'vue-lazyload';
+import VueGTag from 'vue-gtag'
 
 // Create the Vue application
 const app = createApp(App);
@@ -15,5 +16,13 @@ app.use(VueLazyload, {
   lazyComponent: true,
 });
 
+app.use(
+  VueGTag,
+  {
+    config: {
+      id: '{ hoge }'
+    }
+  },
+)
 // Mount the app to the element with id 'app'
 app.mount('#app');

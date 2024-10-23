@@ -769,6 +769,7 @@ import 'font-awesome/css/font-awesome.css';
 import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence } from "firebase/auth";
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { auth } from '../firebaseConfig'; // Firebaseの初期化ファイルからインポート
+import { event } from 'vue-gtag'
  
 export default {
   name: "MainBody",
@@ -1092,6 +1093,8 @@ export default {
       toggleHelpPopup() {
         console.log(this.selectedVerseRank);
         this.showHelpPopup = !this.showHelpPopup; // ポップアップの表示/非表示をトグル
+        // gat
+        event('ヘルプクリック');
       },
       handleClickOutside(event) {
         // ポップアップとアイコンの外側をクリックしたときにポップアップを閉じる
@@ -1102,6 +1105,8 @@ export default {
         }
       },
       async logout() {
+        // gat
+        event('ログアウトクリック');
         //const auth = getAuth();
         // currentUserが存在する場合のみ処理を実行
         if (auth.currentUser) {       
@@ -1139,11 +1144,15 @@ export default {
            localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
         }
         this.closePopup(); // ポップアップを閉じる
+        // gat
+        event('取得クリック');
       },
       async saveCloudData () {
         // 選択されたアイテムをFirestoreに保存
         await this.saveSelectedItems(auth.currentUser.uid, this.selectedItems);
         this.closePopup(); // ポップアップを閉じる
+        // gat
+        event('保存クリック');
       },
       closePopup () {
         this.showPopup = false; // ポップアップを閉じる
