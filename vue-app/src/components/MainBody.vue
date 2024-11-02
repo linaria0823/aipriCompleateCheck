@@ -541,8 +541,8 @@
                          <li v-for="(verseData) in verseList1.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
                             <div class="tooltip1"
                              :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
-                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                             <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div class="defaultCursor">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -553,8 +553,8 @@
                          <li v-for="(verseData) in verseList1.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
                            <div class="tooltip1" 
                              :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
-                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                             <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div class="defaultCursor">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -565,8 +565,8 @@
                          <li v-for="(verseData) in verseList1.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
                            <div class="tooltip1" 
                              :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
-                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                             <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div class="defaultCursor">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -589,8 +589,8 @@
                          <li v-for="(verseData) in verseList2.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
                             <div class="tooltip1" 
                              :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
-                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                             <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div class="defaultCursor">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -601,8 +601,8 @@
                          <li v-for="(verseData) in verseList2.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
                            <div class="tooltip1" 
                              :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
-                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                             <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div class="defaultCursor">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -613,8 +613,8 @@
                          <li v-for="(verseData) in verseList2.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
                            <div class="tooltip1" 
                              :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
-                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                             <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div class="defaultCursor">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -637,8 +637,8 @@
                          <li v-for="(verseData) in verseList3.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
                            <div class="tooltip1" 
                              :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
-                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                             <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div class="defaultCursor">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -649,8 +649,8 @@
                          <li v-for="(verseData) in verseList3.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
                             <div class="tooltip1" 
                              :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
-                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                             <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div class="defaultCursor">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -661,8 +661,8 @@
                          <li v-for="(verseData) in verseList3.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
                             <div class="tooltip1" 
                              :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
-                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                             <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div class="defaultCursor">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -685,8 +685,8 @@
                          <li v-for="(verseData) in verseList4.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
                            <div class="tooltip1" 
                              :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
-                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                             <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div class="defaultCursor">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -697,8 +697,8 @@
                          <li v-for="(verseData) in verseList4.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
                            <div class="tooltip1" 
                              :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
-                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                             <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div class="defaultCursor">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -709,8 +709,8 @@
                          <li v-for="(verseData) in verseList4.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
                            <div class="tooltip1" 
                              :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
-                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                             <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div class="defaultCursor">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -734,8 +734,8 @@
                         <li v-for="(verseData) in verseListSP.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" 
                             :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
-                            <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                            <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                            <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <div class="defaultCursor">{{ verseData.name }}</div>
                           </div>
                         </li>
                       </ul>
@@ -746,8 +746,8 @@
                         <li v-for="(verseData) in verseListSP.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" 
                             :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
-                            <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                            <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                            <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <div class="defaultCursor">{{ verseData.name }}</div>
                           </div>
                         </li>
                       </ul>
@@ -758,8 +758,8 @@
                         <li v-for="(verseData) in verseListSP.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" 
                             :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
-                            <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                            <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                            <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <div class="defaultCursor">{{ verseData.name }}</div>
                           </div>
                         </li>
                       </ul>
@@ -770,8 +770,8 @@
                         <li v-for="(verseData) in verseListSP.filter(item => item.rank === 'sp')" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" 
                             :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
-                            <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                            <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                            <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <div class="defaultCursor">{{ verseData.name }}</div>
                           </div>
                         </li>
                       </ul>
@@ -1425,17 +1425,19 @@ export default {
     margin-right: 5px;
     margin-left: 5px;
     width: 75px;
+    font-size: 11px;
   }
   .cordeButtonMobile {
     margin-bottom: 5px;
     margin-right: 5px;
     margin-left: 5px;
     width: 60px;
+    font-size: 8px;
   }
   .cordeItemImg {
     cursor: pointer;
     transition: background-color 0.3s, transform 0.2s;
-    width: 75px;
+    width: inherit;
     border-radius: 10px;
     background-color: #fff;
     transition: opacity 0.3s;  /* スムーズな変化のためのトランジション */
@@ -1446,28 +1448,7 @@ export default {
     background-color: #f0f0f0;
     transform: scale(0.95);
     transition: background-color 0.3s, transform 0.2s;
-    width: 75px;
-    border-radius: 10px;
-    background-color: #fff;
-    transition: opacity 0.3s;  /* スムーズな変化のためのトランジション */
-    opacity: 1;  /* 通常状態では不透明 */
-  }
-  .cordeItemImgMobile {
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    width: 60px;
-    height: 60px;
-    border-radius: 10px;
-    background-color: #fff;
-    transition: opacity 0.3s;  /* スムーズな変化のためのトランジション */
-    opacity: 1;  /* 通常状態では不透明 */
-  }
-  .cordeItemImgMobile:active {
-    cursor: pointer;
-    background-color: #f0f0f0;
-    transform: scale(0.95);
-    width: 60px;
-    height: 60px;
+    width: inherit;
     border-radius: 10px;
     background-color: #fff;
     transition: opacity 0.3s;  /* スムーズな変化のためのトランジション */
@@ -1856,6 +1837,9 @@ export default {
     align-items: center;
     padding: 0 10px;
     border-bottom: 1px solid #ccc; /* アイテムの下にボーダーを追加 */
+  }
+  .defaultCursor {
+    cursor: default;
   }
  </style>
  
