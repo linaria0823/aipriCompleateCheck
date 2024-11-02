@@ -12,12 +12,10 @@ app.directive('lazy-show', lazyShow); // 正しいディレクティブの登録
 
 // Use the VueLazyload plugin
 app.use(VueLazyload, {
-  // Placeholder image while loading
-  // loading: '/path/to/loading-placeholder.jpg',
-  // Placeholder image on error
-  error: '/path/to/error-placeholder.jpg',
-  // Enable lazy loading
-  lazyComponent: true,
+  preLoad: 1.3,
+  error: require('@/img/icon/Error.webp'),
+  loading: require('@/img/icon/Loading_icon.gif'),
+  attempt: 1,
 });
 
 // Google Analytics

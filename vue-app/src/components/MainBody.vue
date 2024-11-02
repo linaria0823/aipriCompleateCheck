@@ -1,10 +1,4 @@
 <template>
-  <div class="virtual-scroller-container">
-    <virtual-scroller
-      :items="items"
-      :item-size="itemSize"
-      class="virtual-scroller"
-    >
   <div id="contents" class="mainBody">
      <div>
         <img v-lazy="require(`@/img/icon/help.png`)" class="helpIcon" alt="" @click="toggleHelpPopup">
@@ -793,8 +787,6 @@
   </div>
   <div class="top_btn" v-show="buttonActive" @click="pageTop">
   </div>
-</virtual-scroller>
-</div>
 </template>
  
 <script>
@@ -807,15 +799,11 @@ import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { auth } from '../firebaseConfig'; // Firebaseの初期化ファイルからインポート
 import { event } from 'vue-gtag'
 import lazyShow from '../directives/lazyShow.js';
-import { VirtualScroller } from 'vue3-virtual-scroller';
  
 export default {
   name: "MainBody",
   directives: {
     lazyShow
-  },
-  components: {
-    VirtualScroller,
   },
   data() {
     return {
