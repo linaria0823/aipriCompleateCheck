@@ -123,7 +123,7 @@
               </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="himitsuItemName" placeholder="アイテム名で検索">
               <div>
-                <div v-if="showContentA">
+                <div v-show="showContentA">
                   <div v-show="(selectedHimitsuVersion === 1 || selectedHimitsuVersion === 0)
                     && (
                       selectedHimitsuRank === 0 || (
@@ -515,7 +515,7 @@
                <option value="ps">プリズムストーン</option>
              </select>
              <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="verseItemName" placeholder="アイテム名で検索">
-             <div v-if="showContentB">
+             <div v-show="showContentB">
                <div>
                  <div v-show="(selectedVerseVersion === 1 || selectedVerseVersion === 0)
                    && (
@@ -1229,7 +1229,7 @@ export default {
     mounted() {
       // コンポーネントがマウントされたときに初期タブの内容を表示
       this.change(this.isActive);
-      
+
       //Cookies.remove('selectedItems');
       this.loadSelectedItems();
       if (this.isMobile()) {
