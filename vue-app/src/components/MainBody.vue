@@ -1,5 +1,10 @@
 <template>
-  <div @scroll="handleScroll">
+  <div class="virtual-scroller-container">
+    <virtual-scroller
+      :items="items"
+      :item-size="itemSize"
+      class="virtual-scroller"
+    >
   <div id="contents" class="mainBody">
      <div>
         <img v-lazy="require(`@/img/icon/help.png`)" class="helpIcon" alt="" @click="toggleHelpPopup">
@@ -140,7 +145,7 @@
                             <img v-show="himitsuList1.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                             <div>
                             <ul id="dispHimitsuItemList">
-                              <li v-for="(himitsuData) in displayedItems.filter(item => item.rank === 4)" :key="himitsuData.value" class="itemLi">
+                              <li v-for="(himitsuData) in himitsuList1.filter(item => item.rank === 4)" :key="himitsuData.value" class="itemLi">
                                 <div class="tooltip1 cardButton" 
                                   :class="{'isClicked': selectedItems.includes(himitsuData.value)}" 
                                   @click="toggleItem(himitsuData.value)">
@@ -154,7 +159,7 @@
                             <img v-show="himitsuList1.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                             <div>
                             <ul id="dispHimitsuItemList">
-                              <li v-for="(verseData) in displayedItems.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
+                              <li v-for="(verseData) in himitsuList1.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
                                 <div class="tooltip1 cardButton" 
                                   :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                                   @click="toggleItem(verseData.value)">
@@ -168,7 +173,7 @@
                           <img v-show="himitsuList1.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                           <div>
                           <ul id="dispHimitsuItemList">
-                            <li v-for="(verseData) in displayedItems.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
+                            <li v-for="(verseData) in himitsuList1.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
                               <div class="tooltip1 cardButton" 
                                 :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                                 @click="toggleItem(verseData.value)">
@@ -194,7 +199,7 @@
                         <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
                           <img v-show="himitsuList2.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                           <ul id="dispHimitsuItemList">
-                            <li v-for="(himitsuData) in displayedItems.filter(item => item.rank === 4)" :key="himitsuData.value" class="itemLi">
+                            <li v-for="(himitsuData) in himitsuList2.filter(item => item.rank === 4)" :key="himitsuData.value" class="itemLi">
                               <div class="tooltip1 cardButton" 
                                 :class="{'isClicked': selectedItems.includes(himitsuData.value)}" 
                                 @click="toggleItem(himitsuData.value)">
@@ -206,7 +211,7 @@
                         <div v-show="(selectedHimitsuRank === 3 || selectedHimitsuRank === 0)">
                           <img v-show="himitsuList2.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                           <ul id="dispHimitsuItemList">
-                            <li v-for="(verseData) in displayedItems.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
+                            <li v-for="(verseData) in himitsuList2.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
                               <div class="tooltip1 cardButton" 
                                 :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                                 @click="toggleItem(verseData.value)">
@@ -218,7 +223,7 @@
                       <div v-show="(selectedHimitsuRank === 2 || selectedHimitsuRank === 0)">
                         <img v-show="himitsuList2.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                         <ul id="dispHimitsuItemList">
-                           <li v-for="(verseData) in displayedItems.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
+                           <li v-for="(verseData) in himitsuList2.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
                             <div class="tooltip1 cardButton" 
                               :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                               @click="toggleItem(verseData.value)">
@@ -789,6 +794,7 @@
   <button class="top_btn" v-show="buttonActive" @click="pageTop">
     <i class="fa-solid fa-angle-up"></i>
   </button>
+</virtual-scroller>
 </div>
 </template>
  
@@ -802,11 +808,15 @@ import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { auth } from '../firebaseConfig'; // Firebaseの初期化ファイルからインポート
 import { event } from 'vue-gtag'
 import lazyShow from '../directives/lazyShow.js';
+import { VirtualScroller } from 'vue3-virtual-scroller';
  
 export default {
   name: "MainBody",
   directives: {
     lazyShow
+  },
+  components: {
+    VirtualScroller,
   },
   data() {
     return {
@@ -842,7 +852,9 @@ export default {
       showContentB: false,
       displayedItems: [], // 表示用アイテム
       itemsToShow: 10, // 一度に表示するアイテム数
-      loading: false // ローディング状態
+      loading: false, // ローディング状態
+      items: Array.from({ length: 1000 }, (_, index) => `Item ${index + 1}`),
+      itemSize: 30, // 各アイテムの高さ
     };
   },
   computed: {
@@ -1245,26 +1257,8 @@ export default {
       closeHelpPopup () {
         this.showHelpPopup = false; // ポップアップを閉じる
       },
-      loadMoreItems() {
-        const nextItems = this.allItems.slice(this.displayedItems.length, this.displayedItems.length + this.itemsToShow);
-        this.displayedItems.push(...nextItems);
-      },
-      handleScroll() {
-        const scrollTop = window.scrollY || window.pageYOffset;
-        const windowHeight = window.innerHeight;
-        const documentHeight = document.documentElement.scrollHeight;
-
-        if (scrollTop + windowHeight >= documentHeight - 100 && !this.loading) {
-          this.loading = true;
-          this.loadMoreItems();
-          this.loading = false;
-        }
-      }
     },
     mounted() {
-      this.loadMoreItems();
-      window.addEventListener('scroll', this.handleScroll);
-
       // コンポーネントがマウントされたときに初期タブの内容を表示
       this.change(this.isActive);
 
@@ -1360,6 +1354,7 @@ export default {
  .article{
    overflow: hidden;
    margin-top: -1px;
+   margin-bottom: 50px;
  }
  .article li {
    max-width: 1500px;
@@ -1513,7 +1508,7 @@ export default {
  }
  .top_btn {
    position: fixed;
-   bottom: 30px;
+   bottom: 60px;
    right: 30px;
    width: 40px;
    height: 40px;
@@ -1853,6 +1848,16 @@ export default {
   .itemNameMobile {
     font-size: 8px;
     cursor: default;
+  }
+  .virtual-scroller-container {
+    overflow-y: auto; /* 垂直方向のスクロールを有効に */
+  }
+  .item {
+    height: 30px; /* アイテムの高さ */
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    border-bottom: 1px solid #ccc; /* アイテムの下にボーダーを追加 */
   }
  </style>
  

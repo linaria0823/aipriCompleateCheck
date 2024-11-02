@@ -15,7 +15,8 @@
     "vue": "^3.2.13",
     "vue-gtag": "^2.0.1",
     "vue-lazyload": "^3.0.0",
-    "vue-router": "^4.0.13"
+    "vue-router": "^4.0.13",
+    "vue3-virtual-scroller": "^0.2.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

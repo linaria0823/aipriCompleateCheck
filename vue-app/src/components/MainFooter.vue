@@ -3,17 +3,8 @@
     <div class="link" @click="policyPopup">
       プライバシーポリシー
     </div>
-    <div>
-      -問い合わせ先-
-    </div>
-    <div>
-      X:
-      <a href="https://x.com/linaria_aipri" target="_blank" rel="noopener noreferrer">
-        リナリア
-      </a>
-    </div>
-    <div>
-      メール:vivio823823@gmail.com
+    <div class="link" @click="infoPopup">
+      問い合わせ
     </div>
     <div v-if="showPolicyPopup" class="overlay" @click="showPolicyPopup = false"></div>
     <div v-if="showPolicyPopup" v-bind:class="{'popupMobile': this.mobile === true,'popup': this.mobile === false}" ref="popup">
@@ -60,6 +51,21 @@
             本ポリシーは随時変更されることがあります。変更があった場合、ウェブサイトにて通知します。
           </div>
         </div>
+        <div v-if="showInfoPopup" class="overlay" @click="showInfoPopup = false"></div>
+        <div v-if="showInfoPopup" v-bind:class="{'popupMobile': this.mobile === true,'popup': this.mobile === false}" ref="popup">
+          <div class="closeIconBox">
+            <button class="closeButton" @click="closeInfoPopup">×</button>
+          </div>
+            <div>
+            X:
+            <a href="https://x.com/linaria_aipri" target="_blank" rel="noopener noreferrer">
+              リナリア
+            </a>
+          </div>
+          <div>
+            メール:vivio823823@gmail.com
+          </div>
+        </div>
   </footer>
 </template>
   
@@ -71,6 +77,7 @@ export default {
   data() {
      return {
       showPolicyPopup: false, // ポップアップの表示状態を保持
+      showInfoPopup: false, // ポップアップの表示状態を保持
       mobile: false,
      };
    },
@@ -78,8 +85,16 @@ export default {
     policyPopup() {
       this.showPolicyPopup = !this.showPolicyPopup; // ポップアップの表示/非表示をトグル
     },
+    infoPopup() {
+      this.showInfoPopup = !this.showInfoPopup; // ポップアップの表示/非表示をトグル
+    },
     closePolicyPopup() {
       this.showPolicyPopup = false; // ポップアップを閉じる
+      // gat
+      event('ポリシークリック');
+    },
+    closeInfoPopup() {
+      this.showInfoPopup = false; // ポップアップを閉じる
       // gat
       event('ポリシークリック');
     },
@@ -110,22 +125,24 @@ export default {
 <style scoped>
 footer {
   text-align: center;
-  margin-top: 30px;
-  border-top: 2px solid rgb(0 55 255);
-  padding-top: 20px;
-  padding-bottom: 20px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
 }
 .link {
-  color: #bdd8f9;
+  color: #2226ff;
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 5px;
+  text-decoration:underline;
 }
 .link:after {
   background-repeat: no-repeat;
   box-sizing: inherit;
   cursor: pointer;
   margin-bottom: 5px;
+  text-decoration:underline;
 }
 .popup {
   text-align: left;
