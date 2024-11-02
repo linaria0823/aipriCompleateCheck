@@ -49,7 +49,7 @@
             </div>
             <div v-if="kind === 'get'" class="marginBottom">
               <div>クラウドからデータを取得しますか？</div>
-              <div>※ローカルデータは削除されます</div>
+              <div>※ローカルデータは上書きされます</div>
             </div>
             <div v-if="kind === 'delete'" class="marginBottom">
               <div>ローカルデータを削除しますか？</div>
@@ -1667,7 +1667,8 @@ export default {
     padding: 5px 20px;
     width: 210px;
     display: inline-block;
-    margin: 10px;
+    margin-top: 30px;
+    margin-bottom: 10px;
     cursor: pointer;
   }
   .deleteButton {
