@@ -8,7 +8,7 @@
     </div>
     <div>
       X:
-      <a href="https://x.com/linaria_aipri">
+      <a href="https://x.com/linaria_aipri" target="_blank" rel="noopener noreferrer">
         リナリア
       </a>
     </div>
@@ -185,7 +185,7 @@ footer {
   cursor: pointer;
 }
 .closeIconBox {
-  height: 20px;
+    height: 20px;
 }
 .subTitle {
   font-size: 16px;
@@ -195,6 +195,17 @@ footer {
 .marginBottom {
   margin-top: 5px;
   margin-bottom: 5px;
+}
+button{
+  font-family: "Zen Maru Gothic", serif;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 15px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+button:active {
+  background-color: #f0f0f0;
+  transform: scale(0.95);
 }
 </style>
   
