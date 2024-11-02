@@ -1185,6 +1185,7 @@ export default {
            localStorage.setItem("selectedItems", JSON.stringify(this.selectedItems));
         }
         this.closePopup(); // ポップアップを閉じる
+        this.closeUser() // ユーザーアイコン押下後の画面を非表示
         // gat
         event('取得クリック');
       },
@@ -1192,11 +1193,14 @@ export default {
         // 選択されたアイテムをFirestoreに保存
         await this.saveSelectedItems(auth.currentUser.uid, this.selectedItems);
         this.closePopup(); // ポップアップを閉じる
+        this.closeUser() // ユーザーアイコン押下後の画面を非表示
         // gat
         event('保存クリック');
       },
       async delete () {
         localStorage.removeItem('selectedItems'); // ローカルストレージのデータを削除
+        this.closePopup(); // ポップアップを閉じる
+        this.closeUser() // ユーザーアイコン押下後の画面を非表示
       },
       closeUser () {
         this.showUser = false; // ポップアップを閉じる
