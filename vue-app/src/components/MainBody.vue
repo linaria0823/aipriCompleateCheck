@@ -1064,6 +1064,7 @@ export default {
         } catch (error) {
           console.error("ログインエラー:", error);
         }
+        this.showUser = false;
       },
       checkUserState() {
         //const auth = getAuth();
