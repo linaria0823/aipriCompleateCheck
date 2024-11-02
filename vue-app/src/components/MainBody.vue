@@ -123,7 +123,7 @@
               </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="himitsuItemName" placeholder="アイテム名で検索">
               <div>
-                <div>
+                <div v-if="showContentA">
                   <div v-show="(selectedHimitsuVersion === 1 || selectedHimitsuVersion === 0)
                     && (
                       selectedHimitsuRank === 0 || (
@@ -515,7 +515,7 @@
                <option value="ps">プリズムストーン</option>
              </select>
              <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="verseItemName" placeholder="アイテム名で検索">
-             <div>
+             <div v-if="showContentB">
                <div>
                  <div v-show="(selectedVerseVersion === 1 || selectedVerseVersion === 0)
                    && (
@@ -822,7 +822,10 @@ export default {
       showPopup: false, // ポップアップの表示状態を保持
       showHelpPopup: false, // ポップアップの表示状態を保持
       user: "",
-      kind: "" //押下されているボタンを判別
+      kind: "", //押下されているボタンを判別
+      observer: null, // IntersectionObserverのインスタンス
+      showContentA: false,
+      showContentB: false
     };
   },
   computed: {
@@ -967,10 +970,21 @@ export default {
         return this.selectedVerseBrand === 0 ? 'ブランド' : 'すべて';
     },
   },
-   methods: {
-     change(num) {
-       this.isActive = num;
-     },
+  methods: {
+    change(num) {
+      this.isActive = num;
+      this.showContentA = false;
+      this.showContentB = false;
+
+      // 枠だけを表示し、少し遅れて中身を表示
+      setTimeout(() => {
+        if (num === 'A') {
+          this.showContentA = true;
+        } else if (num === 'B') {
+          this.showContentB = true;
+        }
+      }, 100); // 100ms後に中身を表示
+    },
      toggleItem(value) {
         const itemIndex = this.selectedItems.indexOf(value);
         if (itemIndex === -1) {
@@ -1210,9 +1224,12 @@ export default {
       },
       closeHelpPopup () {
         this.showHelpPopup = false; // ポップアップを閉じる
-      }
+      },
     },
     mounted() {
+      // コンポーネントがマウントされたときに初期タブの内容を表示
+      this.change(this.isActive);
+      
       //Cookies.remove('selectedItems');
       this.loadSelectedItems();
       if (this.isMobile()) {
