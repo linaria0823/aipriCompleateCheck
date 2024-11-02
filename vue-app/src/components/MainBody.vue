@@ -123,33 +123,51 @@
               </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="himitsuItemName" placeholder="アイテム名で検索">
               <div>
-                <div v-show="showContentA">
-                  <div v-show="(selectedHimitsuVersion === 1 || selectedHimitsuVersion === 0)
-                    && (
-                      selectedHimitsuRank === 0 || (
-                            (selectedHimitsuRank === 4 && himitsuList1.filter(item => item.rank === 4).length > 0) ||
-                            (selectedHimitsuRank === 3 && himitsuList1.filter(item => item.rank === 3).length > 0) ||
-                            (selectedHimitsuRank === 2 && himitsuList1.filter(item => item.rank === 2).length > 0)
-                        )
-                    )&& himitsuList1.length > 0" lazy-show>
-                      <div class="tableTitle">-1弾-</div>
-                      <div>
-                        <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
-                          <img v-if="himitsuList1.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
-                          <ul id="dispHimitsuItemList">
-                            <li v-for="(himitsuData) in himitsuList1.filter(item => item.rank === 4)" :key="himitsuData.value" class="itemLi">
-                              <div class="tooltip1 cardButton" 
-                                :class="{'isClicked': selectedItems.includes(himitsuData.value)}" 
-                                @click="toggleItem(himitsuData.value)">
-                                <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/himitsu/${himitsuData.src}`)" alt="">
+                <div>
+                  <div>
+                    <div v-show="(selectedHimitsuVersion === 1 || selectedHimitsuVersion === 0)
+                      && (
+                        selectedHimitsuRank === 0 || (
+                              (selectedHimitsuRank === 4 && himitsuList1.filter(item => item.rank === 4).length > 0) ||
+                              (selectedHimitsuRank === 3 && himitsuList1.filter(item => item.rank === 3).length > 0) ||
+                              (selectedHimitsuRank === 2 && himitsuList1.filter(item => item.rank === 2).length > 0)
+                          )
+                      )&& himitsuList1.length > 0">
+                        <div class="tableTitle">-1弾-</div>
+                        <div v-lazy-show>
+                          <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
+                            <img v-if="himitsuList1.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
+                            <div>
+                            <ul id="dispHimitsuItemList">
+                              <li v-for="(himitsuData) in himitsuList1.filter(item => item.rank === 4)" :key="himitsuData.value" class="itemLi">
+                                <div class="tooltip1 cardButton" 
+                                  :class="{'isClicked': selectedItems.includes(himitsuData.value)}" 
+                                  @click="toggleItem(himitsuData.value)">
+                                  <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/himitsu/${himitsuData.src}`)" alt="">
+                              </div>
+                              </li>
+                            </ul>
                             </div>
-                            </li>
-                          </ul>
+                          </div>
+                          <div v-show="(selectedHimitsuRank === 3 || selectedHimitsuRank === 0)">
+                            <img v-if="himitsuList1.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
+                            <div>
+                            <ul id="dispHimitsuItemList">
+                              <li v-for="(verseData) in himitsuList1.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
+                                <div class="tooltip1 cardButton" 
+                                  :class="{'isClicked': selectedItems.includes(verseData.value)}" 
+                                  @click="toggleItem(verseData.value)">
+                                  <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/himitsu/${verseData.src}`)" alt="">
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
                         </div>
-                        <div v-show="(selectedHimitsuRank === 3 || selectedHimitsuRank === 0)">
-                          <img v-if="himitsuList1.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
+                        <div v-show="(selectedHimitsuRank === 2 || selectedHimitsuRank === 0)">
+                          <img v-if="himitsuList1.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
+                          <div>
                           <ul id="dispHimitsuItemList">
-                            <li v-for="(verseData) in himitsuList1.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
+                            <li v-for="(verseData) in himitsuList1.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
                               <div class="tooltip1 cardButton" 
                                 :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                                 @click="toggleItem(verseData.value)">
@@ -157,18 +175,8 @@
                               </div>
                             </li>
                           </ul>
-                      </div>
-                      <div v-show="(selectedHimitsuRank === 2 || selectedHimitsuRank === 0)">
-                        <img v-if="himitsuList1.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
-                        <ul id="dispHimitsuItemList">
-                           <li v-for="(verseData) in himitsuList1.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
-                            <div class="tooltip1 cardButton" 
-                              :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                              @click="toggleItem(verseData.value)">
-                              <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false}" v-lazy="require(`@/img/himitsu/${verseData.src}`)" alt="">
-                            </div>
-                          </li>
-                        </ul>
+                        </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -179,9 +187,9 @@
                             (selectedHimitsuRank === 3 && himitsuList2.filter(item => item.rank === 3).length > 0) ||
                             (selectedHimitsuRank === 2 && himitsuList2.filter(item => item.rank === 2).length > 0)
                         )
-                    )&& himitsuList2.length > 0" lazy-show>
+                    )&& himitsuList2.length > 0">
                       <div class="tableTitle">-2弾-</div>
-                      <div>
+                      <div v-lazy-show>
                         <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
                           <img v-if="himitsuList2.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                           <ul id="dispHimitsuItemList">
@@ -227,9 +235,9 @@
                             (selectedHimitsuRank === 3 && himitsuList3.filter(item => item.rank === 3).length > 0) ||
                             (selectedHimitsuRank === 2 && himitsuList3.filter(item => item.rank === 2).length > 0)
                         )
-                    )&& himitsuList3.length > 0" lazy-show>
+                    )&& himitsuList3.length > 0" >
                       <div class="tableTitle">-3弾-</div>
-                      <div>
+                      <div v-lazy-show>
                         <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
                           <img v-if="himitsuList3.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                           <ul id="dispHimitsuItemList">
@@ -275,9 +283,9 @@
                             (selectedHimitsuRank === 3 && himitsuList4.filter(item => item.rank === 3).length > 0) ||
                             (selectedHimitsuRank === 2 && himitsuList4.filter(item => item.rank === 2).length > 0)
                         )
-                    )&& himitsuList4.length > 0" lazy-show>
+                    )&& himitsuList4.length > 0" >
                       <div class="tableTitle">-4弾-</div>
-                      <div>
+                      <div v-lazy-show>
                         <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
                           <img v-if="himitsuList4.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                           <ul id="dispHimitsuItemList">
@@ -324,9 +332,9 @@
                             (selectedHimitsuRank === 2 && himitsuListSP.filter(item => item.rank === 2).length > 0) ||
                             (selectedHimitsuRank === 'sp' && himitsuListSP.filter(item => item.rank === 'sp').length > 0)
                         )
-                    )&& himitsuListSP.length > 0" lazy-show>
+                    )&& himitsuListSP.length > 0" >
                       <div class="tableTitle">-スペシャル-</div>
-                      <div>
+                      <div v-lazy-show>
                         <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
                           <img v-if="himitsuListSP.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                           <ul id="dispHimitsuItemList">
@@ -384,9 +392,9 @@
                             (selectedHimitsuRank === 3 && himitsuListGumi.filter(item => item.rank === 3).length > 0) ||
                             (selectedHimitsuRank === 2 && himitsuListGumi.filter(item => item.rank === 2).length > 0)
                         )
-                    )&& himitsuListGumi.length > 0" lazy-show>
+                    )&& himitsuListGumi.length > 0" >
                       <div class="tableTitle">-コレクショングミ-</div>
-                      <div>
+                      <div v-lazy-show>
                         <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
                           <img v-if="himitsuListGumi.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                           <ul id="dispHimitsuItemList">
@@ -432,9 +440,9 @@
                             (selectedHimitsuRank === 3 && himitsuListMirufi.filter(item => item.rank === 3).length > 0) ||
                             (selectedHimitsuRank === 2 && himitsuListMirufi.filter(item => item.rank === 2).length > 0)
                         )
-                    )&& himitsuListMirufi.length > 0" lazy-show>
+                    )&& himitsuListMirufi.length > 0" >
                       <div class="tableTitle">-ミルフィーカード-</div>
-                      <div>
+                      <div v-lazy-show>
                         <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
                           <img v-if="himitsuListMirufi.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                           <ul id="dispHimitsuItemList">
@@ -524,9 +532,9 @@
                            (selectedVerseRank === 3 && verseList1.filter(item => item.rank === 3).length > 0) ||
                            (selectedVerseRank === 2 && verseList1.filter(item => item.rank === 2).length > 0)
                        )
-                   )&& verseList1.length > 0" lazy-show>
+                   )&& verseList1.length > 0" >
                    <div class="tableTitle">-1弾-</div>
-                   <div>
+                   <div v-lazy-show>
                      <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
                        <img v-if="verseList1.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
@@ -572,9 +580,9 @@
                            (selectedVerseRank === 3 && verseList2.filter(item => item.rank === 3).length > 0) ||
                            (selectedVerseRank === 2 && verseList2.filter(item => item.rank === 2).length > 0)
                        )
-                   )&& verseList2.length > 0" lazy-show>
+                   )&& verseList2.length > 0" >
                    <div class="tableTitle versionMargin">-2弾-</div>
-                   <div>
+                   <div v-lazy-show>
                      <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
                        <img v-if="verseList2.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
@@ -620,9 +628,9 @@
                            (selectedVerseRank === 3 && verseList3.filter(item => item.rank === 3).length > 0) ||
                            (selectedVerseRank === 2 && verseList3.filter(item => item.rank === 2).length > 0)
                        )
-                   )&& verseList3.length > 0" lazy-show>
+                   )&& verseList3.length > 0" >
                    <div class="tableTitle versionMargin">-3弾-</div>
-                   <div>
+                   <div v-lazy-show>
                      <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
                        <img v-if="verseList3.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
@@ -668,9 +676,9 @@
                            (selectedVerseRank === 3 && verseList4.filter(item => item.rank === 3).length > 0) ||
                            (selectedVerseRank === 2 && verseList4.filter(item => item.rank === 2).length > 0)
                        )
-                   )&& verseList4.length > 0" lazy-show>
+                   )&& verseList4.length > 0" >
                    <div class="tableTitle versionMargin">-4弾-</div>
-                   <div>
+                   <div v-lazy-show>
                      <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
                        <img v-if="verseList4.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
@@ -717,9 +725,9 @@
                            (selectedVerseRank === 2 && verseListSP.filter(item => item.rank === 2).length > 0) ||
                            (selectedVerseRank === 'sp' && verseListSP.filter(item => item.rank === 'sp').length > 0)
                        )
-                  )&& verseListSP.length > 0" lazy-show>
+                  )&& verseListSP.length > 0" >
                   <div class="tableTitle versionMargin">-スペシャルコーデアイテム-</div>
-                  <div>
+                  <div v-lazy-show>
                     <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
                       <img v-if="verseListSP.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                       <ul id="dispHimitsuItemList">
@@ -791,9 +799,13 @@ import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, setPe
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { auth } from '../firebaseConfig'; // Firebaseの初期化ファイルからインポート
 import { event } from 'vue-gtag'
+import lazyShow from '../directives/lazyShow.js';
  
 export default {
   name: "MainBody",
+  directives: {
+    lazyShow
+  },
   data() {
     return {
       isActive: "A",
