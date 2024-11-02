@@ -541,6 +541,7 @@
                          <li v-for="(verseData) in verseList1.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" :class="dynamicClass(verseData)">
                              <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <span>{{ verseData.name }}</span>
                             </div>
                          </li>
                        </ul>
@@ -551,6 +552,7 @@
                          <li v-for="(verseData) in verseList1.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" :class="dynamicClass(verseData)">
                              <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <span>{{ verseData.name }}</span>
                             </div>
                          </li>
                        </ul>
@@ -561,6 +563,7 @@
                          <li v-for="(verseData) in verseList1.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
                            <div class="tooltip1" :class="dynamicClass(verseData)">
                              <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <span>{{ verseData.name }}</span>
                             </div>
                          </li>
                        </ul>
@@ -583,6 +586,7 @@
                          <li v-for="(verseData) in verseList2.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" :class="dynamicClass(verseData)">
                              <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <span>{{ verseData.name }}</span>
                             </div>
                          </li>
                        </ul>
@@ -593,6 +597,7 @@
                          <li v-for="(verseData) in verseList2.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" :class="dynamicClass(verseData)">
                              <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <span>{{ verseData.name }}</span>
                             </div>
                          </li>
                        </ul>
@@ -603,6 +608,7 @@
                          <li v-for="(verseData) in verseList2.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" :class="dynamicClass(verseData)">
                              <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <span>{{ verseData.name }}</span>
                             </div>
                          </li>
                        </ul>
@@ -625,6 +631,7 @@
                          <li v-for="(verseData) in verseList3.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" :class="dynamicClass(verseData)">
                              <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <span>{{ verseData.name }}</span>
                             </div>
                          </li>
                        </ul>
@@ -635,6 +642,7 @@
                          <li v-for="(verseData) in verseList3.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" :class="dynamicClass(verseData)">
                              <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <span>{{ verseData.name }}</span>
                             </div>
                          </li>
                        </ul>
@@ -645,6 +653,7 @@
                          <li v-for="(verseData) in verseList3.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" :class="dynamicClass(verseData)">
                              <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <span>{{ verseData.name }}</span>
                             </div>
                          </li>
                        </ul>
@@ -667,6 +676,7 @@
                          <li v-for="(verseData) in verseList4.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" :class="dynamicClass(verseData)">
                              <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <span>{{ verseData.name }}</span>
                             </div>
                          </li>
                        </ul>
@@ -677,6 +687,7 @@
                          <li v-for="(verseData) in verseList4.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" :class="dynamicClass(verseData)">
                              <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <span>{{ verseData.name }}</span>
                             </div>
                          </li>
                        </ul>
@@ -687,6 +698,7 @@
                          <li v-for="(verseData) in verseList4.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" :class="dynamicClass(verseData)">
                              <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <span>{{ verseData.name }}</span>
                             </div>
                          </li>
                        </ul>
@@ -710,6 +722,7 @@
                         <li v-for="(verseData) in verseListSP.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" :class="dynamicClass(verseData)">
                             <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <span>{{ verseData.name }}</span>
                           </div>
                         </li>
                       </ul>
@@ -720,6 +733,7 @@
                         <li v-for="(verseData) in verseListSP.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" :class="dynamicClass(verseData)">
                             <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <span>{{ verseData.name }}</span>
                           </div>
                         </li>
                       </ul>
@@ -730,6 +744,7 @@
                         <li v-for="(verseData) in verseListSP.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" :class="dynamicClass(verseData)">
                             <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <span>{{ verseData.name }}</span>
                           </div>
                         </li>
                       </ul>
@@ -740,6 +755,7 @@
                         <li v-for="(verseData) in verseListSP.filter(item => item.rank === 'sp')" :key="verseData.value" class="itemLi">
                           <div class="tooltip1" :class="dynamicClass(verseData)">
                             <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <span>{{ verseData.name }}</span>
                           </div>
                         </li>
                       </ul>
