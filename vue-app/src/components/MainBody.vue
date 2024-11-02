@@ -29,15 +29,36 @@
         </div>
         <div v-else-if="isLoggedIn">
           <img :src="userPhotoURL" alt="Googleアイコン" class="circular-icon loginButton" @click="togglePopup" ref="icon"/>
+          <div v-if="showUser" class="orverScreen">
+            <div class="closeIconBox">
+              <button class="closeButton" @click="closeUser">×</button>
+            </div>
+            <button class="saveButton" @click.stop="clickCloud('save')">クラウドへデータ保存</button>
+            <button class="getButton" @click.stop="clickCloud('get')">クラウドからデータ取得</button>
+            <button class="deleteButton" @click.stop="clickCloud('delete')">ローカルデータ削除</button>
+            <button class="logoutButton" @click="logout">ログアウト</button>
+          </div>
           <!-- オーバーレイ -->
           <div v-if="showPopup" class="overlay" @click="showPopup = false"></div>
           <div v-if="showPopup" v-bind:class="{'popupMobile': this.mobile === true,'popup': this.mobile === false}" ref="popup">
             <div class="closeIconBox">
               <button class="closeButton" @click="closePopup">×</button>
             </div>
-            <button class="saveButton" @click="saveCloudData">クラウドへデータ保存</button>
-            <button class="getButton" @click="getCloudData">クラウドからデータ取得</button>
-            <button class="logoutButton" @click="logout">ログアウト</button>
+            <div v-if="kind === 'save'" class="marginBottom">
+              <div>クラウドへデータ保存しますか？</div>
+            </div>
+            <div v-if="kind === 'get'" class="marginBottom">
+              <div>クラウドからデータを取得しますか？</div>
+              <div>※ローカルデータは削除されます</div>
+            </div>
+            <div v-if="kind === 'delete'" class="marginBottom">
+              <div>ローカルデータを削除しますか？</div>
+              <div>※クラウドデータは削除されません</div>
+            </div>
+            <div>
+              <button class="okButton" @click="ok">はい</button>
+              <button class="noButton" @click="no">いいえ</button>
+            </div>
           </div>
         </div>
         <div v-else>
@@ -797,9 +818,11 @@ export default {
       userPhotoURL: "",
       isLoggedIn: false, // ログイン状態を保持
       isLoading: true, // ローディング状態を保持
+      showUser: false, // クライド関連画面表示状態を保持
       showPopup: false, // ポップアップの表示状態を保持
       showHelpPopup: false, // ポップアップの表示状態を保持
-      user: ""
+      user: "",
+      kind: "" //押下されているボタンを判別
     };
   },
   computed: {
@@ -1088,7 +1111,7 @@ export default {
        }
       },
       togglePopup() {
-        this.showPopup = !this.showPopup; // ポップアップの表示/非表示をトグル
+        this.showUser = !this.showUser; // ポップアップの表示/非表示をトグル
       },
       toggleHelpPopup() {
         console.log(this.selectedVerseRank);
@@ -1101,6 +1124,7 @@ export default {
         const popup = this.$refs.popup;
         const icon = this.$refs.icon;
         if (this.showPopup && popup && !popup.contains(event.target) && icon && !icon.contains(event.target)) {
+          console.log("閉じられてる")
           this.closePopup();
         }
       },
@@ -1133,6 +1157,22 @@ export default {
         const docRef = doc(db, "users", uid);
         await setDoc(docRef, { selectedItems: selectedItems }, { merge: true });
       },
+      async clickCloud (name) {
+        this.showPopup = true; // 確認モーダルを開く
+        this.kind = name; //押されたボタンを保持
+      },
+      async ok () {
+        if (this.kind === 'save'){
+          this.saveCloudData();
+        } else if (this.kind === 'get') {
+          this.getCloudData();
+        } else {
+          this.delete();
+        }
+      },
+      async no () {
+        this.showPopup = false; // 確認モーダルを開く
+      },
       async getCloudData () {
         // 選択されたアイテムをFirestoreから取得
         // ユーザーデータを取得
@@ -1153,6 +1193,12 @@ export default {
         this.closePopup(); // ポップアップを閉じる
         // gat
         event('保存クリック');
+      },
+      async delete () {
+        localStorage.removeItem('selectedItems'); // ローカルストレージのデータを削除
+      },
+      closeUser () {
+        this.showUser = false; // ポップアップを閉じる
       },
       closePopup () {
         this.showPopup = false; // ポップアップを閉じる
@@ -1456,6 +1502,19 @@ export default {
     width: 90%;
     font-size: 11px;
   }
+  .orverScreen {
+    position: fixed; /* スクロールしても位置を固定 */
+    top: 0; /* 上端に配置 */
+    left: 0; /* 左端に配置 */
+    background-color: white; /* ポップアップの背景色 */
+    z-index: 1001; /* 他の要素の上に表示 */
+    display: flex; /* フレックスボックスを使用 */
+    flex-direction: column; /* 縦に並べる */
+    align-items: center; /* 中央に揃える */
+    width: 100%;
+    height: 100%;
+    font-size: 11px;
+  }
   .overlay {
     position: fixed; /* スクロールしても位置を固定 */
     top: 0; /* 上端に配置 */
@@ -1610,6 +1669,23 @@ export default {
     margin: 10px;
     cursor: pointer;
   }
+  .deleteButton {
+    color: #ffffff;
+    background-color: #ff0000;
+    border-radius: 100vh;
+    border-color: #ff0000;
+    border-style: solid;
+    /* クリックした際に枠線をnone消す */
+    outline: none;
+    /* 影を消す */
+    box-shadow: none;
+    padding: 5px 20px;
+    width: 210px;
+    display: inline-block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
   .logoutButton {
     color: #ff0000;
     background-color: #ffffff;
@@ -1625,6 +1701,38 @@ export default {
     display: inline-block;
     margin-top: 30px;
     margin-bottom: 10px;
+    cursor: pointer;
+  }
+  .okButton {
+    color: #fff;
+    background-color: #3191ff;
+    border-radius: 100vh;
+    border-color: #3191ff;
+    border-style: solid;
+    /* クリックした際に枠線をnone消す */
+    outline: none;
+    /* 影を消す */
+    box-shadow: none;
+    padding: 5px 20px;
+    width: 100px;
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+  }
+  .noButton {
+    color: #3191ff;
+    background-color: #ffffff;
+    border-radius: 100vh;
+    border-color: #3191ff;
+    border-style: solid;
+    /* クリックした際に枠線をnone消す */
+    outline: none;
+    /* 影を消す */
+    box-shadow: none;
+    padding: 5px 20px;
+    width: 100px;
+    display: inline-block;
+    margin: 10px;
     cursor: pointer;
   }
   .buttonBox {
@@ -1671,6 +1779,9 @@ export default {
   .redBigText {
     color: red; /* テキストを赤色にする */
     font-size: 15px;
+  }
+  .marginBottom {
+    margin-bottom: 10px;
   }
  </style>
  
