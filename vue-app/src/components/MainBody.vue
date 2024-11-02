@@ -122,6 +122,8 @@
                 <option value="thi">チィ</option>
               </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="himitsuItemName" placeholder="アイテム名で検索">
+                <div>
+                  <div>
               <div v-show="(selectedHimitsuVersion === 1 || selectedHimitsuVersion === 0)
                 && (
                   selectedHimitsuRank === 0 || (
@@ -478,6 +480,8 @@
                 </div>
               </div>
             </div>
+          </div>
+            </div>
           </li>
  
         <li v-show="isActive === 'B'" class="tableMain verseMain">
@@ -570,7 +574,7 @@
                 <div class="tableTitle versionMargin">-2弾-</div>
                 <div v-lazy-show>
                   <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
-                    <img v-show="filteredVerseList2[4] > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
+                    <img v-show="filteredVerseList2[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList2[4]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
