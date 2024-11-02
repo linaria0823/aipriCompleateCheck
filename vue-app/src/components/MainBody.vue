@@ -531,10 +531,10 @@
                        <img v-if="verseList1.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList1.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
-                            <div class="tooltip1 cordeButton" 
-                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                             @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <div class="tooltip1"
+                             :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
+                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -543,11 +543,11 @@
                        <img v-if="verseList1.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList1.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
-                           <div class="tooltip1 cordeButton" 
-                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                             @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                           </div>
+                           <div class="tooltip1" 
+                             :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
+                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                            </div>
                          </li>
                        </ul>
                      </div>
@@ -555,10 +555,10 @@
                        <img v-if="verseList1.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList1.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
-                           <div class="tooltip1 cordeButton" 
-                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                             @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                           <div class="tooltip1" 
+                             :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
+                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -579,10 +579,10 @@
                        <img v-if="verseList2.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList2.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
-                            <div class="tooltip1 cordeButton" 
-                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                             @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <div class="tooltip1" 
+                             :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
+                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -591,10 +591,10 @@
                        <img v-if="verseList2.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList2.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
-                           <div class="tooltip1 cordeButton" 
-                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                             @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                           <div class="tooltip1" 
+                             :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
+                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -603,10 +603,10 @@
                        <img v-if="verseList2.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList2.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
-                           <div class="tooltip1 cordeButton" 
-                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                             @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                           <div class="tooltip1" 
+                             :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
+                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -627,11 +627,11 @@
                        <img v-if="verseList3.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList3.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
-                           <div class="tooltip1 cordeButton" 
-                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                             @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                         </div>
+                           <div class="tooltip1" 
+                             :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
+                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                            </div>
                          </li>
                        </ul>
                      </div>
@@ -639,10 +639,10 @@
                        <img v-if="verseList3.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList3.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
-                            <div class="tooltip1 cordeButton" 
-                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                             @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <div class="tooltip1" 
+                             :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
+                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -651,10 +651,10 @@
                        <img v-if="verseList3.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList3.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
-                            <div class="tooltip1 cordeButton" 
-                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                             @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <div class="tooltip1" 
+                             :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
+                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -675,10 +675,10 @@
                        <img v-if="verseList4.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList4.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
-                           <div class="tooltip1 cordeButton" 
-                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                             @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                           <div class="tooltip1" 
+                             :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
+                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
                             </div>
                          </li>
                        </ul>
@@ -687,11 +687,11 @@
                        <img v-if="verseList4.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList4.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
-                           <div class="tooltip1 cordeButton" 
-                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                             @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                          </div>
+                           <div class="tooltip1" 
+                             :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
+                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                            </div>
                          </li>
                        </ul>
                      </div>
@@ -699,11 +699,11 @@
                        <img v-if="verseList4.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                        <ul id="dispHimitsuItemList">
                          <li v-for="(verseData) in verseList4.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
-                           <div class="tooltip1 cordeButton" 
-                             :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                             @click="toggleItem(verseData.value)">
-                             <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                          </div>
+                           <div class="tooltip1" 
+                             :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
+                             <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                             <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                            </div>
                          </li>
                        </ul>
                      </div>
@@ -724,10 +724,10 @@
                       <img v-if="verseListSP.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                       <ul id="dispHimitsuItemList">
                         <li v-for="(verseData) in verseListSP.filter(item => item.rank === 4)" :key="verseData.value" class="itemLi">
-                          <div class="tooltip1 cordeButton" 
-                            :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                            @click="toggleItem(verseData.value)">
-                            <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <div class="tooltip1" 
+                            :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
+                            <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
                           </div>
                         </li>
                       </ul>
@@ -736,11 +736,11 @@
                       <img v-if="verseListSP.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                       <ul id="dispHimitsuItemList">
                         <li v-for="(verseData) in verseListSP.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
-                          <div class="tooltip1 cordeButton" 
-                            :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                            @click="toggleItem(verseData.value)">
-                            <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                        </div>
+                          <div class="tooltip1" 
+                            :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
+                            <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                          </div>
                         </li>
                       </ul>
                     </div>
@@ -748,11 +748,11 @@
                       <img v-if="verseListSP.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                       <ul id="dispHimitsuItemList">
                         <li v-for="(verseData) in verseListSP.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
-                          <div class="tooltip1 cordeButton" 
-                            :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                            @click="toggleItem(verseData.value)">
-                            <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
-                        </div>
+                          <div class="tooltip1" 
+                            :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
+                            <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
+                          </div>
                         </li>
                       </ul>
                     </div>
@@ -760,10 +760,10 @@
                       <img v-if="verseListSP.filter(item => item.rank === 'sp').length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/special.webp`)" alt="">
                       <ul id="dispHimitsuItemList">
                         <li v-for="(verseData) in verseListSP.filter(item => item.rank === 'sp')" :key="verseData.value" class="itemLi">
-                          <div class="tooltip1 cordeButton" 
-                            :class="{'isClicked': selectedItems.includes(verseData.value)}" 
-                            @click="toggleItem(verseData.value)">
-                            <img v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <div class="tooltip1" 
+                            :class="{'isClicked': selectedItems.includes(verseData.value), 'cordeButtonMobile': this.mobile === true, 'cordeButton': this.mobile === false}">
+                            <img @click="toggleItem(verseData.value)" v-bind:class="{'cordeItemImgMobile': this.mobile === true, 'cordeItemImg': this.mobile === false}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                            <div v-bind:class="{'itemNameMobile': this.mobile === true, 'itemName': this.mobile === false}">{{ verseData.name }}</div>
                           </div>
                         </li>
                       </ul>
@@ -1330,7 +1330,6 @@ export default {
  }
  .tooltip1 {
    position: relative;
-   cursor: pointer;
    display: inline-block;
  }
  .isClicked {
@@ -1383,11 +1382,13 @@ export default {
     margin-bottom: 5px;
     margin-right: 5px;
     margin-left: 5px;
+    width: 75px;
   }
-  .cordeButton:active {
+  .cordeButtonMobile {
     margin-bottom: 5px;
     margin-right: 5px;
     margin-left: 5px;
+    width: 60px;
   }
   .cordeItemImg {
     cursor: pointer;
@@ -1431,7 +1432,7 @@ export default {
     opacity: 1;  /* 通常状態では不透明 */
   }
  .itemLi{
-   display: inline;
+   display: inline-flex;
  }
  .tableTitle {
    margin-top: 5px;
@@ -1784,6 +1785,14 @@ export default {
   }
   .marginBottom {
     margin-bottom: 10px;
+  }
+  .itemName {
+    font-size: 11px;
+    cursor: default;
+  }
+  .itemNameMobile {
+    font-size: 8px;
+    cursor: default;
   }
  </style>
  
