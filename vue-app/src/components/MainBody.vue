@@ -131,7 +131,7 @@
                             (selectedHimitsuRank === 3 && himitsuList1.filter(item => item.rank === 3).length > 0) ||
                             (selectedHimitsuRank === 2 && himitsuList1.filter(item => item.rank === 2).length > 0)
                         )
-                    )&& himitsuList1.length > 0">
+                    )&& himitsuList1.length > 0" lazy-show>
                       <div class="tableTitle">-1弾-</div>
                       <div>
                         <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
@@ -179,7 +179,7 @@
                             (selectedHimitsuRank === 3 && himitsuList2.filter(item => item.rank === 3).length > 0) ||
                             (selectedHimitsuRank === 2 && himitsuList2.filter(item => item.rank === 2).length > 0)
                         )
-                    )&& himitsuList2.length > 0">
+                    )&& himitsuList2.length > 0" lazy-show>
                       <div class="tableTitle">-2弾-</div>
                       <div>
                         <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
@@ -227,7 +227,7 @@
                             (selectedHimitsuRank === 3 && himitsuList3.filter(item => item.rank === 3).length > 0) ||
                             (selectedHimitsuRank === 2 && himitsuList3.filter(item => item.rank === 2).length > 0)
                         )
-                    )&& himitsuList3.length > 0">
+                    )&& himitsuList3.length > 0" lazy-show>
                       <div class="tableTitle">-3弾-</div>
                       <div>
                         <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
@@ -275,7 +275,7 @@
                             (selectedHimitsuRank === 3 && himitsuList4.filter(item => item.rank === 3).length > 0) ||
                             (selectedHimitsuRank === 2 && himitsuList4.filter(item => item.rank === 2).length > 0)
                         )
-                    )&& himitsuList4.length > 0">
+                    )&& himitsuList4.length > 0" lazy-show>
                       <div class="tableTitle">-4弾-</div>
                       <div>
                         <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
@@ -324,7 +324,7 @@
                             (selectedHimitsuRank === 2 && himitsuListSP.filter(item => item.rank === 2).length > 0) ||
                             (selectedHimitsuRank === 'sp' && himitsuListSP.filter(item => item.rank === 'sp').length > 0)
                         )
-                    )&& himitsuListSP.length > 0">
+                    )&& himitsuListSP.length > 0" lazy-show>
                       <div class="tableTitle">-スペシャル-</div>
                       <div>
                         <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
@@ -384,7 +384,7 @@
                             (selectedHimitsuRank === 3 && himitsuListGumi.filter(item => item.rank === 3).length > 0) ||
                             (selectedHimitsuRank === 2 && himitsuListGumi.filter(item => item.rank === 2).length > 0)
                         )
-                    )&& himitsuListGumi.length > 0">
+                    )&& himitsuListGumi.length > 0" lazy-show>
                       <div class="tableTitle">-コレクショングミ-</div>
                       <div>
                         <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
@@ -432,7 +432,7 @@
                             (selectedHimitsuRank === 3 && himitsuListMirufi.filter(item => item.rank === 3).length > 0) ||
                             (selectedHimitsuRank === 2 && himitsuListMirufi.filter(item => item.rank === 2).length > 0)
                         )
-                    )&& himitsuListMirufi.length > 0">
+                    )&& himitsuListMirufi.length > 0" lazy-show>
                       <div class="tableTitle">-ミルフィーカード-</div>
                       <div>
                         <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
@@ -524,7 +524,7 @@
                            (selectedVerseRank === 3 && verseList1.filter(item => item.rank === 3).length > 0) ||
                            (selectedVerseRank === 2 && verseList1.filter(item => item.rank === 2).length > 0)
                        )
-                   )&& verseList1.length > 0">
+                   )&& verseList1.length > 0" lazy-show>
                    <div class="tableTitle">-1弾-</div>
                    <div>
                      <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
@@ -572,7 +572,7 @@
                            (selectedVerseRank === 3 && verseList2.filter(item => item.rank === 3).length > 0) ||
                            (selectedVerseRank === 2 && verseList2.filter(item => item.rank === 2).length > 0)
                        )
-                   )&& verseList2.length > 0">
+                   )&& verseList2.length > 0" lazy-show>
                    <div class="tableTitle versionMargin">-2弾-</div>
                    <div>
                      <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
@@ -620,7 +620,7 @@
                            (selectedVerseRank === 3 && verseList3.filter(item => item.rank === 3).length > 0) ||
                            (selectedVerseRank === 2 && verseList3.filter(item => item.rank === 2).length > 0)
                        )
-                   )&& verseList3.length > 0">
+                   )&& verseList3.length > 0" lazy-show>
                    <div class="tableTitle versionMargin">-3弾-</div>
                    <div>
                      <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
@@ -668,7 +668,7 @@
                            (selectedVerseRank === 3 && verseList4.filter(item => item.rank === 3).length > 0) ||
                            (selectedVerseRank === 2 && verseList4.filter(item => item.rank === 2).length > 0)
                        )
-                   )&& verseList4.length > 0">
+                   )&& verseList4.length > 0" lazy-show>
                    <div class="tableTitle versionMargin">-4弾-</div>
                    <div>
                      <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
@@ -717,7 +717,7 @@
                            (selectedVerseRank === 2 && verseListSP.filter(item => item.rank === 2).length > 0) ||
                            (selectedVerseRank === 'sp' && verseListSP.filter(item => item.rank === 'sp').length > 0)
                        )
-                  )&& verseListSP.length > 0">
+                  )&& verseListSP.length > 0" lazy-show>
                   <div class="tableTitle versionMargin">-スペシャルコーデアイテム-</div>
                   <div>
                     <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
