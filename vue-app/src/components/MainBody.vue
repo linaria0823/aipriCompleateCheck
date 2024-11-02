@@ -791,9 +791,8 @@
       </ul>
     </div>
   </div>
-  <button class="top_btn" v-show="buttonActive" @click="pageTop">
-    <i class="fa-solid fa-angle-up"></i>
-  </button>
+  <div class="top_btn" v-show="buttonActive" @click="pageTop">
+  </div>
 </virtual-scroller>
 </div>
 </template>
@@ -1507,15 +1506,26 @@ export default {
    width: 110px;
  }
  .top_btn {
-   position: fixed;
-   bottom: 60px;
-   right: 30px;
-   width: 40px;
-   height: 40px;
-   margin: 0 auto;
-   background-color: #d9d9d9;
-   border-radius: 50%;
-   line-height: 40px;
+  cursor: pointer;
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 48px;
+    height: 48px;
+    text-decoration: none;
+    background-color: #1d20ff;
+    display: block;
+    text-align: center;
+    border-radius: 24px;
+  }
+  .top_btn::before {
+    cursor: pointer;
+    content: '\f062';
+    font-family: 'Font Awesome 6 Free';
+    font-size: 30px;
+    font-weight: 900;
+    color: #fff;
+    line-height: 48px;
   }
   .mobileSearchBox {
    margin-top: 5px;

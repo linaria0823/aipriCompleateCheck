@@ -125,13 +125,13 @@ export default {
 <style scoped>
 footer {
   text-align: center;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #fff;
+  margin-top: 30px;
+  border-top: 2px solid rgb(0 55 255);
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .link {
-  color: #2226ff;
+  color: #6ba6ff;
   font-weight: bold;
   cursor: pointer;
   margin-bottom: 5px;
