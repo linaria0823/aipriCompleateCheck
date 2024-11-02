@@ -1,4 +1,5 @@
 <template>
+  <div @scroll="handleScroll">
   <div id="contents" class="mainBody">
      <div>
         <img v-lazy="require(`@/img/icon/help.png`)" class="helpIcon" alt="" @click="toggleHelpPopup">
@@ -122,7 +123,7 @@
                 <option value="thi">チィ</option>
               </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="himitsuItemName" placeholder="アイテム名で検索">
-              <div>
+              <div v-show="showContentA">
                 <div>
                   <div>
                     <div v-show="(selectedHimitsuVersion === 1 || selectedHimitsuVersion === 0)
@@ -139,7 +140,7 @@
                             <img v-show="himitsuList1.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                             <div>
                             <ul id="dispHimitsuItemList">
-                              <li v-for="(himitsuData) in himitsuList1.filter(item => item.rank === 4)" :key="himitsuData.value" class="itemLi">
+                              <li v-for="(himitsuData) in displayedItems.filter(item => item.rank === 4)" :key="himitsuData.value" class="itemLi">
                                 <div class="tooltip1 cardButton" 
                                   :class="{'isClicked': selectedItems.includes(himitsuData.value)}" 
                                   @click="toggleItem(himitsuData.value)">
@@ -153,7 +154,7 @@
                             <img v-show="himitsuList1.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                             <div>
                             <ul id="dispHimitsuItemList">
-                              <li v-for="(verseData) in himitsuList1.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
+                              <li v-for="(verseData) in displayedItems.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
                                 <div class="tooltip1 cardButton" 
                                   :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                                   @click="toggleItem(verseData.value)">
@@ -167,7 +168,7 @@
                           <img v-show="himitsuList1.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                           <div>
                           <ul id="dispHimitsuItemList">
-                            <li v-for="(verseData) in himitsuList1.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
+                            <li v-for="(verseData) in displayedItems.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
                               <div class="tooltip1 cardButton" 
                                 :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                                 @click="toggleItem(verseData.value)">
@@ -193,7 +194,7 @@
                         <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
                           <img v-show="himitsuList2.filter(item => item.rank === 4).length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                           <ul id="dispHimitsuItemList">
-                            <li v-for="(himitsuData) in himitsuList2.filter(item => item.rank === 4)" :key="himitsuData.value" class="itemLi">
+                            <li v-for="(himitsuData) in displayedItems.filter(item => item.rank === 4)" :key="himitsuData.value" class="itemLi">
                               <div class="tooltip1 cardButton" 
                                 :class="{'isClicked': selectedItems.includes(himitsuData.value)}" 
                                 @click="toggleItem(himitsuData.value)">
@@ -205,7 +206,7 @@
                         <div v-show="(selectedHimitsuRank === 3 || selectedHimitsuRank === 0)">
                           <img v-show="himitsuList2.filter(item => item.rank === 3).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                           <ul id="dispHimitsuItemList">
-                            <li v-for="(verseData) in himitsuList2.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
+                            <li v-for="(verseData) in displayedItems.filter(item => item.rank === 3)" :key="verseData.value" class="itemLi">
                               <div class="tooltip1 cardButton" 
                                 :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                                 @click="toggleItem(verseData.value)">
@@ -217,7 +218,7 @@
                       <div v-show="(selectedHimitsuRank === 2 || selectedHimitsuRank === 0)">
                         <img v-show="himitsuList2.filter(item => item.rank === 2).length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                         <ul id="dispHimitsuItemList">
-                           <li v-for="(verseData) in himitsuList2.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
+                           <li v-for="(verseData) in displayedItems.filter(item => item.rank === 2)" :key="verseData.value" class="itemLi">
                             <div class="tooltip1 cardButton" 
                               :class="{'isClicked': selectedItems.includes(verseData.value)}" 
                               @click="toggleItem(verseData.value)">
@@ -523,7 +524,7 @@
                <option value="ps">プリズムストーン</option>
              </select>
              <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="verseItemName" placeholder="アイテム名で検索">
-             <div>
+             <div v-show="showContentB">
                <div>
                  <div v-show="(selectedVerseVersion === 1 || selectedVerseVersion === 0)
                    && (
@@ -788,6 +789,7 @@
   <button class="top_btn" v-show="buttonActive" @click="pageTop">
     <i class="fa-solid fa-angle-up"></i>
   </button>
+</div>
 </template>
  
 <script>
@@ -837,10 +839,16 @@ export default {
       kind: "", //押下されているボタンを判別
       observer: null, // IntersectionObserverのインスタンス
       showContentA: false,
-      showContentB: false
+      showContentB: false,
+      displayedItems: [], // 表示用アイテム
+      itemsToShow: 10, // 一度に表示するアイテム数
+      loading: false // ローディング状態
     };
   },
   computed: {
+    allItems() {
+      return [...this.himitsuList1, ...this.himitsuList2];
+    },
     filteredHimitsuList() {
       let list = this.iniHimitsuList;
       // バージョンで絞り込み
@@ -1237,8 +1245,26 @@ export default {
       closeHelpPopup () {
         this.showHelpPopup = false; // ポップアップを閉じる
       },
+      loadMoreItems() {
+        const nextItems = this.allItems.slice(this.displayedItems.length, this.displayedItems.length + this.itemsToShow);
+        this.displayedItems.push(...nextItems);
+      },
+      handleScroll() {
+        const scrollTop = window.scrollY || window.pageYOffset;
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+
+        if (scrollTop + windowHeight >= documentHeight - 100 && !this.loading) {
+          this.loading = true;
+          this.loadMoreItems();
+          this.loading = false;
+        }
+      }
     },
     mounted() {
+      this.loadMoreItems();
+      window.addEventListener('scroll', this.handleScroll);
+
       // コンポーネントがマウントされたときに初期タブの内容を表示
       this.change(this.isActive);
 
@@ -1255,6 +1281,7 @@ export default {
       document.addEventListener('click', this.handleClickOutside); // 外部クリックをリスン
     },
     beforeUnmount() {
+      window.removeEventListener('scroll', this.handleScroll);
       document.removeEventListener('click', this.handleClickOutside); // コンポーネントが破棄される前にイベントリスナーを削除
     },
     created() {
