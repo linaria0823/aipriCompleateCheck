@@ -122,7 +122,6 @@
                 <option value="thi">チィ</option>
               </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="himitsuItemName" placeholder="アイテム名で検索">
-              <div @click="test">test</div>
                 <div>
                   <div>
               <div v-show="isInViewport1 && (selectedHimitsuVersion === 1 || selectedHimitsuVersion === 0)
@@ -524,6 +523,7 @@
                <option value="ps">プリズムストーン</option>
              </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="verseItemName" placeholder="アイテム名で検索">
+              <div @click="test">test</div>
               <div ref="verseList1">
               <div v-if="isInVerseViewport1 && (selectedVerseVersion === 1 || selectedVerseVersion === 0)
                 && (
@@ -712,7 +712,7 @@
                 </div>
               </div>
             </div>
-              <div ref="verseListSP">
+              <div id="verseListSP" ref="verseListSP">
               <div v-if="isInVerseViewportSP && (selectedVerseVersion === 'sp' || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
@@ -833,9 +833,9 @@ export default {
       isInViewport3: false,
       isInViewport4: false,
       isInVerseViewport1: false,
-      isVerseInViewport2: false,
-      isVerseInViewport3: false,
-      isVerseInViewport4: false,
+      isInVerseViewport2: false,
+      isInVerseViewport3: false,
+      isInVerseViewport4: false,
       isInVerseViewportSP: false,
       observer: null,
     };
@@ -1281,100 +1281,61 @@ export default {
         this.showHelpPopup = false; // ポップアップを閉じる
       },
       test () {
-        console.log(this.isInVerseViewportSP);
+        console.log(this.isInVerseViewport4);
       },
       initializeObserver () {
         this.observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+        for (const entry of entries) {
           // 各エントリの状態をログに出力
           console.log('Observing:', entry.target.id, 'isIntersecting:', entry.isIntersecting);
           if (entry.isIntersecting) {
             if (entry.target === this.$refs.himitsuList1) {
               this.isInViewport1 = true;
+              break; // 処理を中断
               //console.log('himitsuList1 is in viewport');
             } else if (entry.target === this.$refs.himitsuList2) {
               this.isInViewport2 = true;
+              break; // 処理を中断
               //console.log('himitsuList2 is in viewport');
             } else if (entry.target === this.$refs.verseList1) {
               this.isInVerseViewport1 = true;
+              break; // 処理を中断
               //console.log('verseList1 is in viewport');
             } else if (entry.target === this.$refs.verseList2) {
               this.isInVerseViewport2 = true;
+              break; // 処理を中断
               //console.log('verseList2 is in viewport');
             } else if (entry.target === this.$refs.verseList3) {
               this.isInVerseViewport3 = true;
+              break; // 処理を中断
               //console.log('verseList3 is in viewport');
             } else if (entry.target === this.$refs.verseList4) {
               this.isInVerseViewport4 = true;
+              break; // 処理を中断
               //console.log('verseList4 is in viewport');
             } else if (entry.target === this.$refs.verseListSP) {
               this.isInVerseViewportSP = true;
+              break; // 処理を中断
               //console.log('verseListSP is in viewport');
             }
-          } else {
-            if (entry.target === this.$refs.verseListSP) {
-              if (entry.target === this.$refs.himitsuList1) {
-                this.isInViewport1 = false;
-                //console.log('himitsuList1 is in viewport');
-              } else if (entry.target === this.$refs.himitsuList2) {
-                this.isInViewport2 = false;
-                //console.log('himitsuList2 is in viewport');
-              } else if (entry.target === this.$refs.verseList1) {
-                this.isInVerseViewport1 = false;
-                //console.log('verseList1 is in viewport');
-              } else if (entry.target === this.$refs.verseList2) {
-                this.isInVerseViewport2 = false;
-                //console.log('verseList2 is in viewport');
-              } else if (entry.target === this.$refs.verseList3) {
-                this.isInVerseViewport3 = false;
-                //console.log('verseList3 is in viewport');
-              } else if (entry.target === this.$refs.verseList4) {
-                this.isInVerseViewport4 = false;
-                //console.log('verseList4 is in viewport');
-              } else if (entry.target === this.$refs.verseListSP) {
-                this.isInVerseViewportSP = false;
-                //console.log('verseListSP is in viewport');
-              }
-            }
-          }
-        });
+          } 
+        }
       },{
         threshold: 0 // どの部分でもヒットしたらtrue
       });
 
-      const himitsuList1Element = this.$refs.himitsuList1;
-      const himitsuList2Element = this.$refs.himitsuList2;
-      const verseList1Element = this.$refs.verseList1;
-      const verseList2Element = this.$refs.verseList2;
-      const verseList3Element = this.$refs.verseList3;
-      const verseList4Element = this.$refs.verseList4;
-      const verseListSPElement = this.$refs.verseListSP;
-
-      if (himitsuList1Element) {
-        this.observer.observe(himitsuList1Element);
-      }
-      if (himitsuList2Element) {
-        this.observer.observe(himitsuList2Element);
-      }
-      if (verseList1Element) {
-        this.observer.observe(verseList1Element);
-      }
-      if (verseList2Element) {
-        this.observer.observe(verseList2Element);
-      }
-      if (verseList3Element) {
-        this.observer.observe(verseList3Element);
-      }
-      if (verseList4Element) {
-        this.observer.observe(verseList4Element);
-      }
-      if (verseListSPElement) {
-        this.observer.observe(verseListSPElement);
-      }
-      }
+      this.observer.observe(this.$refs.himitsuList1);
+      this.observer.observe(this.$refs.himitsuList2);
+      this.observer.observe(this.$refs.verseList1);
+      this.observer.observe(this.$refs.verseList2);
+      this.observer.observe(this.$refs.verseList3);
+      this.observer.observe(this.$refs.verseList4);
+      this.observer.observe(this.$refs.verseListSP);
+    }
     },
     mounted() {
       this.$nextTick(() => {
+        console.log("よばれ")
         this.initializeObserver();
         // コンポーネントがマウントされたときに初期タブの内容を表示
         this.change(this.isActive);
@@ -1401,14 +1362,6 @@ export default {
     },
     created() {
     },
-    watch: {
-      isInViewport1(newVal) {
-        console.log('isInViewport1:', newVal);
-      },
-      isInViewport2(newVal) {
-        console.log('isInViewport2:', newVal);
-      }
-    }
   };
 </script>
  
