@@ -3,6 +3,7 @@
     <div class="link" @click="policyPopup">
       プライバシーポリシー
     </div>
+    <br>
     <div class="link" @click="infoPopup">
       問い合わせ
     </div>
@@ -135,6 +136,7 @@ footer {
   cursor: pointer;
   margin-bottom: 5px;
   text-decoration:underline;
+  display: inline-block;
 }
 .link:after {
   background-repeat: no-repeat;
@@ -142,6 +144,7 @@ footer {
   cursor: pointer;
   margin-bottom: 5px;
   text-decoration:underline;
+  display: inline-block;
 }
 .popup {
   text-align: left;
