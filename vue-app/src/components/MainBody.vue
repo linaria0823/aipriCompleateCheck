@@ -523,7 +523,7 @@
                <option value="ps">プリズムストーン</option>
              </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="verseItemName" placeholder="アイテム名で検索">
-              <div v-show="isInVerseViewport1 && (selectedVerseVersion === 1 || selectedVerseVersion === 0)
+              <div v-if="isInVerseViewport1 && (selectedVerseVersion === 1 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList1.filter(item => item.rank === 4).length > 0) ||
@@ -533,7 +533,7 @@
                 )&& verseList1.length > 0" >
                 <div class="tableTitle">-1弾-</div>
                 <div v-lazy-show>
-                  <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
+                  <div v-if="(selectedVerseRank === 4 || selectedVerseRank === 0)">
                     <img v-show="filteredVerseList1[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList1[4]" :key="verseData.value" class="itemLi">
@@ -544,7 +544,7 @@
                       </li>
                     </ul>
                   </div>
-                  <div v-show="(selectedVerseRank === 3 || selectedVerseRank === 0)">
+                  <div v-if="(selectedVerseRank === 3 || selectedVerseRank === 0)">
                     <img v-show="filteredVerseList1[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList1[3]" :key="verseData.value" class="itemLi">
@@ -555,8 +555,8 @@
                       </li>
                     </ul>
                   </div>
-                  <div v-show="(selectedVerseRank === 2 || selectedVerseRank === 0)">
-                    <img v-show="filteredVerseList1[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
+                  <div v-if="(selectedVerseRank === 2 || selectedVerseRank === 0)">
+                    <img v-if="filteredVerseList1[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList1[2]" :key="verseData.value" class="itemLi">
                         <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -569,7 +569,7 @@
                 </div>
               </div>
               <div ref="verseList1"></div>
-              <div v-show="isInVerseViewport2 && (selectedVerseVersion === 2 || selectedVerseVersion === 0)
+              <div v-if="isInVerseViewport2 && (selectedVerseVersion === 2 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList2.filter(item => item.rank === 4).length > 0) ||
@@ -579,8 +579,8 @@
                 )&& verseList2.length > 0" >
                 <div class="tableTitle versionMargin">-2弾-</div>
                 <div v-lazy-show>
-                  <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
-                    <img v-show="filteredVerseList2[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
+                  <div v-if="(selectedVerseRank === 4 || selectedVerseRank === 0)">
+                    <img v-if="filteredVerseList2[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList2[4]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -590,8 +590,8 @@
                       </li>
                     </ul>
                   </div>
-                  <div v-show="(selectedVerseRank === 3 || selectedVerseRank === 0)">
-                    <img v-show="filteredVerseList2[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
+                  <div v-if="(selectedVerseRank === 3 || selectedVerseRank === 0)">
+                    <img v-if="filteredVerseList2[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList2[3]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -601,8 +601,8 @@
                       </li>
                     </ul>
                   </div>
-                  <div v-show="(selectedVerseRank === 2 || selectedVerseRank === 0)">
-                    <img v-show="filteredVerseList2[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
+                  <div v-if="(selectedVerseRank === 2 || selectedVerseRank === 0)">
+                    <img v-if="filteredVerseList2[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList2[2]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -615,7 +615,7 @@
                 </div>
               </div>
               <div ref="verseList2"></div>
-              <div v-show="isInVerseViewport3 && (selectedVerseVersion === 3 || selectedVerseVersion === 0)
+              <div v-if="isInVerseViewport3 && (selectedVerseVersion === 3 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList3.filter(item => item.rank === 4).length > 0) ||
@@ -625,8 +625,8 @@
                 )&& verseList3.length > 0" >
                 <div class="tableTitle versionMargin">-3弾-</div>
                 <div v-lazy-show>
-                  <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
-                    <img v-show="filteredVerseList3[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
+                  <div v-if="(selectedVerseRank === 4 || selectedVerseRank === 0)">
+                    <img v-if="filteredVerseList3[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList3[4]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -636,8 +636,8 @@
                       </li>
                     </ul>
                   </div>
-                  <div v-show="(selectedVerseRank === 3 || selectedVerseRank === 0)">
-                    <img v-show="filteredVerseList3[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
+                  <div v-if="(selectedVerseRank === 3 || selectedVerseRank === 0)">
+                    <img v-if="filteredVerseList3[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList3[3]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -647,8 +647,8 @@
                       </li>
                     </ul>
                   </div>
-                  <div v-show="(selectedVerseRank === 2 || selectedVerseRank === 0)">
-                    <img v-show="filteredVerseList3[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
+                  <div v-if="(selectedVerseRank === 2 || selectedVerseRank === 0)">
+                    <img v-if="filteredVerseList3[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList3[2]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -661,7 +661,7 @@
                 </div>
               </div>
               <div ref="verseList3"></div>
-              <div v-show="isInVerseViewport4 && (selectedVerseVersion === 4 || selectedVerseVersion === 0)
+              <div v-if="isInVerseViewport4 && (selectedVerseVersion === 4 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList4.filter(item => item.rank === 4).length > 0) ||
@@ -671,8 +671,8 @@
                 )&& verseList4.length > 0" >
                 <div class="tableTitle versionMargin">-4弾-</div>
                 <div v-lazy-show>
-                  <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
-                    <img v-show="filteredVerseList4[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
+                  <div v-if="(selectedVerseRank === 4 || selectedVerseRank === 0)">
+                    <img v-if="filteredVerseList4[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList4[4]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -682,8 +682,8 @@
                       </li>
                     </ul>
                   </div>
-                  <div v-show="(selectedVerseRank === 3 || selectedVerseRank === 0)">
-                    <img v-show="filteredVerseList4[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
+                  <div v-if="(selectedVerseRank === 3 || selectedVerseRank === 0)">
+                    <img v-if="filteredVerseList4[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList4[3]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -693,8 +693,8 @@
                       </li>
                     </ul>
                   </div>
-                  <div v-show="(selectedVerseRank === 2 || selectedVerseRank === 0)">
-                    <img v-show="filteredVerseList4[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
+                  <div v-if="(selectedVerseRank === 2 || selectedVerseRank === 0)">
+                    <img v-if="filteredVerseList4[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList4[2]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -707,7 +707,7 @@
                 </div>
               </div>
               <div ref="verseList4"></div>
-              <div v-show="(isInVerseViewportSP && selectedVerseVersion === 'sp' || selectedVerseVersion === 0)
+              <div v-if="(isInVerseViewportSP && selectedVerseVersion === 'sp' || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseListSP.filter(item => item.rank === 4).length > 0) ||
@@ -718,8 +718,8 @@
               )&& verseListSP.length > 0" >
               <div class="tableTitle versionMargin">-スペシャルコーデアイテム-</div>
               <div v-lazy-show>
-                <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
-                  <img v-show="filteredVerseListSP[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
+                <div v-if="(selectedVerseRank === 4 || selectedVerseRank === 0)">
+                  <img v-if="filteredVerseListSP[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                   <ul id="dispHimitsuItemList">
                     <li v-for="(verseData) in filteredVerseListSP[4]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -728,8 +728,8 @@
                     </li>
                   </ul>
                 </div>
-                <div v-show="(selectedVerseRank === 3 || selectedVerseRank === 0)">
-                  <img v-show="filteredVerseListSP[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
+                <div v-if="(selectedVerseRank === 3 || selectedVerseRank === 0)">
+                  <img v-if="filteredVerseListSP[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                   <ul id="dispHimitsuItemList">
                     <li v-for="(verseData) in filteredVerseListSP[3]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -738,8 +738,8 @@
                     </li>
                   </ul>
                 </div>
-                <div v-show="(selectedVerseRank === 2 || selectedVerseRank === 0)">
-                  <img v-show="filteredVerseListSP[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
+                <div v-if="(selectedVerseRank === 2 || selectedVerseRank === 0)">
+                  <img v-if="filteredVerseListSP[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                   <ul id="dispHimitsuItemList">
                     <li v-for="(verseData) in filteredVerseListSP[2]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -748,8 +748,8 @@
                     </li>
                   </ul>
                 </div>
-                <div v-show="(selectedVerseRank === 'sp' || selectedVerseRank === 0)">
-                  <img v-show="filteredVerseListSP[5].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/special.webp`)" alt="">
+                <div v-if="(selectedVerseRank === 'sp' || selectedVerseRank === 0)">
+                  <img v-if="filteredVerseListSP[5].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/special.webp`)" alt="">
                   <ul id="dispHimitsuItemList">
                     <li v-for="(verseData) in filteredVerseListSP[5]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
