@@ -122,6 +122,7 @@
                 <option value="thi">チィ</option>
               </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="himitsuItemName" placeholder="アイテム名で検索">
+              <div @click="test">test</div>
                 <div>
                   <div>
               <div v-show="isInViewport1 && (selectedHimitsuVersion === 1 || selectedHimitsuVersion === 0)
@@ -523,6 +524,7 @@
                <option value="ps">プリズムストーン</option>
              </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="verseItemName" placeholder="アイテム名で検索">
+              <div ref="verseList1">
               <div v-if="isInVerseViewport1 && (selectedVerseVersion === 1 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
@@ -533,7 +535,7 @@
                 )&& verseList1.length > 0" >
                 <div class="tableTitle">-1弾-</div>
                 <div v-lazy-show>
-                  <div v-if="(selectedVerseRank === 4 || selectedVerseRank === 0)">
+                  <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
                     <img v-show="filteredVerseList1[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList1[4]" :key="verseData.value" class="itemLi">
@@ -544,7 +546,7 @@
                       </li>
                     </ul>
                   </div>
-                  <div v-if="(selectedVerseRank === 3 || selectedVerseRank === 0)">
+                  <div v-show="(selectedVerseRank === 3 || selectedVerseRank === 0)">
                     <img v-show="filteredVerseList1[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList1[3]" :key="verseData.value" class="itemLi">
@@ -555,8 +557,8 @@
                       </li>
                     </ul>
                   </div>
-                  <div v-if="(selectedVerseRank === 2 || selectedVerseRank === 0)">
-                    <img v-if="filteredVerseList1[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
+                  <div v-show="(selectedVerseRank === 2 || selectedVerseRank === 0)">
+                    <img v-show="filteredVerseList1[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList1[2]" :key="verseData.value" class="itemLi">
                         <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -568,7 +570,8 @@
                   </div>
                 </div>
               </div>
-              <div ref="verseList1"></div>
+            </div>
+              <div ref="verseList2">
               <div v-if="isInVerseViewport2 && (selectedVerseVersion === 2 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
@@ -579,8 +582,8 @@
                 )&& verseList2.length > 0" >
                 <div class="tableTitle versionMargin">-2弾-</div>
                 <div v-lazy-show>
-                  <div v-if="(selectedVerseRank === 4 || selectedVerseRank === 0)">
-                    <img v-if="filteredVerseList2[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
+                  <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
+                    <img v-show="filteredVerseList2[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList2[4]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -590,8 +593,8 @@
                       </li>
                     </ul>
                   </div>
-                  <div v-if="(selectedVerseRank === 3 || selectedVerseRank === 0)">
-                    <img v-if="filteredVerseList2[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
+                  <div v-show="(selectedVerseRank === 3 || selectedVerseRank === 0)">
+                    <img v-show="filteredVerseList2[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList2[3]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -601,8 +604,8 @@
                       </li>
                     </ul>
                   </div>
-                  <div v-if="(selectedVerseRank === 2 || selectedVerseRank === 0)">
-                    <img v-if="filteredVerseList2[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
+                  <div v-show="(selectedVerseRank === 2 || selectedVerseRank === 0)">
+                    <img v-show="filteredVerseList2[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList2[2]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -614,7 +617,8 @@
                   </div>
                 </div>
               </div>
-              <div ref="verseList2"></div>
+            </div>
+              <div ref="verseList3">
               <div v-if="isInVerseViewport3 && (selectedVerseVersion === 3 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
@@ -625,8 +629,8 @@
                 )&& verseList3.length > 0" >
                 <div class="tableTitle versionMargin">-3弾-</div>
                 <div v-lazy-show>
-                  <div v-if="(selectedVerseRank === 4 || selectedVerseRank === 0)">
-                    <img v-if="filteredVerseList3[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
+                  <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
+                    <img v-show="filteredVerseList3[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList3[4]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -636,8 +640,8 @@
                       </li>
                     </ul>
                   </div>
-                  <div v-if="(selectedVerseRank === 3 || selectedVerseRank === 0)">
-                    <img v-if="filteredVerseList3[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
+                  <div v-show="(selectedVerseRank === 3 || selectedVerseRank === 0)">
+                    <img v-show="filteredVerseList3[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList3[3]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -647,8 +651,8 @@
                       </li>
                     </ul>
                   </div>
-                  <div v-if="(selectedVerseRank === 2 || selectedVerseRank === 0)">
-                    <img v-if="filteredVerseList3[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
+                  <div v-show="(selectedVerseRank === 2 || selectedVerseRank === 0)">
+                    <img v-show="filteredVerseList3[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList3[2]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -660,7 +664,8 @@
                   </div>
                 </div>
               </div>
-              <div ref="verseList3"></div>
+            </div>
+              <div ref="verseList4">
               <div v-if="isInVerseViewport4 && (selectedVerseVersion === 4 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
@@ -671,8 +676,8 @@
                 )&& verseList4.length > 0" >
                 <div class="tableTitle versionMargin">-4弾-</div>
                 <div v-lazy-show>
-                  <div v-if="(selectedVerseRank === 4 || selectedVerseRank === 0)">
-                    <img v-if="filteredVerseList4[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
+                  <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
+                    <img v-show="filteredVerseList4[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList4[4]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -682,8 +687,8 @@
                       </li>
                     </ul>
                   </div>
-                  <div v-if="(selectedVerseRank === 3 || selectedVerseRank === 0)">
-                    <img v-if="filteredVerseList4[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
+                  <div v-show="(selectedVerseRank === 3 || selectedVerseRank === 0)">
+                    <img v-show="filteredVerseList4[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList4[3]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -693,8 +698,8 @@
                       </li>
                     </ul>
                   </div>
-                  <div v-if="(selectedVerseRank === 2 || selectedVerseRank === 0)">
-                    <img v-if="filteredVerseList4[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
+                  <div v-show="(selectedVerseRank === 2 || selectedVerseRank === 0)">
+                    <img v-show="filteredVerseList4[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                     <ul id="dispHimitsuItemList">
                       <li v-for="(verseData) in filteredVerseList4[2]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -706,8 +711,9 @@
                   </div>
                 </div>
               </div>
-              <div ref="verseList4"></div>
-              <div v-if="(isInVerseViewportSP && selectedVerseVersion === 'sp' || selectedVerseVersion === 0)
+            </div>
+              <div ref="verseListSP">
+              <div v-if="isInVerseViewportSP && (selectedVerseVersion === 'sp' || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseListSP.filter(item => item.rank === 4).length > 0) ||
@@ -715,11 +721,11 @@
                         (selectedVerseRank === 2 && verseListSP.filter(item => item.rank === 2).length > 0) ||
                         (selectedVerseRank === 'sp' && verseListSP.filter(item => item.rank === 'sp').length > 0)
                     )
-              )&& verseListSP.length > 0" >
+              )&& verseListSP.length > 0">
               <div class="tableTitle versionMargin">-スペシャルコーデアイテム-</div>
-              <div v-lazy-show>
-                <div v-if="(selectedVerseRank === 4 || selectedVerseRank === 0)">
-                  <img v-if="filteredVerseListSP[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
+              <div>
+                <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
+                  <img v-show="filteredVerseListSP[4].length > 0" class="starClass" v-lazy="require(`@/img/icon/star4.webp`)" alt="">
                   <ul id="dispHimitsuItemList">
                     <li v-for="(verseData) in filteredVerseListSP[4]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -728,8 +734,8 @@
                     </li>
                   </ul>
                 </div>
-                <div v-if="(selectedVerseRank === 3 || selectedVerseRank === 0)">
-                  <img v-if="filteredVerseListSP[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
+                <div v-show="(selectedVerseRank === 3 || selectedVerseRank === 0)">
+                  <img v-show="filteredVerseListSP[3].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star3.webp`)" alt="">
                   <ul id="dispHimitsuItemList">
                     <li v-for="(verseData) in filteredVerseListSP[3]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -738,8 +744,8 @@
                     </li>
                   </ul>
                 </div>
-                <div v-if="(selectedVerseRank === 2 || selectedVerseRank === 0)">
-                  <img v-if="filteredVerseListSP[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
+                <div v-show="(selectedVerseRank === 2 || selectedVerseRank === 0)">
+                  <img v-show="filteredVerseListSP[2].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/star2.webp`)" alt="">
                   <ul id="dispHimitsuItemList">
                     <li v-for="(verseData) in filteredVerseListSP[2]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -748,8 +754,8 @@
                     </li>
                   </ul>
                 </div>
-                <div v-if="(selectedVerseRank === 'sp' || selectedVerseRank === 0)">
-                  <img v-if="filteredVerseListSP[5].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/special.webp`)" alt="">
+                <div v-show="(selectedVerseRank === 'sp' || selectedVerseRank === 0)">
+                  <img v-show="filteredVerseListSP[5].length > 0" class="starClass starMargin" v-lazy="require(`@/img/icon/special.webp`)" alt="">
                   <ul id="dispHimitsuItemList">
                     <li v-for="(verseData) in filteredVerseListSP[5]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
@@ -760,7 +766,7 @@
                 </div>
               </div>
             </div>
-            <div ref="verseListSP"></div>
+          </div>
           </div>
         </li>
       </ul>
@@ -830,6 +836,7 @@ export default {
       isVerseInViewport2: false,
       isVerseInViewport3: false,
       isVerseInViewport4: false,
+      isInVerseViewportSP: false,
       observer: null,
     };
   },
@@ -1273,39 +1280,66 @@ export default {
       closeHelpPopup () {
         this.showHelpPopup = false; // ポップアップを閉じる
       },
-    },
-    mounted() {
-      this.$nextTick(() => {
-      this.observer = new IntersectionObserver((entries) => {
+      test () {
+        console.log(this.isInVerseViewportSP);
+      },
+      initializeObserver () {
+        this.observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           // 各エントリの状態をログに出力
           console.log('Observing:', entry.target.id, 'isIntersecting:', entry.isIntersecting);
-
           if (entry.isIntersecting) {
             if (entry.target === this.$refs.himitsuList1) {
               this.isInViewport1 = true;
-              console.log('himitsuList1 is in viewport');
+              //console.log('himitsuList1 is in viewport');
             } else if (entry.target === this.$refs.himitsuList2) {
               this.isInViewport2 = true;
-              console.log('himitsuList2 is in viewport');
+              //console.log('himitsuList2 is in viewport');
             } else if (entry.target === this.$refs.verseList1) {
               this.isInVerseViewport1 = true;
-              console.log('verseList1 is in viewport');
+              //console.log('verseList1 is in viewport');
             } else if (entry.target === this.$refs.verseList2) {
               this.isInVerseViewport2 = true;
-              console.log('verseList2 is in viewport');
+              //console.log('verseList2 is in viewport');
             } else if (entry.target === this.$refs.verseList3) {
               this.isInVerseViewport3 = true;
-              console.log('verseList3 is in viewport');
+              //console.log('verseList3 is in viewport');
             } else if (entry.target === this.$refs.verseList4) {
               this.isInVerseViewport4 = true;
-              console.log('verseList4 is in viewport');
+              //console.log('verseList4 is in viewport');
             } else if (entry.target === this.$refs.verseListSP) {
               this.isInVerseViewportSP = true;
-              console.log('verseListSP is in viewport');
+              //console.log('verseListSP is in viewport');
+            }
+          } else {
+            if (entry.target === this.$refs.verseListSP) {
+              if (entry.target === this.$refs.himitsuList1) {
+                this.isInViewport1 = false;
+                //console.log('himitsuList1 is in viewport');
+              } else if (entry.target === this.$refs.himitsuList2) {
+                this.isInViewport2 = false;
+                //console.log('himitsuList2 is in viewport');
+              } else if (entry.target === this.$refs.verseList1) {
+                this.isInVerseViewport1 = false;
+                //console.log('verseList1 is in viewport');
+              } else if (entry.target === this.$refs.verseList2) {
+                this.isInVerseViewport2 = false;
+                //console.log('verseList2 is in viewport');
+              } else if (entry.target === this.$refs.verseList3) {
+                this.isInVerseViewport3 = false;
+                //console.log('verseList3 is in viewport');
+              } else if (entry.target === this.$refs.verseList4) {
+                this.isInVerseViewport4 = false;
+                //console.log('verseList4 is in viewport');
+              } else if (entry.target === this.$refs.verseListSP) {
+                this.isInVerseViewportSP = false;
+                //console.log('verseListSP is in viewport');
+              }
             }
           }
         });
+      },{
+        threshold: 0 // どの部分でもヒットしたらtrue
       });
 
       const himitsuList1Element = this.$refs.himitsuList1;
@@ -1337,21 +1371,26 @@ export default {
       if (verseListSPElement) {
         this.observer.observe(verseListSPElement);
       }
-    });
-      // コンポーネントがマウントされたときに初期タブの内容を表示
-      this.change(this.isActive);
-
-      //Cookies.remove('selectedItems');
-      this.loadSelectedItems();
-      if (this.isMobile()) {
-        this.mobile = true;
-      } else {
-        this.mobile = false;
       }
-      window.addEventListener('scroll',this.scrollWindow)
-      // コンポーネントがマウントされたときにログイン状態をチェック
-      this.checkUserState();
-      document.addEventListener('click', this.handleClickOutside); // 外部クリックをリスン
+    },
+    mounted() {
+      this.$nextTick(() => {
+        this.initializeObserver();
+        // コンポーネントがマウントされたときに初期タブの内容を表示
+        this.change(this.isActive);
+
+        // Cookies.remove('selectedItems'); // もし使用している場合、コメントアウトを外す
+        this.loadSelectedItems();
+        if (this.isMobile()) {
+          this.mobile = true;
+        } else {
+          this.mobile = false;
+        }
+        window.addEventListener('scroll', this.scrollWindow);
+        // コンポーネントがマウントされたときにログイン状態をチェック
+        this.checkUserState();
+        document.addEventListener('click', this.handleClickOutside); // 外部クリックをリスン
+      });
     },
     beforeUnmount() {
       window.removeEventListener('scroll', this.handleScroll);
