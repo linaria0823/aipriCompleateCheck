@@ -25,6 +25,7 @@ export default {
 body {
   margin: 0px;
   padding: 0px;
+  transition: overflow 0.3s ease; /* スクロールの切り替え時にスムーズな効果を追加 */
 }
 img {
 	user-drag: none;

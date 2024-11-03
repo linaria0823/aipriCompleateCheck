@@ -82,6 +82,22 @@ export default {
       mobile: false,
      };
    },
+  watch: {
+    showPolicyPopup(newValue) {
+      if (newValue) {
+        this.disableScroll();
+      } else {
+        this.enableScroll();
+      }
+    },
+    showInfoPopup(newValue) {
+      if (newValue) {
+        this.disableScroll();
+      } else {
+        this.enableScroll();
+      }
+    },
+  },
   methods: {
     policyPopup() {
       this.showPolicyPopup = !this.showPolicyPopup; // ポップアップの表示/非表示をトグル
@@ -111,6 +127,12 @@ export default {
       } else {
         return false
       }
+    },
+    disableScroll() {
+      document.body.style.overflow = 'hidden'; // スクロールを無効にする
+    },
+    enableScroll() {
+      document.body.style.overflow = ''; // スクロールを有効に戻す
     },
   },
   mounted() {

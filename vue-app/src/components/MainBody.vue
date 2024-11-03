@@ -1232,8 +1232,27 @@ export default {
       closeHelpPopup () {
         this.showHelpPopup = false; // ポップアップを閉じる
       },
-      test () {
-        console.log(this.$refs.verseBox.offsetHeight);
+      disableScroll() {
+        document.body.style.overflow = 'hidden'; // スクロールを無効にする
+      },
+      enableScroll() {
+        document.body.style.overflow = ''; // スクロールを有効に戻す
+      },
+    },
+    watch: {
+      showUser(newValue) {
+        if (newValue) {
+          this.disableScroll();
+        } else {
+          this.enableScroll();
+        }
+      },
+      showHelpPopup(newValue) {
+        if (newValue) {
+          this.disableScroll();
+        } else {
+          this.enableScroll();
+        }
       },
     },
     mounted() {
