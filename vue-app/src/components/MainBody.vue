@@ -124,7 +124,7 @@
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="himitsuItemName" placeholder="アイテム名で検索">
                 <div>
                   <div>
-              <div v-show="isInViewport1 && (selectedHimitsuVersion === 1 || selectedHimitsuVersion === 0)
+              <div v-show="(selectedHimitsuVersion === 1 || selectedHimitsuVersion === 0)
                 && (
                   selectedHimitsuRank === 0 || (
                         (selectedHimitsuRank === 4 && himitsuList1.filter(item => item.rank === 4).length > 0) ||
@@ -179,8 +179,8 @@
                 </div>
               </div>
             </div>
-            <div ref="himitsuList1"></div>
-            <div v-show="isInViewport2 && (selectedHimitsuVersion === 2 || selectedHimitsuVersion === 0)
+            <div ref="himitsuList2"></div>
+            <div v-show="(selectedHimitsuVersion === 2 || selectedHimitsuVersion === 0)
               && (
                 selectedHimitsuRank === 0 || (
                       (selectedHimitsuRank === 4 && himitsuList2.filter(item => item.rank === 4).length > 0) ||
@@ -228,7 +228,6 @@
                 </div>
               </div>
             </div>
-            <div ref="himitsuList2"></div>
             <div v-show="(selectedHimitsuVersion === 3 || selectedHimitsuVersion === 0)
               && (
                 selectedHimitsuRank === 0 || (
@@ -523,8 +522,7 @@
                <option value="ps">プリズムストーン</option>
              </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="verseItemName" placeholder="アイテム名で検索">
-              <div ref="verseList1">
-              <div v-if="isInVerseViewport1 && (selectedVerseVersion === 1 || selectedVerseVersion === 0)
+              <div v-if="(selectedVerseVersion === 1 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList1.filter(item => item.rank === 4).length > 0) ||
@@ -569,9 +567,7 @@
                   </div>
                 </div>
               </div>
-            </div>
-              <div ref="verseList2">
-              <div v-if="isInVerseViewport2 && (selectedVerseVersion === 2 || selectedVerseVersion === 0)
+              <div v-if="(selectedVerseVersion === 2 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList2.filter(item => item.rank === 4).length > 0) ||
@@ -616,9 +612,7 @@
                   </div>
                 </div>
               </div>
-            </div>
-              <div ref="verseList3">
-              <div v-if="isInVerseViewport3 && (selectedVerseVersion === 3 || selectedVerseVersion === 0)
+              <div v-if="(selectedVerseVersion === 3 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList3.filter(item => item.rank === 4).length > 0) ||
@@ -663,9 +657,7 @@
                   </div>
                 </div>
               </div>
-            </div>
-              <div ref="verseList4">
-              <div v-if="isInVerseViewport4 && (selectedVerseVersion === 4 || selectedVerseVersion === 0)
+              <div v-if="(selectedVerseVersion === 4 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList4.filter(item => item.rank === 4).length > 0) ||
@@ -710,9 +702,7 @@
                   </div>
                 </div>
               </div>
-            </div>
-              <div id="verseListSP" ref="verseListSP">
-              <div v-if="isInVerseViewportSP && (selectedVerseVersion === 'sp' || selectedVerseVersion === 0)
+              <div v-if="(selectedVerseVersion === 'sp' || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseListSP.filter(item => item.rank === 4).length > 0) ||
@@ -762,11 +752,10 @@
                       </div>
                     </li>
                   </ul>
-                </div>
               </div>
             </div>
           </div>
-          </div>
+        </div>
         </li>
       </ul>
     </div>
@@ -794,11 +783,11 @@ export default {
   data() {
     return {
       isActive: "A",
-      selectedHimitsuVersion: 0,
+      selectedHimitsuVersion: 1,
       selectedHimitsuGet: 0,
       selectedHimitsuRank: 0,
       selectedHimitsuChar: 0,
-      selectedVerseVersion: 0,
+      selectedVerseVersion: 1,
       selectedVerseGet: 0,
       selectedVerseRank: 0,
       selectedVerseBrand: 0,
@@ -820,24 +809,11 @@ export default {
       showHelpPopup: false, // ポップアップの表示状態を保持
       user: "",
       kind: "", //押下されているボタンを判別
-      showContentA: false,
-      showContentB: false,
       displayedItems: [], // 表示用アイテム
       itemsToShow: 10, // 一度に表示するアイテム数
       loading: false, // ローディング状態
       items: Array.from({ length: 1000 }, (_, index) => `Item ${index + 1}`),
       itemSize: 30, // 各アイテムの高さ
-      isInViewport1: false,
-      isInViewport2: false,
-      isInViewport3: false,
-      isInViewport4: false,
-      isInVerseViewport1: false,
-      isInVerseViewport2: false,
-      isInVerseViewport3: false,
-      isInVerseViewport4: false,
-      isInVerseViewportSP: false,
-      observer: null,
-      iniDisp: true
     };
   },
   computed: {
@@ -1027,20 +1003,17 @@ export default {
       };
     },
     change(num) {
-      this.iniDisp = true;
-      this.allNoneDisp();
       this.isActive = num;
-      this.showContentA = false;
-      this.showContentB = false;
-
-      // 枠だけを表示し、少し遅れて中身を表示
-      setTimeout(() => {
-        if (num === 'A') {
-          this.showContentA = true;
-        } else if (num === 'B') {
-          this.showContentB = true;
-        }
-      }, 100); // 100ms後に中身を表示
+      this.selectedHimitsuVersion = 1;
+      this.selectedHimitsuGet = 0;
+      this.selectedHimitsuRank = 0;
+      this.selectedHimitsuChar = 0;
+      this.himitsuItemName = "";
+      this.selectedVerseVersion = 1;
+      this.selectedVerseGet = 0;
+      this.selectedVerseRank = 0;
+      this.selectedVerseBrand = 0;
+      this.verseItemName = "";
     },
      toggleItem(value) {
         const itemIndex = this.selectedItems.indexOf(value);
@@ -1061,28 +1034,6 @@ export default {
           this.selectedItems = JSON.parse(savedItems);
         }
       },
-      /*async getListCheck(kind, value) {
-      console.log("リストチェック")
-       //const holidays = [];
-       const list = this.iniVerseList.concat();
-       const slectItem = this.selectedItems.concat();
-       //const inilist = this.iniVerseList.concat();
-       if (kind === "verse") {
-         if(value === 0) {
-           this.verseList = list.concat();
-         } else if (value === 1) {
-           this.verseList = this.selectedItems.map(tabItem => list.find(item => item.value === tabItem));
-         } else {
-           this.verseList = list.filter(tabItem => !slectItem.includes(tabItem.value));
-         }
-        }
-      },
-      filterVerseListByRank(version, rank) {
-      console.log("らんくなんちゃら")
-       return this.iniVerseList.filter(item => {
-         return item.version === String(version) && item.rank === rank;
-       });
-      },*/
       isMobile() {
         var userAgent = window.navigator.userAgent.toLowerCase()
         if (
@@ -1283,101 +1234,11 @@ export default {
         this.showHelpPopup = false; // ポップアップを閉じる
       },
       test () {
-        console.log(this.isInVerseViewport4);
+        console.log(this.$refs.verseBox.offsetHeight);
       },
-      initializeObserver () {
-        this.observer = new IntersectionObserver((entries) => {
-        // バージョンすべて意外を選択されてる場合全表示
-        if (this.selectedVerseVersion != "0") {
-          this.allDisp();
-        } else {
-          for (const entry of entries) {
-            // 各エントリの状態をログに出力
-            console.log('Observing:', entry.target.id, 'isIntersecting:', entry.isIntersecting);
-            if (entry.isIntersecting) {
-              if (entry.target === this.$refs.himitsuList1) {
-                this.isInViewport1 = true;
-                if (this.iniDisp) {
-                  this.iniDisp = false;
-                  break; // 処理を中断
-                }
-                //console.log('himitsuList1 is in viewport');
-              } else if (entry.target === this.$refs.himitsuList2) {
-                this.isInViewport2 = true;
-                if (this.iniDisp) {
-                  this.iniDisp = false;
-                  break; // 処理を中断
-                }
-                //console.log('himitsuList2 is in viewport');
-              } else if (entry.target === this.$refs.verseList1) {
-                this.isInVerseViewport1 = true;
-                if (this.iniDisp) {
-                  this.iniDisp = false;
-                  break; // 処理を中断
-                }
-                //console.log('verseList1 is in viewport');
-              } else if (entry.target === this.$refs.verseList2) {
-                this.isInVerseViewport2 = true;
-                if (this.iniDisp) {
-                  this.iniDisp = false;
-                  break; // 処理を中断
-                }
-                //console.log('verseList2 is in viewport');
-              } else if (entry.target === this.$refs.verseList3) {
-                this.isInVerseViewport3 = true;
-                if (this.iniDisp) {
-                  this.iniDisp = false;
-                  break; // 処理を中断
-                }
-                //console.log('verseList3 is in viewport');
-              } else if (entry.target === this.$refs.verseList4) {
-                this.isInVerseViewport4 = true;
-                if (this.iniDisp) {
-                  this.iniDisp = false;
-                  break; // 処理を中断
-                }
-                //console.log('verseList4 is in viewport');
-              } else if (entry.target === this.$refs.verseListSP) {
-                this.isInVerseViewportSP = true;
-                if (this.iniDisp) {
-                  this.iniDisp = false;
-                  break; // 処理を中断
-                }
-                //console.log('verseListSP is in viewport');
-              }
-            } 
-          }
-        }
-      },{
-        threshold: 0 // どの部分でもヒットしたらtrue
-      });
-
-        this.observer.observe(this.$refs.himitsuList1);
-        this.observer.observe(this.$refs.himitsuList2);
-        this.observer.observe(this.$refs.verseList1);
-        this.observer.observe(this.$refs.verseList2);
-        this.observer.observe(this.$refs.verseList3);
-        this.observer.observe(this.$refs.verseList4);
-        this.observer.observe(this.$refs.verseListSP);
-      },
-      allDisp () {
-        this.isInVerseViewport1 = true;
-        this.isInVerseViewport2 = true;
-        this.isInVerseViewport3 = true;
-        this.isInVerseViewport4 = true;
-        this.isInVerseViewportSP = true;  
-      },
-      allNoneDisp () {
-        this.isInVerseViewport1 = false;
-        this.isInVerseViewport2 = false;
-        this.isInVerseViewport3 = false;
-        this.isInVerseViewport4 = false;
-        this.isInVerseViewportSP = false; 
-      }
     },
     mounted() {
       this.$nextTick(() => {
-        this.initializeObserver();
         // コンポーネントがマウントされたときに初期タブの内容を表示
         this.change(this.isActive);
 
