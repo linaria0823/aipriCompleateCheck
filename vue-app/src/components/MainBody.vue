@@ -773,21 +773,20 @@ import { signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged, setPe
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import { auth } from '../firebaseConfig'; // Firebaseの初期化ファイルからインポート
 import { event } from 'vue-gtag'
-import lazyShow from '../directives/lazyShow.js';
+
+// 初期値のバージョンを指定(最新弾推奨)
+const iniVersion = 4;
  
 export default {
   name: "MainBody",
-  directives: {
-    lazyShow
-  },
   data() {
     return {
       isActive: "A",
-      selectedHimitsuVersion: 1,
+      selectedHimitsuVersion: iniVersion,
       selectedHimitsuGet: 0,
       selectedHimitsuRank: 0,
       selectedHimitsuChar: 0,
-      selectedVerseVersion: 1,
+      selectedVerseVersion: iniVersion,
       selectedVerseGet: 0,
       selectedVerseRank: 0,
       selectedVerseBrand: 0,
@@ -1004,12 +1003,12 @@ export default {
     },
     change(num) {
       this.isActive = num;
-      this.selectedHimitsuVersion = 1;
+      this.selectedHimitsuVersion = iniVersion;
       this.selectedHimitsuGet = 0;
       this.selectedHimitsuRank = 0;
       this.selectedHimitsuChar = 0;
       this.himitsuItemName = "";
-      this.selectedVerseVersion = 1;
+      this.selectedVerseVersion = iniVersion;
       this.selectedVerseGet = 0;
       this.selectedVerseRank = 0;
       this.selectedVerseBrand = 0;

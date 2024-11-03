@@ -1,6 +1,6 @@
 <template>
   <div class="head">
-    <img v-lazy="require(`@/img/icon/title.png`)" class="titleIcon" alt="">
+    <img :src="require(`@/img/icon/title.png`)" class="titleIcon" alt="">
     <!--<button class="loginButton">ログイン</button>-->
   </div>
 </template>
