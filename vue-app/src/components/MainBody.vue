@@ -524,14 +524,14 @@
              </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="verseItemName" placeholder="アイテム名で検索">
               <div ref="verseList1">
-              <div v-if="isInVerseViewport1 && (selectedVerseVersion === 1 || selectedVerseVersion === 0)
+              <div v-if="(selectedVerseVersion === 1 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList1.filter(item => item.rank === 4).length > 0) ||
                         (selectedVerseRank === 3 && verseList1.filter(item => item.rank === 3).length > 0) ||
                         (selectedVerseRank === 2 && verseList1.filter(item => item.rank === 2).length > 0)
                     )
-                )&& verseList1.length > 0" >
+                )&& verseList1.length > 0" :style="{ visibility: isInVerseViewport1 ? 'visible' : 'hidden' }">
                 <div class="tableTitle">-1弾-</div>
                 <div>
                   <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
@@ -571,14 +571,14 @@
               </div>
             </div>
               <div ref="verseList2">
-              <div v-if="isInVerseViewport2 && (selectedVerseVersion === 2 || selectedVerseVersion === 0)
+              <div v-if="(selectedVerseVersion === 2 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList2.filter(item => item.rank === 4).length > 0) ||
                         (selectedVerseRank === 3 && verseList2.filter(item => item.rank === 3).length > 0) ||
                         (selectedVerseRank === 2 && verseList2.filter(item => item.rank === 2).length > 0)
                     )
-                )&& verseList2.length > 0" >
+                )&& verseList2.length > 0" :style="{ visibility: isInVerseViewport2 ? 'visible' : 'hidden' }">
                 <div class="tableTitle versionMargin">-2弾-</div>
                 <div>
                   <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
@@ -618,14 +618,14 @@
               </div>
             </div>
               <div ref="verseList3">
-              <div v-if="isInVerseViewport3 && (selectedVerseVersion === 3 || selectedVerseVersion === 0)
+              <div v-if="(selectedVerseVersion === 3 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList3.filter(item => item.rank === 4).length > 0) ||
                         (selectedVerseRank === 3 && verseList3.filter(item => item.rank === 3).length > 0) ||
                         (selectedVerseRank === 2 && verseList3.filter(item => item.rank === 2).length > 0)
                     )
-                )&& verseList3.length > 0" >
+                )&& verseList3.length > 0"  :style="{ visibility: isInVerseViewport3 ? 'visible' : 'hidden' }">
                 <div class="tableTitle versionMargin">-3弾-</div>
                 <div >
                   <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
@@ -665,14 +665,14 @@
               </div>
             </div>
               <div ref="verseList4">
-              <div v-if="isInVerseViewport4 && (selectedVerseVersion === 4 || selectedVerseVersion === 0)
+              <div v-if="(selectedVerseVersion === 4 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList4.filter(item => item.rank === 4).length > 0) ||
                         (selectedVerseRank === 3 && verseList4.filter(item => item.rank === 3).length > 0) ||
                         (selectedVerseRank === 2 && verseList4.filter(item => item.rank === 2).length > 0)
                     )
-                )&& verseList4.length > 0" >
+                )&& verseList4.length > 0"  :style="{ visibility: isInVerseViewport2 ? 'visible' : 'hidden' }">
                 <div class="tableTitle versionMargin">-4弾-</div>
                 <div >
                   <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
@@ -712,7 +712,7 @@
               </div>
             </div>
               <div id="verseListSP" ref="verseListSP">
-              <div v-if="isInVerseViewportSP && (selectedVerseVersion === 'sp' || selectedVerseVersion === 0)
+              <div v-if="(selectedVerseVersion === 'sp' || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseListSP.filter(item => item.rank === 4).length > 0) ||
@@ -720,7 +720,7 @@
                         (selectedVerseRank === 2 && verseListSP.filter(item => item.rank === 2).length > 0) ||
                         (selectedVerseRank === 'sp' && verseListSP.filter(item => item.rank === 'sp').length > 0)
                     )
-              )&& verseListSP.length > 0">
+              )&& verseListSP.length > 0" :style="{ visibility: isInVerseViewport2 ? 'visible' : 'hidden' }">
               <div class="tableTitle versionMargin">-スペシャルコーデアイテム-</div>
               <div>
                 <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
@@ -1287,71 +1287,30 @@ export default {
       },
       initializeObserver () {
         this.observer = new IntersectionObserver((entries) => {
-        // バージョンすべて意外を選択されてる場合全表示
-        if (this.selectedVerseVersion != "0") {
-          this.allDisp();
-        } else {
           for (const entry of entries) {
             // 各エントリの状態をログに出力
             console.log('Observing:', entry.target.id, 'isIntersecting:', entry.isIntersecting);
             if (entry.isIntersecting) {
               if (entry.target === this.$refs.himitsuList1) {
                 this.isInViewport1 = true;
-                if (this.iniDisp) {
-                  this.iniDisp = false;
-                  break; // 処理を中断
-                }
-                //console.log('himitsuList1 is in viewport');
               } else if (entry.target === this.$refs.himitsuList2) {
                 this.isInViewport2 = true;
-                if (this.iniDisp) {
-                  this.iniDisp = false;
-                  break; // 処理を中断
-                }
-                //console.log('himitsuList2 is in viewport');
               } else if (entry.target === this.$refs.verseList1) {
                 this.isInVerseViewport1 = true;
-                if (this.iniDisp) {
-                  this.iniDisp = false;
-                  break; // 処理を中断
-                }
-                //console.log('verseList1 is in viewport');
               } else if (entry.target === this.$refs.verseList2) {
                 this.isInVerseViewport2 = true;
-                if (this.iniDisp) {
-                  this.iniDisp = false;
-                  break; // 処理を中断
-                }
-                //console.log('verseList2 is in viewport');
               } else if (entry.target === this.$refs.verseList3) {
                 this.isInVerseViewport3 = true;
-                if (this.iniDisp) {
-                  this.iniDisp = false;
-                  break; // 処理を中断
-                }
-                //console.log('verseList3 is in viewport');
               } else if (entry.target === this.$refs.verseList4) {
                 this.isInVerseViewport4 = true;
-                if (this.iniDisp) {
-                  this.iniDisp = false;
-                  break; // 処理を中断
-                }
-                //console.log('verseList4 is in viewport');
               } else if (entry.target === this.$refs.verseListSP) {
                 this.isInVerseViewportSP = true;
-                if (this.iniDisp) {
-                  this.iniDisp = false;
-                  break; // 処理を中断
-                }
-                //console.log('verseListSP is in viewport');
               }
             } 
           }
-        }
       },{
         threshold: 0 // どの部分でもヒットしたらtrue
       });
-
         this.observer.observe(this.$refs.himitsuList1);
         this.observer.observe(this.$refs.himitsuList2);
         this.observer.observe(this.$refs.verseList1);
@@ -1359,13 +1318,6 @@ export default {
         this.observer.observe(this.$refs.verseList3);
         this.observer.observe(this.$refs.verseList4);
         this.observer.observe(this.$refs.verseListSP);
-      },
-      allDisp () {
-        this.isInVerseViewport1 = true;
-        this.isInVerseViewport2 = true;
-        this.isInVerseViewport3 = true;
-        this.isInVerseViewport4 = true;
-        this.isInVerseViewportSP = true;  
       },
       allNoneDisp () {
         this.isInVerseViewport1 = false;
