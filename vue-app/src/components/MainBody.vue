@@ -124,7 +124,7 @@
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="himitsuItemName" placeholder="アイテム名で検索">
                 <div>
                   <div>
-              <div v-show="(selectedHimitsuVersion === 1 || selectedHimitsuVersion === 0)
+              <div v-show="isInViewport1 && (selectedHimitsuVersion === 1 || selectedHimitsuVersion === 0)
                 && (
                   selectedHimitsuRank === 0 || (
                         (selectedHimitsuRank === 4 && himitsuList1.filter(item => item.rank === 4).length > 0) ||
@@ -179,7 +179,8 @@
                 </div>
               </div>
             </div>
-            <div v-show="(selectedHimitsuVersion === 2 || selectedHimitsuVersion === 0)
+            <div ref="himitsuList1"></div>
+            <div v-show="isInViewport2 && (selectedHimitsuVersion === 2 || selectedHimitsuVersion === 0)
               && (
                 selectedHimitsuRank === 0 || (
                       (selectedHimitsuRank === 4 && himitsuList2.filter(item => item.rank === 4).length > 0) ||
@@ -227,6 +228,7 @@
                 </div>
               </div>
             </div>
+            <div ref="himitsuList2"></div>
             <div v-show="(selectedHimitsuVersion === 3 || selectedHimitsuVersion === 0)
               && (
                 selectedHimitsuRank === 0 || (
@@ -521,7 +523,7 @@
                <option value="ps">プリズムストーン</option>
              </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="verseItemName" placeholder="アイテム名で検索">
-              <div v-show="(selectedVerseVersion === 1 || selectedVerseVersion === 0)
+              <div v-show="isInVerseViewport1 && (selectedVerseVersion === 1 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList1.filter(item => item.rank === 4).length > 0) ||
@@ -537,6 +539,7 @@
                       <li v-for="(verseData) in filteredVerseList1[4]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
                           <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
                         </div>
                       </li>
                     </ul>
@@ -547,6 +550,7 @@
                       <li v-for="(verseData) in filteredVerseList1[3]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
                           <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
                         </div>
                       </li>
                     </ul>
@@ -557,13 +561,15 @@
                       <li v-for="(verseData) in filteredVerseList1[2]" :key="verseData.value" class="itemLi">
                         <div class="tooltip1" :class="dynamicClass(verseData)">
                           <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
                         </div>
                       </li>
                     </ul>
                   </div>
                 </div>
               </div>
-              <div v-show="(selectedVerseVersion === 2 || selectedVerseVersion === 0)
+              <div ref="verseList1"></div>
+              <div v-show="isInVerseViewport2 && (selectedVerseVersion === 2 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList2.filter(item => item.rank === 4).length > 0) ||
@@ -579,6 +585,7 @@
                       <li v-for="(verseData) in filteredVerseList2[4]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
                           <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
                         </div>
                       </li>
                     </ul>
@@ -589,6 +596,7 @@
                       <li v-for="(verseData) in filteredVerseList2[3]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
                           <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
                         </div>
                       </li>
                     </ul>
@@ -599,13 +607,15 @@
                       <li v-for="(verseData) in filteredVerseList2[2]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
                           <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
                         </div>
                       </li>
                     </ul>
                   </div>
                 </div>
               </div>
-              <div v-show="(selectedVerseVersion === 3 || selectedVerseVersion === 0)
+              <div ref="verseList2"></div>
+              <div v-show="isInVerseViewport3 && (selectedVerseVersion === 3 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList3.filter(item => item.rank === 4).length > 0) ||
@@ -621,6 +631,7 @@
                       <li v-for="(verseData) in filteredVerseList3[4]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
                           <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
                         </div>
                       </li>
                     </ul>
@@ -631,6 +642,7 @@
                       <li v-for="(verseData) in filteredVerseList3[3]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
                           <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
                         </div>
                       </li>
                     </ul>
@@ -641,13 +653,15 @@
                       <li v-for="(verseData) in filteredVerseList3[2]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
                           <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
                         </div>
                       </li>
                     </ul>
                   </div>
                 </div>
               </div>
-              <div v-show="(selectedVerseVersion === 4 || selectedVerseVersion === 0)
+              <div ref="verseList3"></div>
+              <div v-show="isInVerseViewport4 && (selectedVerseVersion === 4 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList4.filter(item => item.rank === 4).length > 0) ||
@@ -663,6 +677,7 @@
                       <li v-for="(verseData) in filteredVerseList4[4]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
                           <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
                         </div>
                       </li>
                     </ul>
@@ -673,6 +688,7 @@
                       <li v-for="(verseData) in filteredVerseList4[3]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
                           <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
                         </div>
                       </li>
                     </ul>
@@ -683,13 +699,15 @@
                       <li v-for="(verseData) in filteredVerseList4[2]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
                           <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
                         </div>
                       </li>
                     </ul>
                   </div>
                 </div>
               </div>
-              <div v-show="(selectedVerseVersion === 'sp' || selectedVerseVersion === 0)
+              <div ref="verseList4"></div>
+              <div v-show="(isInVerseViewportSP && selectedVerseVersion === 'sp' || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseListSP.filter(item => item.rank === 4).length > 0) ||
@@ -742,6 +760,7 @@
                 </div>
               </div>
             </div>
+            <div ref="verseListSP"></div>
           </div>
         </li>
       </ul>
@@ -796,7 +815,6 @@ export default {
       showHelpPopup: false, // ポップアップの表示状態を保持
       user: "",
       kind: "", //押下されているボタンを判別
-      observer: null, // IntersectionObserverのインスタンス
       showContentA: false,
       showContentB: false,
       displayedItems: [], // 表示用アイテム
@@ -804,12 +822,18 @@ export default {
       loading: false, // ローディング状態
       items: Array.from({ length: 1000 }, (_, index) => `Item ${index + 1}`),
       itemSize: 30, // 各アイテムの高さ
+      isInViewport1: false,
+      isInViewport2: false,
+      isInViewport3: false,
+      isInViewport4: false,
+      isInVerseViewport1: false,
+      isVerseInViewport2: false,
+      isVerseInViewport3: false,
+      isVerseInViewport4: false,
+      observer: null,
     };
   },
   computed: {
-    allItems() {
-      return [...this.himitsuList1, ...this.himitsuList2];
-    },
     filteredHimitsuList() {
       let list = this.iniHimitsuList;
       // バージョンで絞り込み
@@ -1251,6 +1275,69 @@ export default {
       },
     },
     mounted() {
+      this.$nextTick(() => {
+      this.observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          // 各エントリの状態をログに出力
+          console.log('Observing:', entry.target.id, 'isIntersecting:', entry.isIntersecting);
+
+          if (entry.isIntersecting) {
+            if (entry.target === this.$refs.himitsuList1) {
+              this.isInViewport1 = true;
+              console.log('himitsuList1 is in viewport');
+            } else if (entry.target === this.$refs.himitsuList2) {
+              this.isInViewport2 = true;
+              console.log('himitsuList2 is in viewport');
+            } else if (entry.target === this.$refs.verseList1) {
+              this.isInVerseViewport1 = true;
+              console.log('verseList1 is in viewport');
+            } else if (entry.target === this.$refs.verseList2) {
+              this.isInVerseViewport2 = true;
+              console.log('verseList2 is in viewport');
+            } else if (entry.target === this.$refs.verseList3) {
+              this.isInVerseViewport3 = true;
+              console.log('verseList3 is in viewport');
+            } else if (entry.target === this.$refs.verseList4) {
+              this.isInVerseViewport4 = true;
+              console.log('verseList4 is in viewport');
+            } else if (entry.target === this.$refs.verseListSP) {
+              this.isInVerseViewportSP = true;
+              console.log('verseListSP is in viewport');
+            }
+          }
+        });
+      });
+
+      const himitsuList1Element = this.$refs.himitsuList1;
+      const himitsuList2Element = this.$refs.himitsuList2;
+      const verseList1Element = this.$refs.verseList1;
+      const verseList2Element = this.$refs.verseList2;
+      const verseList3Element = this.$refs.verseList3;
+      const verseList4Element = this.$refs.verseList4;
+      const verseListSPElement = this.$refs.verseListSP;
+
+      if (himitsuList1Element) {
+        this.observer.observe(himitsuList1Element);
+      }
+      if (himitsuList2Element) {
+        this.observer.observe(himitsuList2Element);
+      }
+      if (verseList1Element) {
+        this.observer.observe(verseList1Element);
+      }
+      if (verseList2Element) {
+        this.observer.observe(verseList2Element);
+      }
+      if (verseList3Element) {
+        this.observer.observe(verseList3Element);
+      }
+      if (verseList4Element) {
+        this.observer.observe(verseList4Element);
+      }
+      if (verseListSPElement) {
+        this.observer.observe(verseListSPElement);
+      }
+    });
       // コンポーネントがマウントされたときに初期タブの内容を表示
       this.change(this.isActive);
 
@@ -1269,8 +1356,19 @@ export default {
     beforeUnmount() {
       window.removeEventListener('scroll', this.handleScroll);
       document.removeEventListener('click', this.handleClickOutside); // コンポーネントが破棄される前にイベントリスナーを削除
+      if (this.observer) {
+        this.observer.disconnect();
+      }
     },
     created() {
+    },
+    watch: {
+      isInViewport1(newVal) {
+        console.log('isInViewport1:', newVal);
+      },
+      isInViewport2(newVal) {
+        console.log('isInViewport2:', newVal);
+      }
     }
   };
 </script>
