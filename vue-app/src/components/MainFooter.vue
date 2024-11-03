@@ -125,7 +125,6 @@ export default {
 <style scoped>
 footer {
   text-align: center;
-  margin-top: 30px;
   border-top: 2px solid rgb(0 55 255);
   padding-top: 20px;
   padding-bottom: 20px;

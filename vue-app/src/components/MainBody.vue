@@ -1028,11 +1028,7 @@ export default {
     },
     change(num) {
       this.iniDisp = true;
-      this.isInVerseViewport1 = false;
-      this.isInVerseViewport2 = false;
-      this.isInVerseViewport3 = false;
-      this.isInVerseViewport4 = false;
-      this.isInVerseViewportSP = false;
+      this.allNoneDisp();
       this.isActive = num;
       this.showContentA = false;
       this.showContentB = false;
@@ -1291,79 +1287,96 @@ export default {
       },
       initializeObserver () {
         this.observer = new IntersectionObserver((entries) => {
-        for (const entry of entries) {
-          // 各エントリの状態をログに出力
-          console.log('Observing:', entry.target.id, 'isIntersecting:', entry.isIntersecting);
-          if (entry.isIntersecting) {
-            if (entry.target === this.$refs.himitsuList1) {
-              this.isInViewport1 = true;
-              if (this.iniDisp) {
-                console.log("きた")
-                this.iniDisp = false;
-                break; // 処理を中断
+        // バージョンすべて意外を選択されてる場合全表示
+        if (this.selectedVerseVersion != "0") {
+          this.allDisp();
+        } else {
+          for (const entry of entries) {
+            // 各エントリの状態をログに出力
+            console.log('Observing:', entry.target.id, 'isIntersecting:', entry.isIntersecting);
+            if (entry.isIntersecting) {
+              if (entry.target === this.$refs.himitsuList1) {
+                this.isInViewport1 = true;
+                if (this.iniDisp) {
+                  this.iniDisp = false;
+                  break; // 処理を中断
+                }
+                //console.log('himitsuList1 is in viewport');
+              } else if (entry.target === this.$refs.himitsuList2) {
+                this.isInViewport2 = true;
+                if (this.iniDisp) {
+                  this.iniDisp = false;
+                  break; // 処理を中断
+                }
+                //console.log('himitsuList2 is in viewport');
+              } else if (entry.target === this.$refs.verseList1) {
+                this.isInVerseViewport1 = true;
+                if (this.iniDisp) {
+                  this.iniDisp = false;
+                  break; // 処理を中断
+                }
+                //console.log('verseList1 is in viewport');
+              } else if (entry.target === this.$refs.verseList2) {
+                this.isInVerseViewport2 = true;
+                if (this.iniDisp) {
+                  this.iniDisp = false;
+                  break; // 処理を中断
+                }
+                //console.log('verseList2 is in viewport');
+              } else if (entry.target === this.$refs.verseList3) {
+                this.isInVerseViewport3 = true;
+                if (this.iniDisp) {
+                  this.iniDisp = false;
+                  break; // 処理を中断
+                }
+                //console.log('verseList3 is in viewport');
+              } else if (entry.target === this.$refs.verseList4) {
+                this.isInVerseViewport4 = true;
+                if (this.iniDisp) {
+                  this.iniDisp = false;
+                  break; // 処理を中断
+                }
+                //console.log('verseList4 is in viewport');
+              } else if (entry.target === this.$refs.verseListSP) {
+                this.isInVerseViewportSP = true;
+                if (this.iniDisp) {
+                  this.iniDisp = false;
+                  break; // 処理を中断
+                }
+                //console.log('verseListSP is in viewport');
               }
-              //console.log('himitsuList1 is in viewport');
-            } else if (entry.target === this.$refs.himitsuList2) {
-              this.isInViewport2 = true;
-              if (this.iniDisp) {
-                this.iniDisp = false;
-                break; // 処理を中断
-              }
-              //console.log('himitsuList2 is in viewport');
-            } else if (entry.target === this.$refs.verseList1) {
-              this.isInVerseViewport1 = true;
-              if (this.iniDisp) {
-                this.iniDisp = false;
-                break; // 処理を中断
-              }
-              //console.log('verseList1 is in viewport');
-            } else if (entry.target === this.$refs.verseList2) {
-              this.isInVerseViewport2 = true;
-              if (this.iniDisp) {
-                this.iniDisp = false;
-                break; // 処理を中断
-              }
-              //console.log('verseList2 is in viewport');
-            } else if (entry.target === this.$refs.verseList3) {
-              this.isInVerseViewport3 = true;
-              if (this.iniDisp) {
-                this.iniDisp = false;
-                break; // 処理を中断
-              }
-              //console.log('verseList3 is in viewport');
-            } else if (entry.target === this.$refs.verseList4) {
-              this.isInVerseViewport4 = true;
-              if (this.iniDisp) {
-                this.iniDisp = false;
-                break; // 処理を中断
-              }
-              //console.log('verseList4 is in viewport');
-            } else if (entry.target === this.$refs.verseListSP) {
-              this.isInVerseViewportSP = true;
-              if (this.iniDisp) {
-                this.iniDisp = false;
-                break; // 処理を中断
-              }
-              //console.log('verseListSP is in viewport');
-            }
-          } 
+            } 
+          }
         }
       },{
         threshold: 0 // どの部分でもヒットしたらtrue
       });
 
-      this.observer.observe(this.$refs.himitsuList1);
-      this.observer.observe(this.$refs.himitsuList2);
-      this.observer.observe(this.$refs.verseList1);
-      this.observer.observe(this.$refs.verseList2);
-      this.observer.observe(this.$refs.verseList3);
-      this.observer.observe(this.$refs.verseList4);
-      this.observer.observe(this.$refs.verseListSP);
-    }
+        this.observer.observe(this.$refs.himitsuList1);
+        this.observer.observe(this.$refs.himitsuList2);
+        this.observer.observe(this.$refs.verseList1);
+        this.observer.observe(this.$refs.verseList2);
+        this.observer.observe(this.$refs.verseList3);
+        this.observer.observe(this.$refs.verseList4);
+        this.observer.observe(this.$refs.verseListSP);
+      },
+      allDisp () {
+        this.isInVerseViewport1 = true;
+        this.isInVerseViewport2 = true;
+        this.isInVerseViewport3 = true;
+        this.isInVerseViewport4 = true;
+        this.isInVerseViewportSP = true;  
+      },
+      allNoneDisp () {
+        this.isInVerseViewport1 = false;
+        this.isInVerseViewport2 = false;
+        this.isInVerseViewport3 = false;
+        this.isInVerseViewport4 = false;
+        this.isInVerseViewportSP = false; 
+      }
     },
     mounted() {
       this.$nextTick(() => {
-        console.log("よばれ")
         this.initializeObserver();
         // コンポーネントがマウントされたときに初期タブの内容を表示
         this.change(this.isActive);
@@ -1379,6 +1392,13 @@ export default {
         // コンポーネントがマウントされたときにログイン状態をチェック
         this.checkUserState();
         document.addEventListener('click', this.handleClickOutside); // 外部クリックをリスン
+        // リロード時にトップへスクロール
+        window.scrollTo(0, 0);
+
+        // リロード前にトップへスクロール
+        window.addEventListener('beforeunload', () => {
+          window.scrollTo(0, 0);
+        });
       });
     },
     beforeUnmount() {
@@ -1387,6 +1407,10 @@ export default {
       if (this.observer) {
         this.observer.disconnect();
       }
+      // beforeunloadイベントを削除
+      window.removeEventListener('beforeunload', () => {
+        window.scrollTo(0, 0);
+      });
     },
     created() {
     },
