@@ -1042,19 +1042,19 @@ export default {
     },
     // バージョンのドロップボックス文字列を変化
     himitsuVersionDropBoxLabel() {
-        return this.selectedVerseVersion === 0 ? 'バージョン' : 'すべて';
+        return this.selectedHimitsuVersion === 0 ? 'バージョン' : 'すべて';
     },
     // 取得状況のドロップボックス文字列を変化
     himitsuGetDropBoxLabel() {
-        return this.selectedVerseGet === 0 ? '取得状況' : 'すべて';
+        return this.selectedHimitsuGet === 0 ? '取得状況' : 'すべて';
     },
     // ランクのドロップボックス文字列を変化
     himitsuRankDropBoxLabel() {
-        return this.selectedVerseRank === 0 ? 'ランク' : 'すべて';
+        return this.selectedHimitsuRank === 0 ? 'ランク' : 'すべて';
     },
     // キャラのドロップボックス文字列を変化
     himitsuCharDropBoxLabel() {
-        return this.selectedVerseBrand === 0 ? 'キャラ' : 'すべて';
+        return this.selectedHimitsuChar === 0 ? 'キャラ' : 'すべて';
     },
     // バージョンのドロップボックス文字列を変化
     verseVersionDropBoxLabel() {
