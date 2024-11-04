@@ -719,6 +719,7 @@
                     <li v-for="(verseData) in filteredVerseListSP[4]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
                         <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                        <span>{{ verseData.name }}</span>
                       </div>
                     </li>
                   </ul>
@@ -729,6 +730,7 @@
                     <li v-for="(verseData) in filteredVerseListSP[3]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
                         <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                        <span>{{ verseData.name }}</span>
                       </div>
                     </li>
                   </ul>
@@ -739,6 +741,7 @@
                     <li v-for="(verseData) in filteredVerseListSP[2]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
                         <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                        <span>{{ verseData.name }}</span>
                       </div>
                     </li>
                   </ul>
@@ -749,6 +752,7 @@
                     <li v-for="(verseData) in filteredVerseListSP[5]" :key="verseData.value" class="itemLi">
                       <div class="tooltip1" :class="dynamicClass(verseData)">
                         <img @click="toggleItem(verseData.value)" class="cordeItemImg" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                        <span>{{ verseData.name }}</span>
                       </div>
                     </li>
                   </ul>
