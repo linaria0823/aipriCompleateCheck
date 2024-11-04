@@ -31,12 +31,16 @@
           <img :src="userPhotoURL" alt="Googleアイコン" class="circular-icon loginButton" @click="togglePopup" ref="icon"/>
           <div v-if="showUser" class="orverScreen">
             <div v-if="showWishHimitsu">
-              <div class="backButton" @click="backWishHimitsu"></div>
+              <div class="backButtonBox" @click="backWishHimitsu">
+                <div class="backButton"></div>
+              </div>
               <button class="closeButton" @click="closeUser">×</button>
               <WishHimitsu :itemList="iniHimitsuList"/>
             </div>
             <div v-if="showWishVerse">
-              <div class="backButton" @click="backWishVerse"></div>
+              <div class="backButtonBox" @click="backWishVerse">
+                <div class="backButton"></div>
+              </div>
               <button class="closeButton" @click="closeUser">×</button>
               <WishVerse :itemList="iniVerseList"/>
             </div>
@@ -2007,6 +2011,11 @@ export default {
     font-size: 28px;
     cursor: pointer;
   }
+  .backButtonBox {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+  }
   .backButton {
     width: 0;
     height: 0;
@@ -2015,9 +2024,8 @@ export default {
     border-bottom: 10px solid transparent;
     border-right: 15px solid #555555;
     border-left: 0;
-    position: absolute;
-    top: 10px;
-    left: 5px;
+    margin-top: 10px;
+    margin-left: 10px;
   }
   .closeIconBox {
     height: 20px;
