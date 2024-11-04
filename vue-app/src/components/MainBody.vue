@@ -2015,6 +2015,7 @@ export default {
     width: 40px;
     height: 40px;
     position: absolute;
+    left: 0;
   }
   .backButton {
     width: 0;
