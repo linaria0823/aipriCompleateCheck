@@ -32,6 +32,7 @@
             required: true,
         },
     },
+    emits: ['update:itemList'],
     data() {
         return {
                 localList: this.getSortedList(), // wishListの順番でlocalListを作成
@@ -64,6 +65,8 @@
         onDragEnd() {
             // ローカルストレージに保存
             localStorage.setItem('wishHimitsuItems', JSON.stringify(this.localList.map(item => item.value)));
+            // 親のデータを更新
+            this.$emit('update:itemList', JSON.stringify(this.localList.map(item => item.value)));
         },
         getSortedList() {
             const wishList = JSON.parse(localStorage.getItem('wishHimitsuItems')) || [];

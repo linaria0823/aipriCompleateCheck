@@ -39,7 +39,7 @@
               <div class="closeButtonBox" @click="closeUser">
                 <div class="closeButton"></div>
               </div>
-              <WishHimitsu :itemList="iniHimitsuList"/>
+              <WishHimitsu :itemList="iniHimitsuList" v-model="wishHimitsuItems"/>
             </div>
             <div v-else-if="showWishVerse">
               <div class="backButtonBox" @click="backWishVerse">
@@ -48,7 +48,7 @@
               <div class="closeButtonBox" @click="closeUser">
                 <div class="closeButton"></div>
               </div>
-              <WishVerse :itemList="iniVerseList"/>
+              <WishVerse :itemList="iniVerseList" v-model="wishVerseItems"/>
             </div>
             <div v-else class="userButtonBox">
               <div class="closeIconBox">
