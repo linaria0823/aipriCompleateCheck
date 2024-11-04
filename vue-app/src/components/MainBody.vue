@@ -594,7 +594,7 @@
                   <label for="toggle" class="toggle_label"/>
                 </div>
               </div>
-              <div v-if="(selectedVerseVersion === 1 || selectedVerseVersion === 0)
+              <div v-show="(selectedVerseVersion === 1 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList1.filter(item => item.rank === 4).length > 0) ||
@@ -639,7 +639,7 @@
                   </div>
                 </div>
               </div>
-              <div v-if="(selectedVerseVersion === 2 || selectedVerseVersion === 0)
+              <div v-show="(selectedVerseVersion === 2 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList2.filter(item => item.rank === 4).length > 0) ||
@@ -647,7 +647,7 @@
                         (selectedVerseRank === 2 && verseList2.filter(item => item.rank === 2).length > 0)
                     )
                 )&& verseList2.length > 0" >
-                <div class="tableTitle versionMargin">-2弾-</div>
+                <div class="tableTitle">-2弾-</div>
                 <div>
                   <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
                     <img v-show="filteredVerseList2[4].length > 0" class="starClass" :src="require(`@/img/icon/star4.webp`)" alt="">
@@ -684,7 +684,7 @@
                   </div>
                 </div>
               </div>
-              <div v-if="(selectedVerseVersion === 3 || selectedVerseVersion === 0)
+              <div v-show="(selectedVerseVersion === 3 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList3.filter(item => item.rank === 4).length > 0) ||
@@ -692,7 +692,7 @@
                         (selectedVerseRank === 2 && verseList3.filter(item => item.rank === 2).length > 0)
                     )
                 )&& verseList3.length > 0" >
-                <div class="tableTitle versionMargin">-3弾-</div>
+                <div class="tableTitle">-3弾-</div>
                 <div >
                   <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
                     <img v-show="filteredVerseList3[4].length > 0" class="starClass" :src="require(`@/img/icon/star4.webp`)" alt="">
@@ -729,7 +729,7 @@
                   </div>
                 </div>
               </div>
-              <div v-if="(selectedVerseVersion === 4 || selectedVerseVersion === 0)
+              <div v-show="(selectedVerseVersion === 4 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList4.filter(item => item.rank === 4).length > 0) ||
@@ -737,7 +737,7 @@
                         (selectedVerseRank === 2 && verseList4.filter(item => item.rank === 2).length > 0)
                     )
                 )&& verseList4.length > 0" >
-                <div class="tableTitle versionMargin">-4弾-</div>
+                <div class="tableTitle">-4弾-</div>
                 <div >
                   <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
                     <img v-show="filteredVerseList4[4].length > 0" class="starClass" :src="require(`@/img/icon/star4.webp`)" alt="">
@@ -774,7 +774,7 @@
                   </div>
                 </div>
               </div>
-              <div v-if="(selectedVerseVersion === 'sp' || selectedVerseVersion === 0)
+              <div v-show="(selectedVerseVersion === 'sp' || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseListSP.filter(item => item.rank === 4).length > 0) ||
@@ -783,7 +783,7 @@
                         (selectedVerseRank === 'sp' && verseListSP.filter(item => item.rank === 'sp').length > 0)
                     )
               )&& verseListSP.length > 0">
-              <div class="tableTitle versionMargin">-スペシャルコーデアイテム-</div>
+              <div class="tableTitle">-スペシャルコーデアイテム-</div>
               <div>
                 <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
                   <img v-show="filteredVerseListSP[4].length > 0" class="starClass" :src="require(`@/img/icon/star4.webp`)" alt="">
