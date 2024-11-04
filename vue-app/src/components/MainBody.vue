@@ -1599,24 +1599,19 @@ export default {
     width: 60px;
   }
   .wishHimitsuBorder {
-    outline: 3px solid rgb(233, 88, 120);
-    border-radius: 1px;
+    box-shadow: 0 0 0 3px rgb(233, 88, 120);
+    border-radius: 2px;
   }
   .wishVerseBorder {
-    outline: 3px solid rgb(233, 88, 120);
-    border-radius: 10px;
+    box-shadow: 0 0 0 3px rgb(233, 88, 120);
   }
   .cordeButton {
-    margin-bottom: 5px;
-    margin-right: 5px;
-    margin-left: 5px;
+    margin: 5px;
     width: 75px;
     font-size: 11px;
   }
   .cordeButtonMobile {
-    margin-bottom: 5px;
-    margin-right: 5px;
-    margin-left: 5px;
+    margin: 5px;
     width: 60px;
     font-size: 8px;
   }
