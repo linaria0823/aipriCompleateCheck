@@ -10,7 +10,9 @@
     <div v-if="showPolicyPopup" class="overlay" @click="showPolicyPopup = false"></div>
     <div v-if="showPolicyPopup" v-bind:class="{'popupMobile': this.mobile === true,'popup': this.mobile === false}" ref="popup">
           <div class="closeIconBox">
-            <button class="closeButton" @click="closePolicyPopup">×</button>
+            <div class="closeButtonBox" @click="closePolicyPopup">
+              <div class="closeButtonNoMargin"></div>
+            </div>
           </div>
           <div>
             <div class="policyTitle">
@@ -55,15 +57,17 @@
         <div v-if="showInfoPopup" class="overlay" @click="showInfoPopup = false"></div>
         <div v-if="showInfoPopup" v-bind:class="{'popupMobile': this.mobile === true,'popup': this.mobile === false}" ref="popup">
           <div class="closeIconBox">
-            <button class="closeButton" @click="closeInfoPopup">×</button>
+            <div class="closeButtonBox" @click="closeInfoPopup">
+              <div class="closeButtonNoMargin"></div>
+            </div>
           </div>
-            <div>
+          <div class="info">
             X:
             <a href="https://x.com/linaria_aipri" target="_blank" rel="noopener noreferrer">
               リナリア
             </a>
           </div>
-          <div>
+          <div class="info">
             メール:vivio823823@gmail.com
           </div>
         </div>
@@ -248,5 +252,38 @@ button:active {
   background-color: #f0f0f0;
   transform: scale(0.95);
 }
+.closeButtonBox {
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    right: 0;
+    cursor: pointer;
+  }
+  .closeButtonNoMargin {
+    display: block;
+    position: relative;
+    width: 30px;
+    height: 30px;
+  }
+  .closeButtonNoMargin::before, .closeButtonNoMargin::after { /* 共通設定 */
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px; /* 棒の幅（太さ） */
+    height: 25px; /* 棒の高さ */
+    background: #333;
+  }
+  
+  .closeButtonNoMargin::before {
+    transform: translate(-50%,-50%) rotate(45deg);
+  }
+  
+  .closeButtonNoMargin::after {
+    transform: translate(-50%,-50%) rotate(-45deg);
+  }
+  .info {
+    font-size: 15px;
+  }
 </style>
   

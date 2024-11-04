@@ -5,7 +5,9 @@
         <div v-if="showHelpPopup" class="overlay" @click="showHelpPopup = false"></div>
         <div v-if="showHelpPopup" v-bind:class="{'popupMobile': this.mobile === true,'popup': this.mobile === false}" ref="popup">
           <div class="closeIconBox">
-            <button class="closeButton" @click="closeHelpPopup">×</button>
+            <div class="closeButtonBox" @click="closeHelpPopup">
+              <div class="closeButtonNoMargin"></div>
+            </div>
           </div>
           <div class="helpTextBox">
             <div>データはお使いの端末のブラウザへ保存されます。</div>
@@ -34,19 +36,25 @@
               <div class="backButtonBox" @click="backWishHimitsu">
                 <div class="backButton"></div>
               </div>
-              <button class="closeButton" @click="closeUser">×</button>
+              <div class="closeButtonBox" @click="closeUser">
+                <div class="closeButton"></div>
+              </div>
               <WishHimitsu :itemList="iniHimitsuList"/>
             </div>
-            <div v-if="showWishVerse">
+            <div v-else-if="showWishVerse">
               <div class="backButtonBox" @click="backWishVerse">
                 <div class="backButton"></div>
               </div>
-              <button class="closeButton" @click="closeUser">×</button>
+              <div class="closeButtonBox" @click="closeUser">
+                <div class="closeButton"></div>
+              </div>
               <WishVerse :itemList="iniVerseList"/>
             </div>
             <div v-else class="userButtonBox">
               <div class="closeIconBox">
-                <button class="closeButton" @click="closeUser">×</button>
+                <div class="closeButtonBox" @click="closeUser">
+                  <div class="closeButton"></div>
+                </div>
               </div>
               <div class="userButton">
                 <button class="saveButton" @click.stop="clickCloud('save')">クラウドへデータ保存</button>
@@ -62,7 +70,9 @@
           <div v-if="showPopup" class="overlay" @click="showPopup = false"></div>
           <div v-if="showPopup" v-bind:class="{'popupMobile': this.mobile === true,'popup': this.mobile === false}" ref="popup">
             <div class="closeIconBox">
-              <button class="closeButton" @click="closePopup">×</button>
+              <div class="closeButtonBox" @click="closePopup">
+                <div class="closeButtonNoMargin"></div>
+              </div>
             </div>
             <div v-if="kind === 'save'" class="marginBottom">
               <div>クラウドへデータ保存しますか？</div>
@@ -2002,20 +2012,66 @@ export default {
   .buttonBox {
     text-align: center;
   }
-  .closeButton {
+  .closeButtonBox {
+    width: 40px;
+    height: 40px;
     position: absolute;
-    top: 0px;
-    right: 0px;
-    background-color: transparent;
-    border: none;
-    font-size: 28px;
+    right: 0;
     cursor: pointer;
+  }
+  .closeButtonNoMargin {
+    display: block;
+    position: relative;
+    width: 30px;
+    height: 30px;
+  }
+  .closeButtonNoMargin::before, .closeButtonNoMargin::after { /* 共通設定 */
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px; /* 棒の幅（太さ） */
+    height: 25px; /* 棒の高さ */
+    background: #333;
+  }
+  
+  .closeButtonNoMargin::before {
+    transform: translate(-50%,-50%) rotate(45deg);
+  }
+  
+  .closeButtonNoMargin::after {
+    transform: translate(-50%,-50%) rotate(-45deg);
+  }
+  .closeButton {
+    display: block;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    margin-top: 10px;
+  }
+  .closeButton::before, .closeButton::after { /* 共通設定 */
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px; /* 棒の幅（太さ） */
+    height: 25px; /* 棒の高さ */
+    background: #333;
+  }
+  
+  .closeButton::before {
+    transform: translate(-50%,-50%) rotate(45deg);
+  }
+  
+  .closeButton::after {
+    transform: translate(-50%,-50%) rotate(-45deg);
   }
   .backButtonBox {
     width: 40px;
     height: 40px;
     position: absolute;
     left: 0;
+    cursor: pointer;
   }
   .backButton {
     width: 0;
@@ -2062,6 +2118,7 @@ export default {
     font-size: 15px;
   }
   .marginBottom {
+    margin-top: 5px;
     margin-bottom: 10px;
   }
   .itemName {
