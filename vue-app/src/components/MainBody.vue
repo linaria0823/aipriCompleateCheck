@@ -25,10 +25,6 @@
             </div>
           </div>
         </div>
-        <div v-if="isLoading" class="loginButton">
-          <!-- ローディング中の表示（スピナーなど） -->
-          <p>読み込み中...</p>
-        </div>
         <div v-if="showWishHimitsu" class="orverScreen">
           <div class="userButtonBox">
             <div class="closeIconBox">
@@ -48,6 +44,10 @@
             </div>
             <WishVerse :itemList="iniVerseList" v-model="wishVerseItems"/>
           </div>
+        </div>
+        <div v-if="isLoading" class="loginButton">
+          <!-- ローディング中の表示（スピナーなど） -->
+          <p>読み込み中...</p>
         </div>
         <div v-else-if="isLoggedIn">
           <img :src="userPhotoURL" alt="Googleアイコン" class="circular-icon loginButton" @click="togglePopup" ref="icon"/>
