@@ -29,28 +29,30 @@
           <!-- ローディング中の表示（スピナーなど） -->
           <p>読み込み中...</p>
         </div>
+        <div v-if="showWishHimitsu" class="orverScreen">
+          <div class="userButtonBox">
+            <div class="closeIconBox">
+              <div class="closeButtonBox" @click="closeWishHimitsu">
+                <div class="closeButton"></div>
+              </div>
+            </div>
+            <WishHimitsu :itemList="iniHimitsuList" v-model="wishHimitsuItems"/>
+          </div>
+        </div>
+        <div v-if="showWishVerse" class="orverScreen">
+          <div class="userButtonBox">
+            <div class="closeIconBox">
+              <div class="closeButtonBox" @click="closeWishVerse">
+                <div class="closeButton"></div>
+              </div>
+            </div>
+            <WishVerse :itemList="iniVerseList" v-model="wishVerseItems"/>
+          </div>
+        </div>
         <div v-else-if="isLoggedIn">
           <img :src="userPhotoURL" alt="Googleアイコン" class="circular-icon loginButton" @click="togglePopup" ref="icon"/>
           <div v-if="showUser" class="orverScreen">
-            <div v-if="showWishHimitsu">
-              <div class="backButtonBox" @click="backWishHimitsu">
-                <div class="backButton"></div>
-              </div>
-              <div class="closeButtonBox" @click="closeUser">
-                <div class="closeButton"></div>
-              </div>
-              <WishHimitsu :itemList="iniHimitsuList" v-model="wishHimitsuItems"/>
-            </div>
-            <div v-else-if="showWishVerse">
-              <div class="backButtonBox" @click="backWishVerse">
-                <div class="backButton"></div>
-              </div>
-              <div class="closeButtonBox" @click="closeUser">
-                <div class="closeButton"></div>
-              </div>
-              <WishVerse :itemList="iniVerseList" v-model="wishVerseItems"/>
-            </div>
-            <div v-else class="userButtonBox">
+            <div class="userButtonBox">
               <div class="closeIconBox">
                 <div class="closeButtonBox" @click="closeUser">
                   <div class="closeButton"></div>
@@ -60,8 +62,6 @@
                 <button class="saveButton" @click.stop="clickCloud('save')">クラウドへデータ保存</button>
                 <button class="getButton" @click.stop="clickCloud('get')">クラウドからデータ取得</button>
                 <button class="deleteButton" @click.stop="clickCloud('delete')">ローカルデータ削除</button>
-                <button class="wishHimitsuButton" @click="wishHimitsu">ひみプリほしい物</button>
-                <button class="wishVerseButton" @click="wishVerse">バースほしい物</button>
                 <button class="logoutButton" @click="logout">ログアウト</button>
               </div>
             </div>
@@ -153,13 +153,18 @@
                 <option value="thi">チィ</option>
               </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="himitsuItemName" placeholder="アイテム名で検索">
-              <div class="toggleBox">
-                <div class="toggleLabel">
-                  ほしい物チェックモード:
+              <div class="wishBox">
+                <div class="toggleBox">
+                  <div class="toggleLabel">
+                    ほしい物モード:
+                  </div>
+                  <div class="toggle_button">
+                    <input id="toggle" class="toggle_input" type='checkbox' v-model="wishHimitsuMode" @click="toggleHimitsuWishMode"/>
+                    <label for="toggle" class="toggle_label"/>
+                  </div>
                 </div>
-                <div class="toggle_button">
-                  <input id="toggle" class="toggle_input" type='checkbox' v-model="wishHimitsuMode" @click="toggleHimitsuWishMode"/>
-                  <label for="toggle" class="toggle_label"/>
+                <div class="wishButtonBox">
+                  <button class="wishButton" @click="wishHimitsu">ほしい物一覧</button>
                 </div>
               </div>
                 <div>
@@ -585,13 +590,18 @@
                <option value="ps">プリズムストーン</option>
              </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="verseItemName" placeholder="アイテム名で検索">
-              <div class="toggleBox">
-                <div class="toggleLabel">
-                  ほしい物チェックモード:
+              <div class="wishBox">
+                <div class="toggleBox">
+                  <div class="toggleLabel">
+                    ほしい物モード:
+                  </div>
+                  <div class="toggle_button">
+                    <input id="toggle" class="toggle_input" type='checkbox' v-model="wishVerseMode" @click="toggltoggleVerseWishModeeMode"/>
+                    <label for="toggle" class="toggle_label"/>
+                  </div>
                 </div>
-                <div class="toggle_button">
-                  <input id="toggle" class="toggle_input" type='checkbox' v-model="wishVerseMode" @click="toggltoggleVerseWishModeeMode"/>
-                  <label for="toggle" class="toggle_label"/>
+                <div class="wishButtonBox">
+                  <button class="wishButton" @click="wishVerse">ほしい物一覧</button>
                 </div>
               </div>
               <div v-show="(selectedVerseVersion === 1 || selectedVerseVersion === 0)
@@ -1373,6 +1383,12 @@ export default {
         this.closePopup(); // ポップアップを閉じる
         this.closeUser() // ユーザーアイコン押下後の画面を非表示
       },
+      closeWishHimitsu () {
+        this.showWishHimitsu = false;
+      },
+      closeWishVerse () {
+        this.showWishVerse = false;
+      },
       closeUser () {
         this.showUser = false; // ポップアップを閉じる
         this.showWishHimitsu = false;
@@ -1393,14 +1409,8 @@ export default {
       wishHimitsu () {
         this.showWishHimitsu = true;
       },
-      backWishHimitsu () {
-        this.showWishHimitsu = false;
-      },
       wishVerse () {
         this.showWishVerse = true;
-      },
-      backWishVerse () {
-        this.showWishVerse = false;
       },
       toggleHimitsuWishMode () {
         this.wishHimitsuMode = !this.wishHimitsuMode; // ほしい物モードの有効/無効をトグル
@@ -1418,6 +1428,20 @@ export default {
         }
       },
       showHelpPopup(newValue) {
+        if (newValue) {
+          this.disableScroll();
+        } else {
+          this.enableScroll();
+        }
+      },
+      showWishHimitsu(newValue) {
+        if (newValue) {
+          this.disableScroll();
+        } else {
+          this.enableScroll();
+        }
+      },
+      showWishVerse(newValue) {
         if (newValue) {
           this.disableScroll();
         } else {
@@ -1943,38 +1967,26 @@ export default {
     margin-bottom: 10px;
     cursor: pointer;
   }
-  .wishHimitsuButton{
-    color: #ffffff;
-    background-color: rgb(169 215 255);
-    border-radius: 100vh;
-    border-color: rgb(169 215 255);
-    border-style: solid;
-    /* クリックした際に枠線をnone消す */
-    outline: none;
-    /* 影を消す */
-    box-shadow: none;
-    padding: 5px 20px;
-    width: 210px;
-    display: inline-block;
-    margin-top: 30px;
-    margin-bottom: 10px;
-    cursor: pointer;
+  .wishBox {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
   }
-  .wishVerseButton {
+  .wishButtonBox {
+    display: inline-block;
+    margin-left: 5px;
+  }
+  .wishButton{
     color: #ffffff;
-    background-color: rgb(255 198 240);
+    background-color: rgb(233, 88, 120);
     border-radius: 100vh;
-    border-color: rgb(255 198 240);
+    border-color: rgb(233, 88, 120);
     border-style: solid;
     /* クリックした際に枠線をnone消す */
     outline: none;
     /* 影を消す */
     box-shadow: none;
     padding: 5px 20px;
-    width: 210px;
-    display: inline-block;
-    margin-top: 10px;
-    margin-bottom: 10px;
     cursor: pointer;
   }
   .okButton {
@@ -2198,7 +2210,8 @@ export default {
     display: inline-block;
   }
   .toggleBox {
-    margin-top: 5px
+    margin-top: 5px;
+    display: inline-block;
   }
   .toggleLabel {
     display: inline-block;
