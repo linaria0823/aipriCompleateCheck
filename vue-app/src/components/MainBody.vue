@@ -154,6 +154,11 @@
                 <option value="rinrin">リンリン</option>
                 <option value="thi">チィ</option>
                 <option value="tumugiP">つむぎP</option>
+                <option value="Dsakura">Dサクラ</option>
+                <option value="Dtamaki">Dタマキ</option>
+                <option value="Dairi">Dアイリ</option>
+                <option value="Drinrin">Dリンリン</option>
+                <option value="Dthi">Dチィ</option>
               </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="himitsuItemName" placeholder="アイテム名で検索">
               <div class="wishBox">
