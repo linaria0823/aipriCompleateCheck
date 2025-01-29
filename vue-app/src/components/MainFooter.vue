@@ -63,8 +63,13 @@
           </div>
           <div class="info">
             X:
-            <a href="https://x.com/linaria_aipri" target="_blank" rel="noopener noreferrer">
+            <a href="https://x.com/linaria_v" target="_blank" rel="noopener noreferrer">
               リナリア
+            </a>
+          </div>
+          <div class="info">
+            <a href="https://discord.gg/XDmSubgBwS" target="_blank" rel="noopener noreferrer">
+              discord鯖(アプリ更新情報や問い合わせ等)
             </a>
           </div>
           <div class="info">
