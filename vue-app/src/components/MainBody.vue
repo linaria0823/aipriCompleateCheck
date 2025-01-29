@@ -440,7 +440,7 @@
                 </div>
               </div>
             </div>
-            <div v-show="(selectedHimitsuVersion === 5 || selectedHimitsuVersion === 0)
+            <div v-show="(selectedHimitsuVersion === 6 || selectedHimitsuVersion === 0)
               && (
                 selectedHimitsuRank === 0 || (
                       (selectedHimitsuRank === 4 && himitsuList6.filter(item => item.rank === 4).length > 0) ||
