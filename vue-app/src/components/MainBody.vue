@@ -1008,7 +1008,7 @@ import WishHimitsu from './WishHimitsu.vue'
 import WishVerse from './WishVerse.vue'
 
 // 初期値のバージョンを指定(最新弾推奨)
-const iniHimitsuVersion = 5;
+const iniHimitsuVersion = 6;
 const iniVerseVersion = 5;
 
 export default {
