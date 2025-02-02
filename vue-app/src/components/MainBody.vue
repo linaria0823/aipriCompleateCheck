@@ -671,6 +671,7 @@
                <option v-bind:value="3">3弾</option>
                <option v-bind:value="4">4弾</option>
                <option v-bind:value="5">5弾</option>
+               <option v-bind:value="6">6弾</option>
                <option value="sp">SP</option>
              </select>
              <select v-model="selectedVerseGet" class="inlineBlock dropBox">
@@ -940,7 +941,7 @@
                   </div>
                 </div>
               </div>
-              <div v-show="(selectedVerseVersion === 5 || selectedVerseVersion === 0)
+              <div v-show="(selectedVerseVersion === 6 || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
                         (selectedVerseRank === 4 && verseList6.filter(item => item.rank === 4).length > 0) ||
@@ -1065,7 +1066,7 @@ import WishVerse from './WishVerse.vue'
 
 // 初期値のバージョンを指定(最新弾推奨)
 const iniHimitsuVersion = 6;
-const iniVerseVersion = 5;
+const iniVerseVersion = 6;
 
 export default {
   name: "MainBody",
