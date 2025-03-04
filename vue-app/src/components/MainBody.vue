@@ -700,6 +700,7 @@
                <option value="cv">クリスタルバース</option>
                <option value="pc">プリティーコレクション</option>
                <option value="ps">プリズムストーン</option>
+               <option value="pr">プリンセスリング</option>
              </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="verseItemName" placeholder="アイテム名で検索">
               <div class="wishBox">
