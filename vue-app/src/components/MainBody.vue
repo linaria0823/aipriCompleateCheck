@@ -126,6 +126,7 @@
                 <option v-bind:value="4">4弾</option>
                 <option v-bind:value="5">5弾</option>
                 <option v-bind:value="6">6弾</option>
+                <option v-bind:value="7">リング1弾</option>
                 <option value="sp">スペシャル</option>
                 <option value="gumi">グミ</option>
                 <option value="mirufi">ミルフィー</option>
@@ -146,19 +147,15 @@
               <select v-model="selectedHimitsuChar" class="inlineBlock dropBox" v-bind:class="{'mobileSearchBox': this.mobile === true}">
                 <option v-bind:value="0">{{ himitsuCharDropBoxLabel }}</option>
                 <option value="himari">ひまり</option>
-                <option value="mitsuki">みつき</option>https://console.firebase.google.com/u/0/?hl=ja
+                <option value="mitsuki">みつき</option>
                 <option value="tumugi">つむぎ</option>
                 <option value="sakura">サクラ</option>
                 <option value="tamaki">タマキ</option>
                 <option value="airi">アイリ</option>
                 <option value="rinrin">リンリン</option>
                 <option value="thi">チィ</option>
-                <option value="tumugiP">つむぎP</option>
-                <option value="Dsakura">Dサクラ</option>
-                <option value="Dtamaki">Dタマキ</option>
-                <option value="Dairi">Dアイリ</option>
-                <option value="Drinrin">Dリンリン</option>
-                <option value="Dthi">Dチィ</option>
+                <option value="juria">じゅりあ</option>
+                <option value="eru">える</option>
               </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="himitsuItemName" placeholder="アイテム名で検索">
               <div class="wishBox">
@@ -491,6 +488,57 @@
                 </div>
               </div>
             </div>
+            <div v-show="(selectedHimitsuVersion === 7 || selectedHimitsuVersion === 0)
+              && (
+                selectedHimitsuRank === 0 || (
+                      (selectedHimitsuRank === 4 && himitsuList7.filter(item => item.rank === 4).length > 0) ||
+                      (selectedHimitsuRank === 3 && himitsuList7.filter(item => item.rank === 3).length > 0) ||
+                      (selectedHimitsuRank === 2 && himitsuList7.filter(item => item.rank === 2).length > 0)
+                  )
+              )&& himitsuList7.length > 0" >
+                <div class="tableTitle">-リング1弾-</div>
+                <div>
+                  <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
+                    <img v-show="himitsuList7.filter(item => item.rank === 4).length > 0" class="starClass" :src="require(`@/img/icon/star4.webp`)" alt="">
+                    <ul id="dispHimitsuItemList">
+                      <li v-for="(himitsuData) in himitsuList7.filter(item => item.rank === 4)" :key="himitsuData.value" class="itemLi">
+                        <div :class="{'isClicked': selectedItems.includes(himitsuData.value)}" >
+                          <div class="tooltip1 cardButton" 
+                            @click="toggleHimitsuItem(himitsuData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false, 'wishHimitsuBorder': wishHimitsuItems.includes(himitsuData.value)}" v-lazy="require(`@/img/himitsu/${himitsuData.src}`)" alt="">
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div v-show="(selectedHimitsuRank === 3 || selectedHimitsuRank === 0)">
+                    <img v-show="himitsuList7.filter(item => item.rank === 3).length > 0" class="starClass starMargin" :src="require(`@/img/icon/star3.webp`)" alt="">
+                    <ul id="dispHimitsuItemList">
+                      <li v-for="(himitsuData) in himitsuList7.filter(item => item.rank === 3)" :key="himitsuData.value" class="itemLi">
+                        <div :class="{'isClicked': selectedItems.includes(himitsuData.value)}" >
+                          <div class="tooltip1 cardButton" 
+                            @click="toggleHimitsuItem(himitsuData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false, 'wishHimitsuBorder': wishHimitsuItems.includes(himitsuData.value)}" v-lazy="require(`@/img/himitsu/${himitsuData.src}`)" alt="">
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                </div>
+                <div v-show="(selectedHimitsuRank === 2 || selectedHimitsuRank === 0)">
+                  <img v-show="himitsuList7.filter(item => item.rank === 2).length > 0" class="starClass starMargin" :src="require(`@/img/icon/star2.webp`)" alt="">
+                  <ul id="dispHimitsuItemList">
+                      <li v-for="(himitsuData) in himitsuList7.filter(item => item.rank === 2)" :key="himitsuData.value" class="itemLi">
+                        <div :class="{'isClicked': selectedItems.includes(himitsuData.value)}" >
+                          <div class="tooltip1 cardButton" 
+                            @click="toggleHimitsuItem(himitsuData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false, 'wishHimitsuBorder': wishHimitsuItems.includes(himitsuData.value)}" v-lazy="require(`@/img/himitsu/${himitsuData.src}`)" alt="">
+                          </div>
+                        </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
             <div v-show="(selectedHimitsuVersion === 'sp' || selectedHimitsuVersion === 0)
               && (
                 selectedHimitsuRank === 0 || (
@@ -672,6 +720,7 @@
                <option v-bind:value="4">4弾</option>
                <option v-bind:value="5">5弾</option>
                <option v-bind:value="6">6弾</option>
+               <option v-bind:value="7">リング1弾</option>
                <option value="sp">SP</option>
              </select>
              <select v-model="selectedVerseGet" class="inlineBlock dropBox">
@@ -1213,6 +1262,9 @@ export default {
     },
     himitsuList6() {
       return this.filteredHimitsuList.filter((item) => item.version === "6");
+    },
+    himitsuList7() {
+      return this.filteredHimitsuList.filter((item) => item.version === "7");
     },
     himitsuListSP() {
       return this.filteredHimitsuList.filter((item) => item.version === "sp");
