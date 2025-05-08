@@ -1445,7 +1445,7 @@ export default {
     },
     change(num) {
       this.isActive = num;
-      this.selectedHimitsuVersion = iniHimitsuVersion;
+      /*this.selectedHimitsuVersion = iniHimitsuVersion;
       this.selectedHimitsuGet = 0;
       this.selectedHimitsuRank = 0;
       this.selectedHimitsuChar = 0;
@@ -1454,7 +1454,7 @@ export default {
       this.selectedVerseGet = 0;
       this.selectedVerseRank = 0;
       this.selectedVerseBrand = 0;
-      this.verseItemName = "";
+      this.verseItemName = "";*/
     },
      toggleHimitsuItem(value) {
         const wishItemHimitsuIndex = this.wishHimitsuItems.indexOf(value);
