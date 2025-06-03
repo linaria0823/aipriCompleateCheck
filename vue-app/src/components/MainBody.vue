@@ -159,6 +159,7 @@
                 <option value="eru">える</option>
                 <option value="subaru">すばる</option>
                 <option value="otome">おとめ</option>
+                <option value="etc">その他</option>
               </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="himitsuItemName" placeholder="アイテム名で検索">
               <div class="wishBox">
@@ -1138,6 +1139,51 @@
                   </div>
                 </div>
               </div>
+              <div v-show="(selectedVerseVersion === 8 || selectedVerseVersion === 0)
+                && (
+                    selectedVerseRank === 0 || (
+                        (selectedVerseRank === 4 && verseList8.filter(item => item.rank === 4).length > 0) ||
+                        (selectedVerseRank === 3 && verseList8.filter(item => item.rank === 3).length > 0) ||
+                        (selectedVerseRank === 2 && verseList8.filter(item => item.rank === 2).length > 0)
+                    )
+                )&& verseList8.length > 0" >
+                <div class="tableTitle">-リング2弾-</div>
+                <div >
+                  <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
+                    <img v-show="filteredVerseList8[4].length > 0" class="starClass" :src="require(`@/img/icon/star4.webp`)" alt="">
+                    <ul id="">
+                      <li v-for="(verseData) in filteredVerseList8[4]" :key="verseData.value" class="itemLi">
+                      <div class="tooltip1" :class="dynamicClass(verseData)">
+                          <img @click="toggleVerseItem(verseData.value)" class="cordeItemImg" :class="{'wishVerseBorder': wishVerseItems.includes(verseData.value)}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div v-show="(selectedVerseRank === 3 || selectedVerseRank === 0)">
+                    <img v-show="filteredVerseList8[3].length > 0" class="starClass starMargin" :src="require(`@/img/icon/star3.webp`)" alt="">
+                    <ul id="">
+                      <li v-for="(verseData) in filteredVerseList8[3]" :key="verseData.value" class="itemLi">
+                      <div class="tooltip1" :class="dynamicClass(verseData)">
+                          <img @click="toggleVerseItem(verseData.value)" class="cordeItemImg" :class="{'wishVerseBorder': wishVerseItems.includes(verseData.value)}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div v-show="(selectedVerseRank === 2 || selectedVerseRank === 0)">
+                    <img v-show="filteredVerseList8[2].length > 0" class="starClass starMargin" :src="require(`@/img/icon/star2.webp`)" alt="">
+                    <ul id="">
+                      <li v-for="(verseData) in filteredVerseList8[2]" :key="verseData.value" class="itemLi">
+                      <div class="tooltip1" :class="dynamicClass(verseData)">
+                          <img @click="toggleVerseItem(verseData.value)" class="cordeItemImg" :class="{'wishVerseBorder': wishVerseItems.includes(verseData.value)}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
               <div v-show="(selectedVerseVersion === 'sp' || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
@@ -1401,6 +1447,9 @@ export default {
     verseList7() {
       return this.filteredVerseList.filter((item) => item.version === "7");
     },
+    verseList8() {
+      return this.filteredVerseList.filter((item) => item.version === "8");
+    },
     verseListSP() {
       return this.filteredVerseList.filter((item) => item.version === "sp");
     },
@@ -1451,6 +1500,13 @@ export default {
         2: this.verseList7.filter(item => item.rank === 2),
         3: this.verseList7.filter(item => item.rank === 3),
         4: this.verseList7.filter(item => item.rank === 4),
+      };
+    },
+    filteredVerseList8() {
+      return {
+        2: this.verseList8.filter(item => item.rank === 2),
+        3: this.verseList8.filter(item => item.rank === 3),
+        4: this.verseList8.filter(item => item.rank === 4),
       };
     },
     filteredVerseListSP() {
