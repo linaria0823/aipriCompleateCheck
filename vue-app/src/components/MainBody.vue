@@ -127,6 +127,7 @@
                 <option v-bind:value="5">5弾</option>
                 <option v-bind:value="6">6弾</option>
                 <option v-bind:value="7">リング1弾</option>
+                <option v-bind:value="8">リング2弾</option>
                 <option value="sp">スペシャル</option>
                 <option value="gumi">グミ</option>
                 <option value="mirufi">ミルフィー</option>
@@ -156,6 +157,8 @@
                 <option value="thi">チィ</option>
                 <option value="juria">じゅりあ</option>
                 <option value="eru">える</option>
+                <option value="subaru">すばる</option>
+                <option value="otome">おとめ</option>
               </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="himitsuItemName" placeholder="アイテム名で検索">
               <div class="wishBox">
@@ -164,8 +167,8 @@
                     ほしい物モード:
                   </div>
                   <div class="toggle_button">
-                    <input id="toggle" class="toggle_input" type='checkbox' v-model="wishHimitsuMode" @click="toggleHimitsuWishMode"/>
-                    <label for="toggle" class="toggle_label"/>
+                    <input id="toggleh" class="toggle_input" type='checkbox' v-model="wishHimitsuMode" @click="toggleHimitsuWishMode"/>
+                    <label for="toggleh" class="toggle_label"/>
                   </div>
                 </div>
                 <div class="wishButtonBox">
@@ -539,6 +542,57 @@
                 </div>
               </div>
             </div>
+            <div v-show="(selectedHimitsuVersion === 8 || selectedHimitsuVersion === 0)
+              && (
+                selectedHimitsuRank === 0 || (
+                      (selectedHimitsuRank === 4 && himitsuList8.filter(item => item.rank === 4).length > 0) ||
+                      (selectedHimitsuRank === 3 && himitsuList8.filter(item => item.rank === 3).length > 0) ||
+                      (selectedHimitsuRank === 2 && himitsuList8.filter(item => item.rank === 2).length > 0)
+                  )
+              )&& himitsuList8.length > 0" >
+                <div class="tableTitle">-リング2弾-</div>
+                <div>
+                  <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
+                    <img v-show="himitsuList8.filter(item => item.rank === 4).length > 0" class="starClass" :src="require(`@/img/icon/star4.webp`)" alt="">
+                    <ul id="dispHimitsuItemList">
+                      <li v-for="(himitsuData) in himitsuList8.filter(item => item.rank === 4)" :key="himitsuData.value" class="itemLi">
+                        <div :class="{'isClicked': selectedItems.includes(himitsuData.value)}" >
+                          <div class="tooltip1 cardButton" 
+                            @click="toggleHimitsuItem(himitsuData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false, 'wishHimitsuBorder': wishHimitsuItems.includes(himitsuData.value)}" v-lazy="require(`@/img/himitsu/${himitsuData.src}`)" alt="">
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div v-show="(selectedHimitsuRank === 3 || selectedHimitsuRank === 0)">
+                    <img v-show="himitsuList8.filter(item => item.rank === 3).length > 0" class="starClass starMargin" :src="require(`@/img/icon/star3.webp`)" alt="">
+                    <ul id="dispHimitsuItemList">
+                      <li v-for="(himitsuData) in himitsuList8.filter(item => item.rank === 3)" :key="himitsuData.value" class="itemLi">
+                        <div :class="{'isClicked': selectedItems.includes(himitsuData.value)}" >
+                          <div class="tooltip1 cardButton" 
+                            @click="toggleHimitsuItem(himitsuData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false, 'wishHimitsuBorder': wishHimitsuItems.includes(himitsuData.value)}" v-lazy="require(`@/img/himitsu/${himitsuData.src}`)" alt="">
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                </div>
+                <div v-show="(selectedHimitsuRank === 2 || selectedHimitsuRank === 0)">
+                  <img v-show="himitsuList8.filter(item => item.rank === 2).length > 0" class="starClass starMargin" :src="require(`@/img/icon/star2.webp`)" alt="">
+                  <ul id="dispHimitsuItemList">
+                      <li v-for="(himitsuData) in himitsuList8.filter(item => item.rank === 2)" :key="himitsuData.value" class="itemLi">
+                        <div :class="{'isClicked': selectedItems.includes(himitsuData.value)}" >
+                          <div class="tooltip1 cardButton" 
+                            @click="toggleHimitsuItem(himitsuData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false, 'wishHimitsuBorder': wishHimitsuItems.includes(himitsuData.value)}" v-lazy="require(`@/img/himitsu/${himitsuData.src}`)" alt="">
+                          </div>
+                        </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
             <div v-show="(selectedHimitsuVersion === 'sp' || selectedHimitsuVersion === 0)
               && (
                 selectedHimitsuRank === 0 || (
@@ -721,6 +775,7 @@
                <option v-bind:value="5">5弾</option>
                <option v-bind:value="6">6弾</option>
                <option v-bind:value="7">リング1弾</option>
+               <option v-bind:value="8">リング2弾</option>
                <option value="sp">SP</option>
              </select>
              <select v-model="selectedVerseGet" class="inlineBlock dropBox">
@@ -751,6 +806,7 @@
                <option value="ps">プリズムストーン</option>
                <option value="pr">プリンセスリング</option>
                <option value="cc">キューティカラット</option>
+               <option value="fs">フューチャースクール</option>
              </select>
               <input type="text" class="searchMargin textSize" v-bind:class="{'mobileSearchBox': this.mobile === true}" v-model="verseItemName" placeholder="アイテム名で検索">
               <div class="wishBox">
@@ -759,8 +815,8 @@
                     ほしい物モード:
                   </div>
                   <div class="toggle_button">
-                    <input id="toggle" class="toggle_input" type='checkbox' v-model="wishVerseMode" @click="toggltoggleVerseWishModeeMode"/>
-                    <label for="toggle" class="toggle_label"/>
+                    <input id="togglev" class="toggle_input" type='checkbox' v-model="wishVerseMode" @click="toggltoggleVerseWishModeeMode"/>
+                    <label for="togglev" class="toggle_label"/>
                   </div>
                 </div>
                 <div class="wishButtonBox">
@@ -1161,8 +1217,8 @@ import WishHimitsu from './WishHimitsu.vue'
 import WishVerse from './WishVerse.vue'
 
 // 初期値のバージョンを指定(最新弾推奨)
-const iniHimitsuVersion = 7;
-const iniVerseVersion = 7;
+const iniHimitsuVersion = 8;
+const iniVerseVersion = 8;
 
 export default {
   name: "MainBody",
@@ -1311,6 +1367,9 @@ export default {
     },
     himitsuList7() {
       return this.filteredHimitsuList.filter((item) => item.version === "7");
+    },
+    himitsuList8() {
+      return this.filteredHimitsuList.filter((item) => item.version === "8");
     },
     himitsuListSP() {
       return this.filteredHimitsuList.filter((item) => item.version === "sp");
