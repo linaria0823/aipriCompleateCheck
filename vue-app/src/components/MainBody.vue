@@ -130,6 +130,7 @@
                 <option v-bind:value="8">リング2弾</option>
                 <option v-bind:value="9">リング3弾</option>
                 <option v-bind:value="10">リング4弾</option>
+                <option v-bind:value="11">リング5弾</option>
                 <option value="sp">スペシャル</option>
                 <option value="gumi">グミ</option>
                 <option value="mirufi">ミルフィー</option>
@@ -690,6 +691,57 @@
                   <img v-show="himitsuList10.filter(item => item.rank === 2).length > 0" class="starClass starMargin" :src="require(`@/img/icon/star2.webp`)" alt="">
                   <ul id="dispHimitsuItemList">
                       <li v-for="(himitsuData) in himitsuList10.filter(item => item.rank === 2)" :key="himitsuData.value" class="itemLi">
+                        <div :class="{'isClicked': selectedItems.includes(himitsuData.value)}" >
+                          <div class="tooltip1 cardButton" 
+                            @click="toggleHimitsuItem(himitsuData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false, 'wishHimitsuBorder': wishHimitsuItems.includes(himitsuData.value)}" v-lazy="require(`@/img/himitsu/${himitsuData.src}`)" alt="">
+                          </div>
+                        </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div v-show="(selectedHimitsuVersion === 11 || selectedHimitsuVersion === 0)
+              && (
+                selectedHimitsuRank === 0 || (
+                      (selectedHimitsuRank === 4 && himitsuList11.filter(item => item.rank === 4).length > 0) ||
+                      (selectedHimitsuRank === 3 && himitsuList11.filter(item => item.rank === 3).length > 0) ||
+                      (selectedHimitsuRank === 2 && himitsuList11.filter(item => item.rank === 2).length > 0)
+                  )
+              )&& himitsuList11.length > 0" >
+                <div class="tableTitle">-リング5弾-</div>
+                <div>
+                  <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
+                    <img v-show="himitsuList11.filter(item => item.rank === 4).length > 0" class="starClass" :src="require(`@/img/icon/star4.webp`)" alt="">
+                    <ul id="dispHimitsuItemList">
+                      <li v-for="(himitsuData) in himitsuList11.filter(item => item.rank === 4)" :key="himitsuData.value" class="itemLi">
+                        <div :class="{'isClicked': selectedItems.includes(himitsuData.value)}" >
+                          <div class="tooltip1 cardButton" 
+                            @click="toggleHimitsuItem(himitsuData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false, 'wishHimitsuBorder': wishHimitsuItems.includes(himitsuData.value)}" v-lazy="require(`@/img/himitsu/${himitsuData.src}`)" alt="">
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div v-show="(selectedHimitsuRank === 3 || selectedHimitsuRank === 0)">
+                    <img v-show="himitsuList11.filter(item => item.rank === 3).length > 0" class="starClass starMargin" :src="require(`@/img/icon/star3.webp`)" alt="">
+                    <ul id="dispHimitsuItemList">
+                      <li v-for="(himitsuData) in himitsuList11.filter(item => item.rank === 3)" :key="himitsuData.value" class="itemLi">
+                        <div :class="{'isClicked': selectedItems.includes(himitsuData.value)}" >
+                          <div class="tooltip1 cardButton" 
+                            @click="toggleHimitsuItem(himitsuData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false, 'wishHimitsuBorder': wishHimitsuItems.includes(himitsuData.value)}" v-lazy="require(`@/img/himitsu/${himitsuData.src}`)" alt="">
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                </div>
+                <div v-show="(selectedHimitsuRank === 2 || selectedHimitsuRank === 0)">
+                  <img v-show="himitsuList11.filter(item => item.rank === 2).length > 0" class="starClass starMargin" :src="require(`@/img/icon/star2.webp`)" alt="">
+                  <ul id="dispHimitsuItemList">
+                      <li v-for="(himitsuData) in himitsuList11.filter(item => item.rank === 2)" :key="himitsuData.value" class="itemLi">
                         <div :class="{'isClicked': selectedItems.includes(himitsuData.value)}" >
                           <div class="tooltip1 cardButton" 
                             @click="toggleHimitsuItem(himitsuData.value)">
@@ -1645,6 +1697,9 @@ export default {
     },
     himitsuList10() {
       return this.filteredHimitsuList.filter((item) => item.version === "10");
+    },
+    himitsuList11() {
+      return this.filteredHimitsuList.filter((item) => item.version === "11");
     },
     himitsuListSP() {
       return this.filteredHimitsuList.filter((item) => item.version === "sp");
