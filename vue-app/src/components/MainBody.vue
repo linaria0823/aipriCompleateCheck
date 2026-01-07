@@ -920,9 +920,74 @@
                 </div>
               </div>
             </div>
-          </div>
+            <div v-show="(selectedHimitsuVersion === 'memoriaru' || selectedHimitsuVersion === 0)
+              && (
+                selectedHimitsuRank === 0 || (
+                      (selectedHimitsuRank === 4 && himitsuListMemoriaru.filter(item => item.rank === 4).length > 0) ||
+                      (selectedHimitsuRank === 3 && himitsuListMemoriaru.filter(item => item.rank === 3).length > 0) ||
+                      (selectedHimitsuRank === 2 && himitsuListMemoriaru.filter(item => item.rank === 2).length > 0) ||
+                      (selectedHimitsuRank === 'sp' && himitsuListSP.filter(item => item.rank === 'sp').length > 0)
+                  )
+              )&& himitsuListMemoriaru.length > 0" >
+                <div class="tableTitle">-メモリアル-</div>
+                <div >
+                  <div v-show="(selectedHimitsuRank === 4 || selectedHimitsuRank === 0)">
+                    <img v-show="himitsuListMemoriaru.filter(item => item.rank === 4).length > 0" class="starClass" :src="require(`@/img/icon/star4.webp`)" alt="">
+                    <ul id="dispHimitsuItemList">
+                      <li v-for="(himitsuData) in himitsuListMemoriaru.filter(item => item.rank === 4)" :key="himitsuData.value" class="itemLi">
+                        <div :class="{'isClicked': selectedItems.includes(himitsuData.value)}" >
+                          <div class="tooltip1 cardButton" 
+                            @click="toggleHimitsuItem(himitsuData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false, 'wishHimitsuBorder': wishHimitsuItems.includes(himitsuData.value)}" v-lazy="require(`@/img/himitsu/${himitsuData.src}`)" alt="">
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div v-show="(selectedHimitsuRank === 3 || selectedHimitsuRank === 0)">
+                    <img v-show="himitsuListMemoriaru.filter(item => item.rank === 3).length > 0" class="starClass starMargin" :src="require(`@/img/icon/star3.webp`)" alt="">
+                    <ul id="dispHimitsuItemList">
+                      <li v-for="(himitsuData) in himitsuListMemoriaru.filter(item => item.rank === 3)" :key="himitsuData.value" class="itemLi">
+                        <div :class="{'isClicked': selectedItems.includes(himitsuData.value)}" >
+                          <div class="tooltip1 cardButton" 
+                            @click="toggleHimitsuItem(himitsuData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false, 'wishHimitsuBorder': wishHimitsuItems.includes(himitsuData.value)}" v-lazy="require(`@/img/himitsu/${himitsuData.src}`)" alt="">
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                </div>
+                <div v-show="(selectedHimitsuRank === 2 || selectedHimitsuRank === 0)">
+                  <img v-show="himitsuListMemoriaru.filter(item => item.rank === 2).length > 0" class="starClass starMargin" :src="require(`@/img/icon/star2.webp`)" alt="">
+                  <ul id="dispHimitsuItemList">
+                      <li v-for="(himitsuData) in himitsuListMemoriaru.filter(item => item.rank === 2)" :key="himitsuData.value" class="itemLi">
+                        <div :class="{'isClicked': selectedItems.includes(himitsuData.value)}" >
+                          <div class="tooltip1 cardButton" 
+                            @click="toggleHimitsuItem(himitsuData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false, 'wishHimitsuBorder': wishHimitsuItems.includes(himitsuData.value)}" v-lazy="require(`@/img/himitsu/${himitsuData.src}`)" alt="">
+                          </div>
+                        </div>
+                    </li>
+                  </ul>
+                </div>
+                <div v-show="(selectedHimitsuRank === 'sp' || selectedHimitsuRank === 0)">
+                  <img v-show="himitsuListMemoriaru.filter(item => item.rank === 'sp').length > 0" class="starClass starMargin" :src="require(`@/img/icon/special.webp`)" alt="">
+                  <ul id="dispHimitsuItemList">
+                      <li v-for="(himitsuData) in himitsuListMemoriaru.filter(item => item.rank === 'sp')" :key="himitsuData.value" class="itemLi">
+                        <div :class="{'isClicked': selectedItems.includes(himitsuData.value)}" >
+                          <div class="tooltip1 cardButton" 
+                            @click="toggleHimitsuItem(himitsuData.value)">
+                            <img v-bind:class="{'cardItemImgMobile': this.mobile === true, 'cardItemImg': this.mobile === false, 'wishHimitsuBorder': wishHimitsuItems.includes(himitsuData.value)}" v-lazy="require(`@/img/himitsu/${himitsuData.src}`)" alt="">
+                          </div>
+                        </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
-          </li>
+          </div>
+        </div>
+      </li>
  
         <li v-show="isActive === 'B'" class="tableMain verseMain">
            <div class="center">
@@ -938,6 +1003,7 @@
                <option v-bind:value="8">リング2弾</option>
                <option v-bind:value="9">リング3弾</option>
                <option v-bind:value="10">リング4弾</option>
+               <option v-bind:value="11">リング5弾</option>
                <option value="sp">SP</option>
              </select>
              <select v-model="selectedVerseGet" class="inlineBlock dropBox">
@@ -1459,6 +1525,63 @@
                   </div>
                 </div>
               </div>
+              <div v-show="(selectedVerseVersion === 11|| selectedVerseVersion === 0)
+                && (
+                    selectedVerseRank === 0 || (
+                        (selectedVerseRank === 4 && verseList11.filter(item => item.rank === 4).length > 0) ||
+                        (selectedVerseRank === 3 && verseList11.filter(item => item.rank === 3).length > 0) ||
+                        (selectedVerseRank === 2 && verseList11.filter(item => item.rank === 2).length > 0) ||
+                        (selectedVerseRank === 'sp' && verseList11.filter(item => item.rank === 'sp').length > 0)
+                    )
+                )&& verseList11.length > 0" >
+                <div class="tableTitle">-リング5弾-</div>
+                <div >
+                  <div v-show="(selectedVerseRank === 4 || selectedVerseRank === 0)">
+                    <img v-show="filteredVerseList11[4].length > 0" class="starClass" :src="require(`@/img/icon/star4.webp`)" alt="">
+                    <ul id="">
+                      <li v-for="(verseData) in filteredVerseList11[4]" :key="verseData.value" class="itemLi">
+                      <div class="tooltip1" :class="dynamicClass(verseData)">
+                          <img @click="toggleVerseItem(verseData.value)" class="cordeItemImg" :class="{'wishVerseBorder': wishVerseItems.includes(verseData.value)}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div v-show="(selectedVerseRank === 3 || selectedVerseRank === 0)">
+                    <img v-show="filteredVerseList11[3].length > 0" class="starClass starMargin" :src="require(`@/img/icon/star3.webp`)" alt="">
+                    <ul id="">
+                      <li v-for="(verseData) in filteredVerseList11[3]" :key="verseData.value" class="itemLi">
+                      <div class="tooltip1" :class="dynamicClass(verseData)">
+                          <img @click="toggleVerseItem(verseData.value)" class="cordeItemImg" :class="{'wishVerseBorder': wishVerseItems.includes(verseData.value)}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div v-show="(selectedVerseRank === 2 || selectedVerseRank === 0)">
+                    <img v-show="filteredVerseList11[2].length > 0" class="starClass starMargin" :src="require(`@/img/icon/star2.webp`)" alt="">
+                    <ul id="">
+                      <li v-for="(verseData) in filteredVerseList11[2]" :key="verseData.value" class="itemLi">
+                      <div class="tooltip1" :class="dynamicClass(verseData)">
+                          <img @click="toggleVerseItem(verseData.value)" class="cordeItemImg" :class="{'wishVerseBorder': wishVerseItems.includes(verseData.value)}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div v-show="(selectedVerseRank === 'sp' || selectedVerseRank === 0)">
+                    <img v-show="filteredVerseList11[1].length > 0" class="starClass starMargin" :src="require(`@/img/icon/special.webp`)" alt="">
+                    <ul id="">
+                      <li v-for="(verseData) in filteredVerseList11[1]" :key="verseData.value" class="itemLi">
+                      <div class="tooltip1" :class="dynamicClass(verseData)">
+                          <img @click="toggleVerseItem(verseData.value)" class="cordeItemImg" :class="{'wishVerseBorder': wishVerseItems.includes(verseData.value)}" v-lazy="require(`@/img/verse/${verseData.src}`)" alt="">
+                          <span>{{ verseData.name }}</span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
               <div v-show="(selectedVerseVersion === 'sp' || selectedVerseVersion === 0)
                 && (
                     selectedVerseRank === 0 || (
@@ -1539,7 +1662,7 @@ import WishVerse from './WishVerse.vue'
 
 // 初期値のバージョンを指定(最新弾推奨)
 const iniHimitsuVersion = 11;
-const iniVerseVersion = 10;
+const iniVerseVersion = 11;
 
 export default {
   name: "MainBody",
@@ -1710,6 +1833,9 @@ export default {
     himitsuListMirufi() {
       return this.filteredHimitsuList.filter((item) => item.version === "mirufi");
     },
+    himitsuListMemoriaru() {
+      return this.filteredHimitsuList.filter((item) => item.version === "memoriaru");
+    },
     verseList1() {
       return this.filteredVerseList.filter((item) => item.version === "1");
     },
@@ -1739,6 +1865,9 @@ export default {
     },
     verseList10() {
       return this.filteredVerseList.filter((item) => item.version === "10");
+    },
+    verseList11() {
+      return this.filteredVerseList.filter((item) => item.version === "11");
     },
     verseListSP() {
       return this.filteredVerseList.filter((item) => item.version === "sp");
@@ -1813,6 +1942,14 @@ export default {
         2: this.verseList10.filter(item => item.rank === 2),
         3: this.verseList10.filter(item => item.rank === 3),
         4: this.verseList10.filter(item => item.rank === 4),
+      };
+    },
+    filteredVerseList11() {
+      return {
+        1: this.verseList11.filter(item => item.rank === 'sp'),
+        2: this.verseList11.filter(item => item.rank === 2),
+        3: this.verseList11.filter(item => item.rank === 3),
+        4: this.verseList11.filter(item => item.rank === 4),
       };
     },
     filteredVerseListSP() {
